@@ -3,7 +3,7 @@ export default async function fetchDispatcher(param) {
 
 		case 'GET': {
 			let query = fetch(
-				`http://api.bpgprice.loc/api/monitorings`
+				`http://api.bpgprice.loc/api/monitoringss`
 			).then(res => res.json());
 			return query;
 		}

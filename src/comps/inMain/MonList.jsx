@@ -148,85 +148,6 @@ export default function MonitoringList({ props }) {
 					}
 					
 				}) }
-
-				{ true === false ? state[6].label.map((item, index) => {		
-
-					return(
-						<MonitoringItem
-							onClick={() => {
-								dispatch({ type: 'CORRECT_NAME', value: item.Name });
-								dispatch({ type: 'CORRECT_CID', value: item.ClientID });
-								dispatch({ type: 'CORRECT_PID', value: item.PartnerID });
-								dispatch({ type: 'CORRECT_SDATE', value: item.ActiveFrom.split(' 00')[0] });
-								dispatch({ type: 'CORRECT_EDATE', value: item.ActiveTo.split(' 00')[0] });
-								dispatch({ type: 'CORRECT_UUID', value: item.UUID });
-							}} 
-							key={item.UUID}
-						>
-							<ItemCellName
-								onClick={(e) => {
-									if ( e.target.tagName === 'SPAN' ) {
-										history.push(`/card/correct/${item.UUID}`);
-									}
-								}}
-							>
-								<ItemCellView
-									onClick={() => {
-										history.push(`/card/view/${item.UUID}`)
-									}}
-								>
-									<FontAwesomeIcon 
-										style={{
-											color: 'black',
-											marginLeft: 4.5,
-											marginBottom: 8
-										}}
-              			size="sm" 
-              			icon={faEye}
-            			/>
-								</ItemCellView>
-								<ItemCellCorrect 
-									style={{ display: 'none' }}
-									onClick={() => {
-										history.push(`/card/correct/${item.UUID}`)
-									}}
-								>
-									<FontAwesomeIcon 
-										style={{
-											color: 'black',
-											marginLeft: 6,
-											marginBottom: 8
-										}}
-              			size="sm" 
-              			icon={faPenSquare}
-            			/>
-								</ItemCellCorrect>
-								<ItemCellDelete
-									onClick={ async () => {
-										setTimeout(() => history.push(`/remove?name=${item.Name}&uuid=${item.UUID}`), 400);
-									}}
-								>
-									<FontAwesomeIcon 
-										style={{
-											color: 'black',
-											marginLeft: 6,
-											marginBottom: 8
-										}}
-              			size="sm" 
-              			icon={faTrash}
-            			/>
-								</ItemCellDelete>
-								{ item.Name }
-							</ItemCellName>
-							<ItemCell>{ item.ID }</ItemCell>
-							<ItemCell>{ item.ClientID }</ItemCell>
-							<ItemCell>{ item.PartnerID }</ItemCell>
-							<ItemCell>{ item.ActiveFrom.split(' 00')[0] }</ItemCell>
-							<ItemCell>{ item.ActiveTo.split(' 00')[0] }</ItemCell>
-						</MonitoringItem>
-					);
-
-				}) : null }
 				
 				{ state[8].label[4].label[state[8].label[3].label - 1] !== undefined 
 					? state[8].label[4].label[state[8].label[3].label - 1].map((item, index) => {		
@@ -258,6 +179,7 @@ export default function MonitoringList({ props }) {
 								>
 									<FontAwesomeIcon 
 										style={{
+											display: state[10].label[0].label === false ? '' : 'none',
 											color: 'black',
 											marginLeft: 4.5,
 											marginBottom: 7
@@ -289,6 +211,7 @@ export default function MonitoringList({ props }) {
 								>
 									<FontAwesomeIcon 
 										style={{
+											display: state[10].label[0].label === false ? '' : 'none',
 											color: 'black',
 											marginLeft: 6,
 											marginBottom: 7

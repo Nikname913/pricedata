@@ -12,6 +12,9 @@ import WideMenu from "./sideMenu/wideMenu";
 import ShortMenu from "./sideMenu/shortMenu";
 
 const MainSection = bodyTags.MainSection;
+const HelloBrother = bodyTags.MainSectionHelloBlock;
+const HelloBrotherLogo = bodyTags.MainSectionHelloBlockLogo;
+const HelloBrotherText = bodyTags.MainSectionHelloBlockText;
 const RightSideBar = bodyTags.RightSideBar;
 const PageTitle = bodyTags.RightSideBarPageTitle;
 const Back = bodyTags.RightSideBarPageTitleBack;
@@ -93,6 +96,19 @@ function Main({ props }) {
           history={history}
           path="/remove"
           component={MonitoringRemove}
+        /> 
+
+        <Route
+          history={history}
+          path="/"
+          component={() => {
+            return(
+              <HelloBrother>
+                <HelloBrotherLogo/>
+                <HelloBrotherText>добро пожаловать в платформу создания мониторингов. продолжайте работу или ознакомьтесь с сервисом в разделе обучения. хорошего рабочего дня!</HelloBrotherText>
+              </HelloBrother>
+            );
+          }}
         />  
 
       </Switch>

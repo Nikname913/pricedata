@@ -71,7 +71,7 @@ export default function MonitoringCard() {
 
 			<React.Fragment>
 			<InputWrapperVertical style={{ margin: 0 }}>	
-				<InputLabel style={{ marginTop: 4 }}>название мониторинга</InputLabel>
+				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>название мониторинга</InputLabel>
 				<Input
 					maxLength="38"
 					placeholder="Название мониторинга"
@@ -80,7 +80,7 @@ export default function MonitoringCard() {
 				/>
 			</InputWrapperVertical>
 			<InputWrapperVertical style={{ margin: 0 }}>
-				<InputLabel style={{ marginTop: 4 }}>идентификатор клиента</InputLabel>
+				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>идентификатор клиента</InputLabel>
 				<Input
 					maxLength="38"
 					placeholder="Название мониторинга"
@@ -89,7 +89,7 @@ export default function MonitoringCard() {
 				/>
 			</InputWrapperVertical>
 			<InputWrapperVertical style={{ margin: 0 }}>
-				<InputLabel style={{ marginTop: 4 }}>идентификатор партнера</InputLabel>
+				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>идентификатор партнера</InputLabel>
 				<Input
 					maxLength="38"
 					placeholder="Название мониторинга"

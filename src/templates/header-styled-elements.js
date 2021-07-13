@@ -63,6 +63,9 @@ const headerTags = {
 		background-size: 76%;
 		background-repeat: no-repeat;
 		background-position: 18px center;
+		:hover {
+			cursor: pointer;
+		}
 	`,
 	LogoTitle: styled.h4`
 		display: block;

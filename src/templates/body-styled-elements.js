@@ -4,6 +4,7 @@
 /* eslint-disable no-unused-expressions */
 import styled from 'styled-components';
 import store from '../redux-hooks/store';
+import logo from '../images/brandpollogo.png';
 
 let asideBackground = '';
 let asideBtnColor = '';
@@ -87,6 +88,40 @@ const bodyTags = {
 		border-bottom-right-radius: 4px;
 		overflow: hidden;
 	`,
+	MainSectionHelloBlock: styled.section`
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		position: relative;
+		width: 500px;
+		height: 500px;
+		border-radius: 4px;
+		margin: 0 auto;
+		top: 50%;
+		margin-top: -250px;
+	`,
+	MainSectionHelloBlockLogo: styled.span`
+		display: block;
+		position: relative;
+		width: 400px;
+		height: 200px;
+		left: 0;
+		background-image: url(${logo});
+		background-size: 60%;
+		background-repeat: no-repeat;
+		background-position: center;
+		:hover {
+			cursor: pointer;
+		}
+	`,
+	MainSectionHelloBlockText: styled.p`
+		width: 70%;
+		line-height: 22px;
+		color: white;
+		font-size: 14px;
+		text-align: center;
+	`,
 	SideBar: styled.aside`
 		display: block;
 		position: relative;
@@ -119,6 +154,8 @@ const bodyTags = {
 	RightSideBar: styled.section`
 		display: block;
 		position: relative;
+		max-width: 1350px;
+		min-width: 1000px;
 		width: 100%;
 		height: auto;
 		overflow: hidden;

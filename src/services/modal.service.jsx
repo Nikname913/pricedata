@@ -70,22 +70,26 @@ export default function Modal({ props }) {
 							styles={selectStylesTimepicker}
               onChange={value => {
 								if ( value !== null ) {
+                let newValue = [];
+                value.forEach(item => {
+                  newValue.push(item.label);
+                });
 								let counter = index + 1;
 								switch(counter) {
 									case 1:
-										localStorage.setItem('start1From', value.label);
+										localStorage.setItem('start1From', JSON.stringify(newValue));
 										break;
 									case 2:
-										localStorage.setItem('start2From', value.label);
+										localStorage.setItem('start2From', JSON.stringify(newValue));
 										break;
 									case 3:
-										localStorage.setItem('start3From', value.label);
+										localStorage.setItem('start3From', JSON.stringify(newValue));
 										break;	
 									case 4:
-										localStorage.setItem('start4From', value.label);
+										localStorage.setItem('start4From', JSON.stringify(newValue));
 										break;
 									case 5:
-										localStorage.setItem('start5From', value.label);
+										localStorage.setItem('start5From', JSON.stringify(newValue));
 										break;
 
 									default: break;
@@ -93,19 +97,19 @@ export default function Modal({ props }) {
 								let counter = index + 1;
 								switch(counter) {
 									case 1:
-										localStorage.setItem('start1From', '');
+										localStorage.setItem('start1From', '[]');
 										break;
 									case 2:
-										localStorage.setItem('start2From', '');
+										localStorage.setItem('start2From', '[]');
 										break;
 									case 3:
-										localStorage.setItem('start3From', '');
+										localStorage.setItem('start3From', '[]');
 										break;	
 									case 4:
-										localStorage.setItem('start4From', '');
+										localStorage.setItem('start4From', '[]');
 										break;
 									case 5:
-										localStorage.setItem('start5From', '');
+										localStorage.setItem('start5From', '[]');
 										break;
 
 									default: break;
@@ -155,7 +159,14 @@ export default function Modal({ props }) {
             padding: 0,
             marginRight: 4
           }}
-          onClick={() => setShowModal(false)}
+          onClick={() => {
+            setShowModal(false);
+            console.log(localStorage.getItem('start1From'));
+            console.log(localStorage.getItem('start2From'));
+            console.log(localStorage.getItem('start3From'));
+            console.log(localStorage.getItem('start4From'));
+            console.log(localStorage.getItem('start5From'));
+          }}
         >
           
             ОТМЕНА

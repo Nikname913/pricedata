@@ -85,11 +85,11 @@ export default function MonitoringCorrectForm() {
 			ValidationType: "strict",
 			SearchRegions: searchRegions,
 			Priority: important,
-			start_1: [localStorage.getItem('start1From'), localStorage.getItem('start1To')],
-			start_2: [localStorage.getItem('start2From'), localStorage.getItem('start2To')],
-			start_3: [localStorage.getItem('start3From'), localStorage.getItem('start3To')],
-			start_4: [localStorage.getItem('start4From'), localStorage.getItem('start4To')],
-			start_5: [localStorage.getItem('start5From'), localStorage.getItem('start5To')]
+			start_1: JSON.parse(localStorage.getItem('start1From')),
+			start_2: JSON.parse(localStorage.getItem('start2From')),
+			start_3: JSON.parse(localStorage.getItem('start3From')),
+			start_4: JSON.parse(localStorage.getItem('start4From')),
+			start_5: JSON.parse(localStorage.getItem('start5From')),
 		}
 		return data;
 	}
@@ -103,6 +103,12 @@ export default function MonitoringCorrectForm() {
 			type: 'CONTROL_END_DATE_EDIT_CARD',
 			value: new Date(endDateStr)
 		});
+
+		localStorage.setItem('start1From', JSON.stringify(state[9].label.start_1));
+		localStorage.setItem('start2From', JSON.stringify(state[9].label.start_2));
+		localStorage.setItem('start3From', JSON.stringify(state[9].label.start_3));
+		localStorage.setItem('start4From', JSON.stringify(state[9].label.start_4));
+		localStorage.setItem('start5From', JSON.stringify(state[9].label.start_5));
 	},[]);
 
 	return (

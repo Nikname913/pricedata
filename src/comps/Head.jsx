@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { ReduxHooksContext } from "../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowMaximize, faUserCircle, faHome } from '@fortawesome/free-solid-svg-icons';
@@ -33,6 +34,7 @@ function Head() {
   const { dispatch } = useContext(ReduxHooksContext);
   const [ theme, setTheme ] = useState({ themeChanger: true });
   const [ showSwitch, setShowSwitch ] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
@@ -44,7 +46,7 @@ function Head() {
   return (
     <Header>
 
-      <Logo/>
+      <Logo onClick={() => history.push('/')}/>
       <Menu>
         <FontAwesomeIcon 
 					style={{
