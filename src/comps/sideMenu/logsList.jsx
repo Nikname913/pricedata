@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReduxHooksContext } from "../../Context";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 import bodyTags from "../../templates/body-styled-elements";
 
 const Container = bodyTags.LogsBar;
@@ -9,8 +11,25 @@ const Title = bodyTags.LogsBarTitle;
 const Messages = bodyTags.LogsBarMessageSpace;
 const Mess = bodyTags.LogsBarMessageSpaceLog;
 
+const useStyles = makeStyles((theme) => ({
+  btn: {
+    display: "block",
+    position: "absolute",
+    width: "70%",
+    fontSize: "10px",
+    letterSpacing: 1,
+    padding: "10px 14px",
+    fontFamily: 'Roboto, "sans-serif"',
+		top: '100%',
+		marginTop: '-50px',
+		left: '15%',
+		marginLeft: 2
+  },
+}));
+
 function LogsList() {
 
+	const classes = useStyles();
 	const { state, dispatch } = useContext(ReduxHooksContext);
 
   return (
@@ -41,6 +60,20 @@ function LogsList() {
 				);
 
 			})}</Messages>
+
+			<Button 
+        variant="contained" 
+        className={classes.btn}
+        onClick={() => {
+					dispatch({
+						type: 'LOGGER_CLEAR',
+						value: []
+					});
+        }}
+      >
+        очистить логи
+      </Button>
+
 		</Container>
   );
 }

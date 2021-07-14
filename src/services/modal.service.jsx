@@ -56,7 +56,18 @@ export default function Modal({ props }) {
 							isClearable="true"
               isDisabled={ index < 5 ? false : true }
 							options={times}
-							placeholder="время от"
+							placeholder={`время запуска, ${
+                index === 0
+                ? 'понедельник'
+                : index === 1
+                ? 'вторник'
+                : index === 2
+                ? 'среда'
+                : index === 3
+                ? 'четверг'
+                : index === 4
+                ? 'пятница' : ''
+              }`}
 							theme={theme => ({
           			...theme,
           			borderRadius: 4,
@@ -136,7 +147,7 @@ export default function Modal({ props }) {
           }}
         >
           
-          вы можете выбрать либо начальный и конечный момент времени, либо только время старта. не выбирайте исключительно конечное значение
+          вы можете определить, в какое время нужно запускать мониторинг. можно выбрать несколько стартов для каждого дня, с пн по пт
         
         </p>
 

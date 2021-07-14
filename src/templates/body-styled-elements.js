@@ -237,7 +237,7 @@ const bodyTags = {
 		align-items: flex-end;
 		justify-content: flex-start;
 		width: 300px;
-		height: 90vh;
+		height: 80vh;
 		overflow-y: scroll;
 		overflow-x: hidden;
 		box-sizing: border-box;

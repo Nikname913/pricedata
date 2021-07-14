@@ -208,7 +208,7 @@ export default function reducer(state = store, action) {
 			let newState = [];
 			state.map(item => {
 				if ( item.value === 'logData' ) {
-					item.label.push(action.value); 
+					item.label = action.value; 
 				}
 				newState.push(item);
 			});

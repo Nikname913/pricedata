@@ -3,7 +3,7 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import { ReduxHooksContext, ModalContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 import fetchDispatcher from "../../services/fetch-query.service";
 import Modal from '../../services/modal.service';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -57,13 +57,22 @@ export default function MonitoringCorrectForm() {
 	const [ edit5, setEdit5 ] = useState(false);
 	const [ edit6, setEdit6 ] = useState(false);
 
-	const [ currencyFrom, setCurrencyFrom ] = useState(state[9].label.CurrencyIn);
-	const [ currencyTo, setCurrencyTo ] = useState(state[9].label.CurrencyOut);
+	const [ currencyFrom, setCurrencyFrom ] = useState(
+		state[9].label !== null ? state[9].label.CurrencyIn : 'RUB'
+	);
+	const [ currencyTo, setCurrencyTo ] = useState(
+		state[9].label !== null ? state[9].label.CurrencyOut : 'RUB'
+	);
 	const [ validationType, setValidationType ] = useState(
+		state[9].label === null ? 'STRICT' :
 		state[9].label.ValidationType !== undefined ? state[9].label.ValidationType.toUpperCase() : 'STRICT'
 	);
-	const [ important, setImportant ] = useState(state[9].label.Priority);
-	const [ searchRegions, setSearchRegions ] = useState(state[9].label.SearchRegions);
+	const [ important, setImportant ] = useState(
+		state[9].label !== null ? state[9].label.Priority : 4
+	);
+	const [ searchRegions, setSearchRegions ] = useState(
+		state[9].label !== null ? state[9].label.SearchRegions : []
+	);
 	const [ screenshots, ] = useState(false);
 
 	const [ rules, setRules ] = useState({
@@ -95,20 +104,34 @@ export default function MonitoringCorrectForm() {
 	}
 
 	useEffect(() => {
-		dispatch({
-			type: 'CONTROL_START_DATE_EDIT_CARD',
-			value: new Date(startDateStr)
-		});
-		dispatch({
-			type: 'CONTROL_END_DATE_EDIT_CARD',
-			value: new Date(endDateStr)
-		});
 
-		localStorage.setItem('start1From', JSON.stringify(state[9].label.start_1));
-		localStorage.setItem('start2From', JSON.stringify(state[9].label.start_2));
-		localStorage.setItem('start3From', JSON.stringify(state[9].label.start_3));
-		localStorage.setItem('start4From', JSON.stringify(state[9].label.start_4));
-		localStorage.setItem('start5From', JSON.stringify(state[9].label.start_5));
+		if ( state[9].label !== null ) {
+
+			dispatch({
+				type: 'CONTROL_START_DATE_EDIT_CARD',
+				value: new Date(startDateStr)
+			});
+			dispatch({
+				type: 'CONTROL_END_DATE_EDIT_CARD',
+				value: new Date(endDateStr)
+			});
+
+			localStorage.setItem('start1From', JSON.stringify(state[9].label.start_1));
+			localStorage.setItem('start2From', JSON.stringify(state[9].label.start_2));
+			localStorage.setItem('start3From', JSON.stringify(state[9].label.start_3));
+			localStorage.setItem('start4From', JSON.stringify(state[9].label.start_4));
+			localStorage.setItem('start5From', JSON.stringify(state[9].label.start_5));
+
+		} else {
+
+			localStorage.setItem('start1From', '[]');
+			localStorage.setItem('start2From', '[]');
+			localStorage.setItem('start3From', '[]');
+			localStorage.setItem('start4From', '[]');
+			localStorage.setItem('start5From', '[]');
+
+		}
+
 	},[]);
 
 	return (
@@ -131,13 +154,28 @@ export default function MonitoringCorrectForm() {
 
 			>
 
+				<FontAwesomeIcon 
+					style={{
+						display: 'block',
+						position: 'absolute',
+						color: 'white',
+						top: '100%',
+						left: '50%',
+						marginLeft: -8,
+						marginTop: 8,
+						transition: 'all 300ms'
+					}}
+          size="lg" 
+          icon={faAngleDoubleDown}
+        />
+
 				{ showModal === true ? <Modal props={modalData}/> : null }
 
 				{ showParams === false ? (
 
 				<React.Fragment>
 				<InputWrapperVertical style={{ margin: 0 }}>	
-				<InputLabel style={{ marginTop: 4 }}>название мониторинга</InputLabel>	
+				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>название мониторинга</InputLabel>	
 				<Input
 					maxLength="38"
 					placeholder="Название мониторинга"
@@ -159,7 +197,7 @@ export default function MonitoringCorrectForm() {
 				/>
 				</InputWrapperVertical>
 				<InputWrapperVertical style={{ margin: 0 }}>
-				<InputLabel style={{ marginTop: 4 }}>идентификатор клиента</InputLabel>
+				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>идентификатор клиента</InputLabel>
 				<Input
 					maxLength="4"
 					placeholder="Client ID"
@@ -178,7 +216,7 @@ export default function MonitoringCorrectForm() {
 				/>
 				</InputWrapperVertical>
 				<InputWrapperVertical style={{ margin: 0 }}>
-				<InputLabel style={{ marginTop: 4 }}>идентификатор партнера</InputLabel>
+				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>идентификатор партнера</InputLabel>
 				<Input
 					maxLength="4"
 					placeholder="Partner ID"
@@ -243,7 +281,19 @@ export default function MonitoringCorrectForm() {
 				<Params style={{ padding: 0, minHeight: 0 }}>
 					<ParamsLine style={{ border: 'none' }}>
 						<ParamsLineLabel>настроить параметры мониторинга</ParamsLineLabel>
-						<ParamsLineValue onClick={() => setShowParams(!showParams)}>перейти к настройкам</ParamsLineValue>
+						<ParamsLineValue onClick={() => {
+							let date = new Date();
+							let time = `${date.getHours()} : ${date.getMinutes()}`;
+							// eslint-disable-next-line no-unused-expressions
+							state[9].label !== null ? setShowParams(!showParams) : 
+							dispatch({
+								type: 'LOGGER',
+								value: { 
+									message: `${time} : отсутствуют данные о параметрах данного мониторинга. добавьте их или проверьте подключение к серверу`, 
+									time 
+								}
+							});
+						}}>перейти к настройкам</ParamsLineValue>
 					</ParamsLine>
 				</Params>
 

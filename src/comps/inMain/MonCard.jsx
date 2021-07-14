@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams } from "react-router";
 import { ReduxHooksContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 import fetchDispatcher from "../../services/fetch-query.service";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -66,6 +66,21 @@ export default function MonitoringCard() {
 				}
 			}}
 		>
+
+			<FontAwesomeIcon 
+				style={{
+					display: 'block',
+					position: 'absolute',
+					color: 'white',
+					top: '100%',
+					left: '50%',
+					marginLeft: -8,
+					marginTop: 8,
+					transition: 'all 300ms'
+				}}
+        size="lg" 
+        icon={faAngleDoubleDown}
+      />
 			
 			{ showParams === false ? (
 

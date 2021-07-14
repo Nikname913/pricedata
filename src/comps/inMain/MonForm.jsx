@@ -1,13 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import bodyTags from '../../templates/body-styled-elements';
 import Modal from '../../services/modal.service';
 import MonitoringParamsForm from "./MonParamsForm";
-import { ModalContext } from '../../Context';
+import { ModalContext, ReduxHooksContext } from '../../Context';
 import fetchDispatcher from "../../services/fetch-query.service";
 import { data } from '../../data/clients';
 import { partners } from '../../data/partners';
@@ -49,8 +51,9 @@ const loadOptionsPartners = (inputValue, cb) => {
 
 export default function MonitoringForm() {
 
+	const { dispatch } = useContext(ReduxHooksContext);
 	const [ validateInner, setValidateInner ] = useState('создать мониторинг');
-	const [ monitoringDefName, setMonitoringDefName ] = useState('название мониторинга');
+	const [ monitoringDefName, ] = useState('название мониторинга');
 
 	const [ startDate, setStartDate ] = useState(new Date());
 	const [ endDate, setEndDate ] = useState(new Date());
@@ -133,6 +136,21 @@ export default function MonitoringForm() {
 				}}
 
 			>
+
+				<FontAwesomeIcon 
+					style={{
+						display: 'block',
+						position: 'absolute',
+						color: 'white',
+						top: '100%',
+						left: '50%',
+						marginLeft: -8,
+						marginTop: 8,
+						transition: 'all 300ms'
+					}}
+          size="lg" 
+          icon={faAngleDoubleDown}
+        />
 				
 				{ showModal === true ? <Modal props={modalData}/> : null }
 
@@ -141,7 +159,17 @@ export default function MonitoringForm() {
 					disabled={inputDisabled}
 					defaultValue={monitoringDefName}
 					onKeyUp={getMonitorInputValue}
-					onFocus={() => setMonitoringDefName('')}
+					onFocus={(e) => {
+						// setMonitoringDefName('');
+						if ( e.target.value === 'название мониторинга' ) {
+							e.target.value = '';
+						}
+					}}
+					onBlur={(e) => {
+						if ( e.target.value === '' ) {
+							e.target.value = 'название мониторинга';
+						}
+					}}
 				/>
 
         <AsyncSelect
@@ -242,6 +270,10 @@ export default function MonitoringForm() {
 									fetchType: 'SET_PARAMS',
 									value: JSON.stringify(forData)
 								});
+
+								setIsValidating(true);
+								setTimeout(() => setIsRedirect(true), 1000);
+
 							}}
 						>
 							сохранить параметры
@@ -286,6 +318,17 @@ export default function MonitoringForm() {
 							} else {
 
 								setFilterForParams(monitoringName);
+								console.log(query);
+
+								let date = new Date();
+								let time = `${date.getHours()} : ${date.getMinutes()}`;
+								dispatch({
+									type: 'LOGGER',
+									value: { 
+										message: `${time} : мониторинг "${monitoringName}" успешно создан. адрес запроса: ${query.url}`, 
+										time 
+									}
+								});
 
 								setTimeout(() => { 
 									setIsValidating(false);
