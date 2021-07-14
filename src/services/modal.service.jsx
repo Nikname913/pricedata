@@ -26,15 +26,32 @@ export default function Modal({ props }) {
       <DialogTitle style={{ 
           padding: 0, 
           textAlign: 'center',
-          marginTop: 24,
+          marginTop: 32,
           marginBottom: 5 
         }}>
         { props.title }
       </DialogTitle>
       <DialogContent style={{ width: 440, height: 500, overflowY: 'hidden' }}>
-        <DialogContentText style={{ width: '80%' }}>
-          { props.text }
-        </DialogContentText>
+        
+        <p
+          style={{
+            color: 'grey',
+            fontFamily: 'Roboto, "sans-serif',
+            fontSize: 13,
+            lineHeight: '22px',
+            textAlign: 'center',
+            width: '90%',
+            padding: '0 20px',
+            margin: '0 auto',
+            marginTop: '10px',
+            marginBottom: '32px',
+            boxSizing: 'border-box'
+          }}
+        >
+          
+          вы можете определить, в какое время нужно запускать мониторинг. можно выбрать несколько стартов для каждого дня, с пн по пт
+        
+        </p>
 
         { [{},{},{},{},{}].map((item, index) => (
           
@@ -132,25 +149,6 @@ export default function Modal({ props }) {
 
         ))} 
 
-        <p
-          style={{
-            color: 'grey',
-            fontFamily: 'Roboto, "sans-serif',
-            fontSize: 13,
-            lineHeight: '22px',
-            textAlign: 'center',
-            width: '90%',
-            padding: '0 20px',
-            margin: '0 auto',
-            marginTop: '40px',
-            boxSizing: 'border-box'
-          }}
-        >
-          
-          вы можете определить, в какое время нужно запускать мониторинг. можно выбрать несколько стартов для каждого дня, с пн по пт
-        
-        </p>
-
       </DialogContent>
       <DialogActions style={{ marginRight: '20px', marginBottom: '20px' }}>
       <Button
@@ -202,7 +200,7 @@ export default function Modal({ props }) {
           onClick={() => setShowModal(false)}
         >
           
-            OK
+            ОБНОВИТЬ
         
         </Button>
       </DialogActions>
@@ -210,27 +208,78 @@ export default function Modal({ props }) {
 
     ) : ( 
 
-    <Dialog open={true}>
-      <DialogTitle style={{ marginTop: '18px' }}>
+      <Dialog open={true}>
+      <DialogTitle style={{ 
+          padding: 0, 
+          textAlign: 'center',
+          marginTop: 32,
+          marginBottom: 5 
+        }}>
         { props.title }
       </DialogTitle>
-      <DialogContent>
-        <DialogContentText style={{ width: '80%' }}>
-          { props.text }
-        </DialogContentText>
+      <DialogContent style={{ width: 440, height: 500, overflowY: 'hidden' }}>
+        <p
+          style={{
+            color: 'grey',
+            fontFamily: 'Roboto, "sans-serif',
+            fontSize: 13,
+            lineHeight: '22px',
+            textAlign: 'center',
+            width: '90%',
+            padding: '0 20px',
+            margin: '0 auto',
+            marginTop: '10px',
+            boxSizing: 'border-box'
+          }}
+        >
+          
+          вы можете добавить параметры для данного мониторинга в этой форме. для сохранения все поля должны быть заполнены. по завершению нажмите кнопку "добавить" для сохранения
+        
+        </p>
       </DialogContent>
       <DialogActions style={{ marginRight: '20px', marginBottom: '20px' }}>
-        <Button
+      <Button
           style={{
             display: 'block',
             position: 'relative',
-            width: '170px',
+            width: '140px',
             height: '40px',
             lineHeight: '42px',
             borderRadius: '4px',
             fontSize: '11px',
-            backgroundColor: '#ED5225',
-            color: 'white',
+            backgroundColor: '#ffc000',
+            boxShadow: '0px 0px 2px 0.5px grey',
+            color: '#2d2d2d',
+            boxSizing: 'border-box',
+            border: 'none',
+            padding: 0,
+            marginRight: 4
+          }}
+          onClick={() => {
+            setShowModal(false);
+            console.log(localStorage.getItem('start1From'));
+            console.log(localStorage.getItem('start2From'));
+            console.log(localStorage.getItem('start3From'));
+            console.log(localStorage.getItem('start4From'));
+            console.log(localStorage.getItem('start5From'));
+          }}
+        >
+          
+            ОТМЕНА
+        
+        </Button>
+        <Button
+          style={{
+            display: 'block',
+            position: 'relative',
+            width: '140px',
+            height: '40px',
+            lineHeight: '42px',
+            borderRadius: '4px',
+            fontSize: '11px',
+            backgroundColor: '#ffc000',
+            boxShadow: '0px 0px 2px 0.5px grey',
+            color: '#2d2d2d',
             boxSizing: 'border-box',
             border: 'none',
             padding: 0
@@ -238,7 +287,7 @@ export default function Modal({ props }) {
           onClick={() => setShowModal(false)}
         >
           
-            OK
+            ДОБАВИТЬ
         
         </Button>
       </DialogActions>

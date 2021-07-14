@@ -67,13 +67,6 @@ export default function MonitoringForm() {
 	// на начальном этапе фильтрация мониторингов при создани параметра на этой
 	// странице будет происходить через название мониторинга
 	// позднее выборка пойдет через uuid
-	
-	const [ showModal, setShowModal ] = useContext(ModalContext);
-	const [ modalData, setModalData ] = useState({
-		modalType: 'modalWindow',
-		title: '',
-		text: ''
-	});
 
 	const [ monitoringName, setMonitoringName ] = useState('');
 	const [ clientName, setClientName ] = useState('');
@@ -121,19 +114,6 @@ export default function MonitoringForm() {
 						: setCardMargin(0);
 					}
 				}}
-				onDoubleClick={() => {
-					const answer = `код ответа 000, описание статуса - Internal Server Error. response type - cors. данные не получены. проверьте правильность подключения и работу сервера`;
-					setModalData((prev) => {
-						return({
-							...prev,
-							title: 'ошибка нового соединения', 
-							text: answer
-						});
-					});
-					
-					// setShowModal(true);
-				
-				}}
 
 			>
 
@@ -151,8 +131,6 @@ export default function MonitoringForm() {
           size="lg" 
           icon={faAngleDoubleDown}
         />
-				
-				{ showModal === true ? <Modal props={modalData}/> : null }
 
 				<Input
 					maxLength="38"
@@ -308,13 +286,8 @@ export default function MonitoringForm() {
 							
 							if ( query.status !== 200 && query.status !== 201 ) {
 
-								const answer = `код ответа ${query.status}, описание статуса - ${query.statusText}. response type - ${query.type}. данные не получены. проверьте правильность подключения и работу сервера`;
-								setModalData({ title: 'ошибка нового соединения', text: answer });
-								setTimeout(() => { 
-									setShowModal(true);
-									setIsValidating(false);
-								}, 1000);
-
+								setTimeout(() => setIsValidating(false), 1000);
+							
 							} else {
 
 								setFilterForParams(monitoringName);

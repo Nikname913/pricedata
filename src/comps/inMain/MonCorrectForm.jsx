@@ -293,6 +293,14 @@ export default function MonitoringCorrectForm() {
 									time 
 								}
 							});
+							// eslint-disable-next-line no-unused-expressions
+							if ( state[9].label === null ) { 
+								setModalData({ 
+									title: 'параметры мониторинга не созданы', 
+									modalType: 'editParamsFromCard' 
+								});
+								setShowModal(true);
+							}
 						}}>перейти к настройкам</ParamsLineValue>
 					</ParamsLine>
 				</Params>

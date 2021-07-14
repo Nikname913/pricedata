@@ -168,7 +168,7 @@ export default function MonitoringList({ props }) {
 								style={{ lineHeight: '38px' }}
 								onClick={(e) => {
 									if ( e.target.tagName === 'SPAN' ) {
-										history.push(`/card/correct/${item.UUID}`);
+										history.push(`/card/view/${item.UUID}`);
 									}
 								}}
 							>
