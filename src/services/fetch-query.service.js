@@ -3,7 +3,7 @@ export default async function fetchDispatcher(param) {
 
 		case 'GET': {
 			let query = fetch(
-				`http://api.bpgprice.loc/api/monitoringss`
+				`http://api.bpgprice.loc/api/monitorings`
 			).then(res => res.json());
 			return query;
 		}
@@ -72,6 +72,19 @@ export default async function fetchDispatcher(param) {
 			let query = await fetch(
 				`http://api.bpgprice.loc/api/monitoring-params/${param.itemid}`, {
 					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json;charset=utf-8'
+					},
+					body: param.value
+				}
+			);
+			return query;		
+		}
+
+		case 'SET_PRODUCTS': {
+			let query = await fetch(
+				`http://api.bpgprice.loc/api/product-search`, {
+					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json;charset=utf-8'
 					},
