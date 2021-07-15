@@ -95,7 +95,7 @@ export default function MonitoringParamsForm(props) {
 	},[]);
 
 	return(
-		<ParamsBlock>
+		<ParamsBlock style={{ fontFamily: '"Roboto", sans-serif' }}>
 		
 			<InputLine>
 				<Input

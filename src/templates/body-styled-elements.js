@@ -346,15 +346,16 @@ const bodyTags = {
 		}
 	`,
 	MonitoringAddFormAddFileContent: styled.div`
+		position: relative;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: flex-start;
 		position: relative;
-		width: 50%;
 		height: auto;
 		min-height: 20px;
-		margin-left: 54px;
+		margin-left: auto;
+		margin-right: auto;
 	`,
 	MonitoringAddFormAddFileContentText: styled.p`
 		display: block;

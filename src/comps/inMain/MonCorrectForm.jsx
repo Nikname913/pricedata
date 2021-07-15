@@ -139,7 +139,7 @@ export default function MonitoringCorrectForm() {
 		<React.Fragment>
 
 			{ !rules.isRedirect ? ( <MonitoringCorrForm
-			
+				
 				style={{ marginTop: cardMargin }}
 				onWheel={(e) => {
 					if ( e.deltaY > 0 ) {
@@ -297,7 +297,8 @@ export default function MonitoringCorrectForm() {
 							if ( state[9].label === null ) { 
 								setModalData({ 
 									title: 'параметры мониторинга не созданы', 
-									modalType: 'editParamsFromCard' 
+									modalType: 'editParamsFromCard',
+									background: '#6c757d' 
 								});
 								setShowModal(true);
 							}

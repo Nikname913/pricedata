@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Select from 'react-select';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import MonitoringParamsForm from "../comps/inMain/MonParamsForm";
 import { ModalContext } from '../Context';
 import { times } from '../data/times';
 import selectStylesTimepicker from '../templates/css-templates/timepicker-select-modal';
@@ -16,6 +16,7 @@ const InputLine = bodyTags.MonitoringAddParamsFormLine;
 export default function Modal({ props }) {
   
   const [ ,setShowModal ] = useContext(ModalContext);
+  const [ cardMargin, setCardMargin ] = useState(29);
   
   return(
     <React.Fragment>
@@ -213,14 +214,39 @@ export default function Modal({ props }) {
           padding: 0, 
           textAlign: 'center',
           marginTop: 32,
-          marginBottom: 5 
+          marginBottom: 5, 
         }}>
         { props.title }
       </DialogTitle>
-      <DialogContent style={{ width: 440, height: 500, overflowY: 'hidden' }}>
+      <DialogContent 
+        style={{ 
+          width: 500, 
+          height: 500, 
+          overflowY: 'hidden', 
+          backgroundColor: 
+            props.background === '#6c757d' 
+            ? '#6c757d' : '',
+          marginLeft: 14,
+          marginRight: 14,
+          marginTop: 28,
+          marginBottom: 20,
+          borderRadius: 4,
+          boxShadow: '0px 0px 3px black' 
+        }}
+        onWheel={(e) => {
+					if ( e.deltaY > 0 ) {
+						setCardMargin(cardMargin - 10);
+					} else {
+						// eslint-disable-next-line no-unused-expressions
+						cardMargin < 0 
+						? setCardMargin(cardMargin + 10) 
+						: setCardMargin(29);
+					}
+				}}
+      >
         <p
           style={{
-            color: 'grey',
+            color: 'white',
             fontFamily: 'Roboto, "sans-serif',
             fontSize: 13,
             lineHeight: '22px',
@@ -228,7 +254,8 @@ export default function Modal({ props }) {
             width: '90%',
             padding: '0 20px',
             margin: '0 auto',
-            marginTop: '10px',
+            marginTop: cardMargin,
+            marginBottom: '20px',
             boxSizing: 'border-box'
           }}
         >
@@ -236,6 +263,9 @@ export default function Modal({ props }) {
           вы можете добавить параметры для данного мониторинга в этой форме. для сохранения все поля должны быть заполнены. по завершению нажмите кнопку "добавить" для сохранения
         
         </p>
+
+        <MonitoringParamsForm/>
+
       </DialogContent>
       <DialogActions style={{ marginRight: '20px', marginBottom: '20px' }}>
       <Button
