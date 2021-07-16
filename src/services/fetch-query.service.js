@@ -3,14 +3,14 @@ export default async function fetchDispatcher(param) {
 
 		case 'GET': {
 			let query = fetch(
-				`http://api.bpgprice.loc/api/monitorings`
+				`${process.env.REACT_APP_API_URL}/api/monitorings`
 			).then(res => res.json());
 			return query;
 		}
 
 		case 'POST': {
 			let query = await fetch(
-				'http://api.bpgprice.loc/api/monitorings', {
+				`${process.env.REACT_APP_API_URL}/api/monitorings`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json;charset=utf-8'
@@ -25,7 +25,7 @@ export default async function fetchDispatcher(param) {
 
 		case 'PUT': {
 			let query = await fetch(
-				`http://api.bpgprice.loc/api/monitorings/${param.itemid}`, {
+				`${process.env.REACT_APP_API_URL}/api/monitorings/${param.itemid}`, {
 					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json;charset=utf-8'
@@ -38,7 +38,7 @@ export default async function fetchDispatcher(param) {
 
 		case 'DELETE': {
 			let query = await fetch(
-				`http://api.bpgprice.loc/api/monitorings/${param.itemid}`, {
+				`${process.env.REACT_APP_API_URL}/api/monitorings/${param.itemid}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json;charset=utf-8'
@@ -50,7 +50,7 @@ export default async function fetchDispatcher(param) {
 		
 		case 'SET_PARAMS': {
 			let query = await fetch(
-				`http://api.bpgprice.loc/api/monitoring-params`, {
+				`${process.env.REACT_APP_API_URL}/api/monitoring-params`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json;charset=utf-8'
@@ -63,14 +63,14 @@ export default async function fetchDispatcher(param) {
 
 		case 'GET_PARAMS': {
 			let query = fetch(
-				`http://api.bpgprice.loc/api/monitoring-params/${param.value}`
+				`${process.env.REACT_APP_API_URL}/api/monitoring-params/${param.value}`
 			).then(res => res.json());
 			return query;
 		}
 
 		case 'EDIT_PARAMS': {
 			let query = await fetch(
-				`http://api.bpgprice.loc/api/monitoring-params/${param.itemid}`, {
+				`${process.env.REACT_APP_API_URL}/api/monitoring-params/${param.itemid}`, {
 					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json;charset=utf-8'
@@ -83,7 +83,7 @@ export default async function fetchDispatcher(param) {
 
 		case 'SET_PRODUCTS': {
 			let query = await fetch(
-				`http://api.bpgprice.loc/api/product-search`, {
+				`${process.env.REACT_APP_API_URL}/api/product-search`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json;charset=utf-8'
