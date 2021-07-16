@@ -52,7 +52,7 @@ export default function MonitoringForm() {
 
 	const { dispatch } = useContext(ReduxHooksContext);
 	const [ validateInner, setValidateInner ] = useState('создать мониторинг');
-	const [ monitoringDefName, ] = useState('название мониторинга');
+	const [ monitoringDefName, ] = useState('введите название мониторинга');
 
 	const [ startDate, setStartDate ] = useState(new Date());
 	const [ endDate, setEndDate ] = useState(new Date());
@@ -71,8 +71,8 @@ export default function MonitoringForm() {
 	const [ clientName, setClientName ] = useState('');
 	const [ clientId, setClientId ] = useState(0);
 	const [ ,setPartnerName ] = useState('');
-	const [ sDate, setSDate ] = useState('');
-	const [ eDate, setEDate ] = useState('');
+	const [ sDate, setSDate ] = useState(startDate);
+	const [ eDate, setEDate ] = useState(endDate);
 	const [ createParams, setCreateParams ] = useState({});
 
 	const getValueChangeClientName = value => { 
@@ -138,13 +138,13 @@ export default function MonitoringForm() {
 					onKeyUp={getMonitorInputValue}
 					onFocus={(e) => {
 						// setMonitoringDefName('');
-						if ( e.target.value === 'название мониторинга' ) {
+						if ( e.target.value === 'введите название мониторинга' ) {
 							e.target.value = '';
 						}
 					}}
 					onBlur={(e) => {
 						if ( e.target.value === '' ) {
-							e.target.value = 'название мониторинга';
+							e.target.value = 'введите название мониторинга';
 						}
 					}}
 				/>
@@ -260,13 +260,14 @@ export default function MonitoringForm() {
 				: null }
 				
 				{ showParams === false ? <Submit 
+
 					onClick={ async () => {
 
 						if ( clientName !== '' &&
 							   clientId !== 0 && 
 								 monitoringName !== '' &&
 								 sDate !== {} &&
-								 eDate !== {} ) {	
+								 eDate !== {} ) {			
 
 							const postData = {
 								"Name": monitoringName,
@@ -283,8 +284,17 @@ export default function MonitoringForm() {
 								value: postData
 							});
 							
-							if ( query.status !== 200 && query.status !== 201 ) {
+							if ( query.status !== 201 ) {
 
+								let date = new Date();
+								let time = `${date.getHours()} : ${date.getMinutes()}`;
+								dispatch({
+									type: 'LOGGER',
+									value: { 
+										message: `${time} : мониторинг "${monitoringName}" не получилось создать. дерьмо случается. адрес запроса: ${query.url}`, 
+										time 
+									}
+								});
 								setTimeout(() => setIsValidating(false), 1000);
 							
 							} else {

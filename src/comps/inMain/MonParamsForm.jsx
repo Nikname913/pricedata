@@ -9,7 +9,9 @@ import fetchDispatcher from "../../services/fetch-query.service";
 import { regions } from '../../data/regions';
 import { times } from '../../data/times';
 import selectStyles from '../../templates/css-templates/regions-select';
+import selectStylesSecond from '../../templates/css-templates/regions-select-second';
 import selectStylesShort from '../../templates/css-templates/timepicker-select';
+import selectStylesShortSecond from '../../templates/css-templates/timepicker-select-second';
 
 const ParamsBlock = bodyTags.MonitoringAddParamsForm;
 const InputLine = bodyTags.MonitoringAddParamsFormLine;
@@ -101,12 +103,19 @@ export default function MonitoringParamsForm(props) {
 				<Input
 					value={monitoringUUID}
 					disabled="true"
+					style={{
+						color: props.blackColor === true ? 'black' : ''
+						// 0px 0px 6px 0.5px grey
+					}}
 				/>
 			</InputLine>
 			<InputLine style={{ height: 46 }}>
 				<ShortInput
 					maxLength="3"
 					defaultValue={currencyFrom}
+					style={{
+						color: props.blackColor === true ? 'black' : ''
+					}}
 					onFocus={(e) => {
 						switch(e.target.value) {
 							case 'RUB': e.target.value = 'USD';
@@ -127,6 +136,9 @@ export default function MonitoringParamsForm(props) {
 				<ShortInput
 					maxLength="3"
 					defaultValue={currencyTo}
+					style={{
+						color: props.blackColor === true ? 'black' : ''
+					}}
 					onFocus={(e) => {
 						switch(e.target.value) {
 							case 'RUB': e.target.value = 'USD';
@@ -144,12 +156,21 @@ export default function MonitoringParamsForm(props) {
 						paramsUp(bundleData());
 					}}
 				/>
-				<TextLabel>валюта на вход и выход</TextLabel>
+				<TextLabel
+					style={{
+						color: props.blackColor === true ? 'black' : ''
+					}}
+				>
+					валюта на вход и выход
+				</TextLabel>
 			</InputLine>
 			<InputLine style={{ height: 46 }}>
 				<ShortInput
 					maxLength="8"
 					defaultValue={validationType}
+					style={{
+						color: props.blackColor === true ? 'black' : ''
+					}}
 					onFocus={(e) => {
 						switch(e.target.value) {
 							case 'STRICT': e.target.value = 'NO STRICT';
@@ -168,6 +189,9 @@ export default function MonitoringParamsForm(props) {
 				<ShortInput
 					maxLength="2"
 					defaultValue={important}
+					style={{
+						color: props.blackColor === true ? 'black' : ''
+					}}
 					onKeyUp={(e) => {
 						if ( e.target.value < 5 ) {
 							setImportant(e.target.value);
@@ -179,7 +203,13 @@ export default function MonitoringParamsForm(props) {
 						}
 					}}
 				/>
-				<TextLabel>валидация и приоритет</TextLabel>
+				<TextLabel
+					style={{
+						color: props.blackColor === true ? 'black' : ''
+					}}
+				>
+					валидация и приоритет
+				</TextLabel>
 			</InputLine>
 			<InputLine>
 				<ScreenSwitcher 
@@ -191,10 +221,22 @@ export default function MonitoringParamsForm(props) {
 						: setScreenshotsLabel('скриншоты не нужны');
 					}}
 				/>
-				<TextLabel style={{ marginTop: 26 }}>{ screenshotsLabel }</TextLabel>
+				<TextLabel style={{ 
+					marginTop: 26,
+					color: props.blackColor === true ? 'black' : '' 
+					}}
+				>
+					{ screenshotsLabel }
+				</TextLabel>
 			</InputLine>
 
-			<TextTitle>регионы мониторинга</TextTitle>
+			<TextTitle
+				style={{
+					color: props.blackColor === true ? 'black' : ''
+				}}
+			>
+				регионы мониторинга
+			</TextTitle>
 
 			<AsyncSelect
 				isMulti
@@ -212,7 +254,7 @@ export default function MonitoringParamsForm(props) {
             primary50: 'rgb(236, 236, 236)'
           }
         })}
-				styles={selectStyles}
+				styles={ props.blackColor !== true ? selectStyles : selectStylesSecond }
 				onChange={(value) => {
 					if ( value.length !== 0 ) {
 						let arr = [];
@@ -226,7 +268,13 @@ export default function MonitoringParamsForm(props) {
 				}}
 			/>
 
-			<TextTitle>время старта мониторинга</TextTitle>	
+			<TextTitle
+				style={{
+					color: props.blackColor === true ? 'black' : ''
+				}}
+			>
+				время старта мониторинга
+			</TextTitle>	
 
 			<AsyncSelect
 				isMulti
@@ -244,7 +292,7 @@ export default function MonitoringParamsForm(props) {
             primary50: 'rgb(236, 236, 236)'
           }
         })}
-				styles={selectStylesShort}
+				styles={props.blackColor !== true ? selectStylesShort : selectStylesShortSecond }
 				onChange={(value) => {
 					let val = [];
 					// eslint-disable-next-line no-unused-expressions
@@ -273,7 +321,7 @@ export default function MonitoringParamsForm(props) {
             primary50: 'rgb(236, 236, 236)'
           }
         })}
-				styles={selectStylesShort}
+				styles={props.blackColor !== true ? selectStylesShort : selectStylesShortSecond }
 				onChange={(value) => {
 					let val = [];
 					// eslint-disable-next-line no-unused-expressions
@@ -302,7 +350,7 @@ export default function MonitoringParamsForm(props) {
             primary50: 'rgb(236, 236, 236)'
           }
         })}
-				styles={selectStylesShort}
+				styles={props.blackColor !== true ? selectStylesShort : selectStylesShortSecond }
 				onChange={(value) => {
 					let val = [];
 					// eslint-disable-next-line no-unused-expressions
@@ -331,7 +379,7 @@ export default function MonitoringParamsForm(props) {
             primary50: 'rgb(236, 236, 236)'
           }
         })}
-				styles={selectStylesShort}
+				styles={props.blackColor !== true ? selectStylesShort : selectStylesShortSecond }
 				onChange={(value) => {
 					let val = [];
 					// eslint-disable-next-line no-unused-expressions
@@ -360,7 +408,7 @@ export default function MonitoringParamsForm(props) {
             primary50: 'rgb(236, 236, 236)'
           }
         })}
-				styles={selectStylesShort}
+				styles={props.blackColor !== true ? selectStylesShort : selectStylesShortSecond }
 				onChange={(value) => {
 					let val = [];
 					// eslint-disable-next-line no-unused-expressions
@@ -389,7 +437,7 @@ export default function MonitoringParamsForm(props) {
             primary50: 'rgb(236, 236, 236)'
           }
         })}
-				styles={selectStylesShort}
+				styles={props.blackColor !== true ? selectStylesShort : selectStylesShortSecond }
 			/>
 			<AsyncSelect
 				isMulti
@@ -407,10 +455,14 @@ export default function MonitoringParamsForm(props) {
             primary50: 'rgb(236, 236, 236)'
           }
         })}
-				styles={selectStylesShort}
+				styles={props.blackColor !== true ? selectStylesShort : selectStylesShortSecond }
 			/>
 
-			<AddFile>
+			<AddFile
+				style={{
+					border: props.blackColor === true ? '1px dashed black' : '1px dashed white'
+				}}
+			>
 				<input 
 					type="file"
 					style={{
@@ -428,12 +480,18 @@ export default function MonitoringParamsForm(props) {
 				<AddFileContent>
 					<FontAwesomeIcon 
 						style={{
-							color: 'white'
+							color: props.blackColor === true ? 'black' : 'white'
 						}}
 						size="2x" 
 						icon={ faDownload }
 					/>
-					<AddFileContentText>загрузить фид с товарами</AddFileContentText>
+					<AddFileContentText
+						style={{
+							color: props.blackColor === true ? 'black' : ''
+						}}
+					>
+						загрузить фид с товарами
+					</AddFileContentText>
 				</AddFileContent>
 			</AddFile>
 		

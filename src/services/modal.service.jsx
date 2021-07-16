@@ -225,13 +225,12 @@ export default function Modal({ props }) {
           overflowY: 'hidden', 
           backgroundColor: 
             props.background === '#6c757d' 
-            ? '#6c757d' : '',
+            ? '' : '',
           marginLeft: 14,
           marginRight: 14,
           marginTop: 28,
           marginBottom: 20,
-          borderRadius: 4,
-          boxShadow: '0px 0px 3px black' 
+          borderTop: '2px solid #ffc000'
         }}
         onWheel={(e) => {
 					if ( e.deltaY > 0 ) {
@@ -246,7 +245,7 @@ export default function Modal({ props }) {
       >
         <p
           style={{
-            color: 'white',
+            color: 'black',
             fontFamily: 'Roboto, "sans-serif',
             fontSize: 13,
             lineHeight: '22px',
@@ -264,7 +263,7 @@ export default function Modal({ props }) {
         
         </p>
 
-        <MonitoringParamsForm/>
+        <MonitoringParamsForm blackColor={true}/>
 
       </DialogContent>
       <DialogActions style={{ marginRight: '20px', marginBottom: '20px' }}>
