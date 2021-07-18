@@ -756,6 +756,17 @@ export default function MonitoringCorrectForm() {
 							if ( queryParams.status === 200 ) {
 
 								setTimeout(() => { 
+
+									let date = new Date();
+									let time = `${date.getHours()} : ${date.getMinutes()}`;
+									dispatch({
+										type: 'LOGGER',
+										value: { 
+											message: `${time} : параметры для мониторинга "${state[0].label}" успешно изменены. адрес запроса: ${query.url}`, 
+											time 
+										}
+									});
+
 									setRules({
 										isValidating: false
 									});

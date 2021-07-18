@@ -31,7 +31,7 @@ const ThemeSwitch = withStyles({
 
 function Head() {
 
-  const { dispatch } = useContext(ReduxHooksContext);
+  const { state, dispatch } = useContext(ReduxHooksContext);
   const [ theme, setTheme ] = useState({ themeChanger: true });
   const [ showSwitch, setShowSwitch ] = useState(false);
   const history = useHistory();
@@ -70,10 +70,11 @@ function Head() {
         />
         <FontAwesomeIcon 
 					style={{
-						color: 'white',
+						color: state[10].label[7].label === false ? 'white' : '#ffc000',
 						marginLeft: 6,
 					  marginBottom: 8,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: 'all 300ms'
 					}}
           size="md" 
           icon={faWindowMaximize}

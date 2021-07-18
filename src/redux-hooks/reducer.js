@@ -188,6 +188,9 @@ export default function reducer(state = store, action) {
 				if ( item.value === 'rulesState' ) {
 					item.label[6].label = action.value; 
 				}
+				if ( item.value === 'rulesState' ) {
+					item.label[7].label = false;
+				}
 				newState.push(item);
 			});
 			return newState;
@@ -198,6 +201,9 @@ export default function reducer(state = store, action) {
 			state.map(item => {
 				if ( item.value === 'logData' ) {
 					item.label.unshift(action.value); 
+				}
+				if ( item.value === 'rulesState' ) {
+					item.label[7].label = true;
 				}
 				newState.push(item);
 			});

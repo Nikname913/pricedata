@@ -91,7 +91,7 @@ export default function MonitoringForm() {
 		: null;
 	}
 
-	const getMonitorInputValue = event => setMonitoringName(event.target.value);
+	const getMonitorInputValue = event => setMonitoringName(`${event.target.value}`);
 	const setMonitoringParams = async data => {
 		const pack = { data }
 		setCreateParams(pack);
@@ -171,12 +171,22 @@ export default function MonitoringForm() {
         />
         <AsyncSelect
           cacheOptions
-          defaultOptions
           loadOptions={loadOptionsPartners}
-          placeholder={"название партнера"}
+          placeholder={"название партнера*"}
           styles={selectStyles}
 					isDisabled
         />
+
+				<InputWrapper>
+					<InputLabel
+						style={{
+							lineHeight: '22px',
+							paddingRight: 80
+						}}
+					>
+						* на текущий момент партнер по умолчанию для всех мониторингов "Катков и Партнеры". возможность выбора будет доступна после того, как будет сформирован спискок всех партнеров. пока что это поле можно пропустить при заполнении
+					</InputLabel>
+				</InputWrapper>
 
 				<InputWrapper>
 					<DatePicker 
@@ -248,6 +258,16 @@ export default function MonitoringForm() {
 									value: JSON.stringify(forData)
 								});
 
+								let date = new Date();
+								let time = `${date.getHours()} : ${date.getMinutes()}`;
+								dispatch({
+									type: 'LOGGER',
+									value: { 
+										message: `${time} : параметры для мониторинга "${monitoringName}" успешно созданы. адрес запроса: ${query.url}`, 
+										time 
+									}
+								});
+
 								setIsValidating(true);
 								setTimeout(() => setIsRedirect(true), 1000);
 
@@ -291,7 +311,7 @@ export default function MonitoringForm() {
 								dispatch({
 									type: 'LOGGER',
 									value: { 
-										message: `${time} : мониторинг "${monitoringName}" не получилось создать. дерьмо случается. адрес запроса: ${query.url}`, 
+										message: `${time} : мониторинг "${monitoringName}" не получилось создать. конечная и начальная дата не могут совпадать. адрес запроса: ${query.url}`, 
 										time 
 									}
 								});

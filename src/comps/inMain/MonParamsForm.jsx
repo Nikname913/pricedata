@@ -8,6 +8,7 @@ import bodyTags from '../../templates/body-styled-elements';
 import fetchDispatcher from "../../services/fetch-query.service";
 import { regions } from '../../data/regions';
 import { times } from '../../data/times';
+import productsParser from '../../services/csv-parser.service';
 import selectStyles from '../../templates/css-templates/regions-select';
 import selectStylesSecond from '../../templates/css-templates/regions-select-second';
 import selectStylesShort from '../../templates/css-templates/timepicker-select';
@@ -464,6 +465,7 @@ export default function MonitoringParamsForm(props) {
 				}}
 			>
 				<input 
+					multiple
 					type="file"
 					style={{
 						display: 'block',
@@ -476,6 +478,7 @@ export default function MonitoringParamsForm(props) {
 						cursor: 'pointer',
 						zIndex: 10
 					}}
+					onChange={(e) => productsParser(e.target.files)}
 				/>
 				<AddFileContent>
 					<FontAwesomeIcon 
