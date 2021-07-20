@@ -253,6 +253,7 @@ export default function MonitoringForm() {
 								console.log(JSON.stringify(forData));
 								console.log(JSON.stringify(createParams));
 								// eslint-disable-next-line no-unused-vars
+								
 								let query = await fetchDispatcher({
 									fetchType: 'SET_PARAMS',
 									value: JSON.stringify(forData)
@@ -283,6 +284,12 @@ export default function MonitoringForm() {
 
 					onClick={ async () => {
 
+						localStorage.setItem('start1From', '[]');
+	    			localStorage.setItem('start2From', '[]');
+	    			localStorage.setItem('start3From', '[]');
+	    			localStorage.setItem('start4From', '[]');
+	    			localStorage.setItem('start5From', '[]');
+	    			
 						if ( clientName !== '' &&
 							   clientId !== 0 && 
 								 monitoringName !== '' &&

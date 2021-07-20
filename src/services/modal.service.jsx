@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MonitoringParamsForm from "../comps/inMain/MonParamsForm";
+import fetchDispatcher from "../services/fetch-query.service";
 import { ModalContext } from '../Context';
 import { times } from '../data/times';
 import selectStylesTimepicker from '../templates/css-templates/timepicker-select-modal';
@@ -17,6 +18,17 @@ export default function Modal({ props }) {
   
   const [ ,setShowModal ] = useContext(ModalContext);
   const [ cardMargin, setCardMargin ] = useState(29);
+  const [ paramsData, setParamsData ] = useState({});
+
+  const createParamsFromEditForm = (data) => {
+	
+    let params = {
+      data
+    }
+  
+    setParamsData(params);
+  
+  }
   
   return(
     <React.Fragment>
@@ -263,7 +275,11 @@ export default function Modal({ props }) {
         
         </p>
 
-        <MonitoringParamsForm blackColor={true}/>
+        <MonitoringParamsForm 
+          blackColor={true}
+          paramsUp={createParamsFromEditForm}
+					createFilter={props.monitoring}
+        />
 
       </DialogContent>
       <DialogActions style={{ marginRight: '20px', marginBottom: '20px' }}>
@@ -313,7 +329,14 @@ export default function Modal({ props }) {
             border: 'none',
             padding: 0
           }}
-          onClick={() => setShowModal(false)}
+          onClick={ async () => {
+            setShowModal(false);
+            let query = await fetchDispatcher({
+              fetchType: 'SET_PARAMS',
+              value: JSON.stringify(paramsData)
+            });
+            console.log(query);
+          }}
         >
           
             ДОБАВИТЬ

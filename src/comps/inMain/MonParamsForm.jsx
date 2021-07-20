@@ -95,6 +95,8 @@ export default function MonitoringParamsForm(props) {
 			})}
 		});
 
+		paramsUp(bundleData());
+
 	},[]);
 
 	return(
@@ -106,7 +108,6 @@ export default function MonitoringParamsForm(props) {
 					disabled="true"
 					style={{
 						color: props.blackColor === true ? 'black' : ''
-						// 0px 0px 6px 0.5px grey
 					}}
 				/>
 			</InputLine>

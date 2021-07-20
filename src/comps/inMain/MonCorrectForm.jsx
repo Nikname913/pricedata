@@ -298,7 +298,8 @@ export default function MonitoringCorrectForm() {
 								setModalData({ 
 									title: 'параметры мониторинга не созданы', 
 									modalType: 'editParamsFromCard',
-									background: '#6c757d' 
+									background: '#6c757d',
+									monitoring: state[0].label 
 								});
 								setShowModal(true);
 							}
