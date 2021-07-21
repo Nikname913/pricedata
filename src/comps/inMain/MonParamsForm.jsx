@@ -479,7 +479,7 @@ export default function MonitoringParamsForm(props) {
 						cursor: 'pointer',
 						zIndex: 10
 					}}
-					onChange={(e) => productsParser(e.target.files)}
+					onChange={(e) => productsParser(e.target.files, monitoringUUID)}
 				/>
 				<AddFileContent>
 					<FontAwesomeIcon 

@@ -62,6 +62,18 @@ function ShortMenu() {
           />
         </SideMenuButton>
       </Link>
+      <Link to={"/"} style={{ textDecoration: "none" }}>
+        <SideMenuButton style={{ width: 42 }}>
+          <FontAwesomeIcon
+            style={{
+              marginLeft: 12,
+              marginRight: 10,
+            }}
+            size="lg"
+            icon={faFolder}
+          />
+        </SideMenuButton>
+      </Link>
       <FontAwesomeIcon 
         style={{ 
 					display: 'block',

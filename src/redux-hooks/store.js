@@ -102,7 +102,11 @@ const store = [
 		{ value: 'endDateEditCard', label: new Date() },
 		{ value: 'editCardValidateInner', label: 'обновить карточку' },
 		{ value: 'showLogMenu', label: '0px' },
-		{ value: 'newLogMessage', label: false }
+		{ value: 'newLogMessage', label: false },
+		{ value: 'textEditor', label: [
+			{ value: 'active', label: true },
+			{ value: 'data', label: 'products data will be here' }
+		]}
 	]},
 	{ value: 'logData', label: []}
 ];

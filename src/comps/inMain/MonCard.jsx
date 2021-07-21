@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams } from "react-router";
 import { ReduxHooksContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faAngleDoubleDown, faPenSquare, faCaretSquareDown, faCaretSquareUp } from '@fortawesome/free-solid-svg-icons';
 import fetchDispatcher from "../../services/fetch-query.service";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -136,8 +136,51 @@ export default function MonitoringCard() {
 
 			) : null }
 
+			{ showParams !== true ? (
+
 			<Params style={{ padding: 0, minHeight: 0 }}>
-				<ParamsLine style={{ border: 'none' }}>
+				<ParamsLine style={{ border: 'none', paddingLeft: 52 }}>
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={faPenSquare}
+      		/>
+					<ParamsLineLabel>список товаров мониторинга</ParamsLineLabel>
+					<ParamsLineValue>посмотреть список</ParamsLineValue>
+				</ParamsLine>
+			</Params>
+
+			) : null }
+
+			<Params style={{ padding: 0, minHeight: 0 }}>
+				<ParamsLine style={{ border: 'none', paddingLeft: 52 }}>
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={
+							showParams === true 
+							? faCaretSquareUp
+							: faCaretSquareDown
+						}
+      		/>
 					<ParamsLineLabel>параметры мониторинга</ParamsLineLabel>
 					<ParamsLineValue onClick={() => {
 						let date = new Date();
@@ -163,7 +206,7 @@ export default function MonitoringCard() {
 							});
 						}
 					}}>
-						отобразить параметры
+						{ showParams === true ? "основные данные" : "отобразить параметры" }
 					</ParamsLineValue>
 				</ParamsLine>
 			</Params>

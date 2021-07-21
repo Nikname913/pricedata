@@ -81,6 +81,19 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
+          create parser
+        </SideMenuButton>
+      </Link>
+      <Link to={"/"} style={{ textDecoration: "none" }}>
+        <SideMenuButton>
+          <FontAwesomeIcon
+            style={{
+              marginLeft: 12,
+              marginRight: 10,
+            }}
+            size="lg"
+            icon={faFolder}
+          />
           manual
         </SideMenuButton>
       </Link>

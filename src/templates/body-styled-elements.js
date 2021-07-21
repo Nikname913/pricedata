@@ -201,6 +201,60 @@ const bodyTags = {
 		height: 40px;
 		border-radius: 20px;
 	`,
+	TextEditor: styled.section`
+		display: none;
+		position: absolute;
+		width: 100vw;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		background-color: ${asideBackground};
+		z-index: 100;
+		box-sizing: border-box;
+		transition: all 200ms;
+		opacity: 1;
+	`,
+	TextEditorHeader: styled.section`
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		height: 64px;
+		border-bottom: 2px solid ${cardContainerBackground};
+		padding: 0 24px;
+		box-sizing: border-box;
+	`,
+	TextEditorHeaderTitle: styled.h3`
+		display: block;
+		font-size: 16px;
+		letter-spacing: 1px;
+		color: ${asideBtnColor};
+	`,
+	TextEditorWorkSpace: styled.div`
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		justify-content: flex-start;
+		position: relative;
+		width: 100%;
+		height: calc(100vh - 100px);
+		background-color: ${workspaceBackground};
+	`,
+	TextEditorWorkSpaceMenu: styled.div`
+		display: block;
+		position: relative;
+		width: 300px;
+		height: 100%;
+		background-color: ${asideBackground};
+	`,
+	TextEditorWorkSpaceEditor: styled.div`
+		display: block;
+		position: relative;
+		width: calc(100% - 300px);
+		height: 100%;
+		overflow: hidden;
+	`,
 	LogsBar: styled.section`
 		display: flex;
 		flex-direction: column;

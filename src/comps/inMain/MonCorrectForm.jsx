@@ -3,7 +3,7 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import { ReduxHooksContext, ModalContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faAngleDoubleDown, faPenSquare } from '@fortawesome/free-solid-svg-icons';
 import fetchDispatcher from "../../services/fetch-query.service";
 import Modal from '../../services/modal.service';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -42,14 +42,14 @@ const loadOptions = (inputValue, cb) => {
 
 export default function MonitoringCorrectForm() {
 
-	const { state, dispatch } = useContext(ReduxHooksContext);
 	let { id } = useParams();
+	const { state, dispatch } = useContext(ReduxHooksContext);
 	const history = useHistory();
 	const [ showParams, setShowParams ] = useState(false);
 	const [ cardMargin, setCardMargin ] = useState(0);
 	const startDateStr = `${state[3].label.split('-')[1]}-${state[3].label.split('-')[2]}-${state[3].label.split('-')[0]}`;
 	const endDateStr = `${state[4].label.split('-')[1]}-${state[4].label.split('-')[2]}-${state[4].label.split('-')[0]}`;
-
+	
 	const [ edit1, setEdit1 ] = useState(false);
 	const [ edit2, setEdit2 ] = useState(false);
 	const [ edit3, setEdit3 ] = useState(false);
@@ -279,7 +279,21 @@ export default function MonitoringCorrectForm() {
 				) : null }
 
 				<Params style={{ padding: 0, minHeight: 0 }}>
-					<ParamsLine style={{ border: 'none' }}>
+					<ParamsLine style={{ border: 'none', paddingLeft: 52 }}>
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '50%',
+								left: 0,
+								marginLeft: 16,
+								marginTop: -16,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faPenSquare}
+      			/>
 						<ParamsLineLabel>настроить параметры мониторинга</ParamsLineLabel>
 						<ParamsLineValue onClick={() => {
 							let date = new Date();
