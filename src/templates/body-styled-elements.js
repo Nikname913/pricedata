@@ -202,7 +202,7 @@ const bodyTags = {
 		border-radius: 20px;
 	`,
 	TextEditor: styled.section`
-		display: none;
+		display: block;
 		position: absolute;
 		width: 100vw;
 		height: 100vh;
@@ -211,7 +211,7 @@ const bodyTags = {
 		background-color: ${asideBackground};
 		z-index: 100;
 		box-sizing: border-box;
-		transition: all 200ms;
+		transition: all 400ms;
 		opacity: 1;
 	`,
 	TextEditorHeader: styled.section`
@@ -247,6 +247,33 @@ const bodyTags = {
 		width: 300px;
 		height: 100%;
 		background-color: ${asideBackground};
+		padding-left: 24px;
+		padding-top: 20px;
+		box-sizing: border-box;
+	`,
+	TextEditorWorkSpaceMenuItem: styled.span`
+		display: block;
+		position: relative;
+		width: 100%;
+		height: auto;
+		margin-bottom: 8px;
+		font-size: 13px;
+		line-height: 30px;
+		padding-left: 34px;
+		color: ${asideBtnColor};
+		:hover {
+			cursor: pointer;
+		}
+	`,
+	TextEditorWorkSpaceMenuDivider: styled.span`
+		display: block;
+		position: relative;
+		width: 80%;
+		height: 2px;
+		background-color: ${workspaceBackground};
+		margin-top: 18px;
+		margin-bottom: 20px;
+		margin-left: -2px;
 	`,
 	TextEditorWorkSpaceEditor: styled.div`
 		display: block;
@@ -254,6 +281,21 @@ const bodyTags = {
 		width: calc(100% - 300px);
 		height: 100%;
 		overflow: hidden;
+	`,
+	TextEditorWorkSpaceEditorLine: styled.article`
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		position: relative;
+		width: 100%;
+		height: auto;
+		box-sizing: border-box;
+		line-height: 30px;
+		padding: 6px 0px;
+		padding-left: 14px;
+		border-bottom: 1px solid ${asideBackground};
+		font-style: italic;
 	`,
 	LogsBar: styled.section`
 		display: flex;

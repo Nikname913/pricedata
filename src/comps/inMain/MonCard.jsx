@@ -155,7 +155,16 @@ export default function MonitoringCard() {
         		icon={faPenSquare}
       		/>
 					<ParamsLineLabel>список товаров мониторинга</ParamsLineLabel>
-					<ParamsLineValue>посмотреть список</ParamsLineValue>
+					<ParamsLineValue
+						onClick={() => {
+							dispatch({
+								type: 'CONTROL_EDITOR',
+								value: true
+							});
+						}}
+					>
+						посмотреть список
+					</ParamsLineValue>
 				</ParamsLine>
 			</Params>
 

@@ -1,5 +1,8 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return */
 import store from './store';
 export default function reducer(state = store, action) {
+
 	switch(action.type) {
 
 		case 'CORRECT_NAME': {
@@ -196,6 +199,17 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'CONTROL_EDITOR': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[8].label[0].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		case 'LOGGER': {
 			let newState = [];
 			state.map(item => {
@@ -221,7 +235,28 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'EDITOR_DATA': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[8].label[1].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'EDITOR_FORMAT': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[8].label[2].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		default: return state;
 
-	}
-}
+}}

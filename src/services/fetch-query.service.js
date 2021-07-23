@@ -1,4 +1,5 @@
 export default async function fetchDispatcher(param) {
+
 	switch(param.fetchType) {
 
 		case 'GET': {
@@ -81,6 +82,13 @@ export default async function fetchDispatcher(param) {
 			return query;		
 		}
 
+		case 'GET_PRODUCTS_TOTAL': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/product-search`
+			).then(res => res.json());
+			return query;
+		}
+
 		case 'SET_PRODUCTS': {
 			let query = await fetch(
 				`${process.env.REACT_APP_API_URL}/api/product-search`, {
@@ -97,5 +105,4 @@ export default async function fetchDispatcher(param) {
 		default:
 			break;	
 
-	}
-}
+}}

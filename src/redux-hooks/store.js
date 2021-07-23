@@ -104,9 +104,11 @@ const store = [
 		{ value: 'showLogMenu', label: '0px' },
 		{ value: 'newLogMessage', label: false },
 		{ value: 'textEditor', label: [
-			{ value: 'active', label: true },
-			{ value: 'data', label: 'products data will be here' }
-		]}
+			{ value: 'active', label: false },
+			{ value: 'data', label: 'products data will be here' },
+			{ value: 'contentType', label: 'table' }
+		]},
+		{ value: 'navigation', label: null }
 	]},
 	{ value: 'logData', label: []}
 ];
