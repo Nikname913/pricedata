@@ -21,19 +21,30 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Roboto, "sans-serif"',
     top: "100%",
     left: "10%",
-    marginTop: "-70px",
+    marginTop: "-62px",
   },
 }));
 
 function WideMenu() {
 
   const classes = useStyles();
-  const { dispatch } = useContext(ReduxHooksContext);
+  const { state, dispatch } = useContext(ReduxHooksContext);
 
   return (
     <SideBar>
       <Link to={"/add"} style={{ textDecoration: "none" }}>
-        <SideMenuButton>
+        <SideMenuButton 
+          style={{
+            fontWeight: state[10].label[9].label === 0
+            ? '500' : ''
+          }}
+          onClick={() => {
+            dispatch({
+              type: 'CONTROL_NAVIGATION',
+              value: 0
+            });
+          }}
+        >
           <FontAwesomeIcon
             style={{
               marginLeft: 12,
@@ -46,7 +57,18 @@ function WideMenu() {
         </SideMenuButton>
       </Link>
       <Link to={"/history"} style={{ textDecoration: "none" }}>
-        <SideMenuButton>
+      <SideMenuButton 
+          style={{
+            fontWeight: state[10].label[9].label === 1
+            ? '500' : ''
+          }}
+          onClick={() => {
+            dispatch({
+              type: 'CONTROL_NAVIGATION',
+              value: 1
+            });
+          }}
+        >
           <FontAwesomeIcon
             style={{
               marginLeft: 12,
@@ -59,7 +81,18 @@ function WideMenu() {
         </SideMenuButton>
       </Link>
       <Link to={"/"} style={{ textDecoration: "none" }}>
-        <SideMenuButton>
+      <SideMenuButton 
+          style={{
+            fontWeight: state[10].label[9].label === 2
+            ? '500' : ''
+          }}
+          onClick={() => {
+            dispatch({
+              type: 'CONTROL_NAVIGATION',
+              value: 2
+            });
+          }}
+        >
           <FontAwesomeIcon
             style={{
               marginLeft: 12,
@@ -72,7 +105,18 @@ function WideMenu() {
         </SideMenuButton>
       </Link>
       <Link to={"/"} style={{ textDecoration: "none" }}>
-        <SideMenuButton>
+      <SideMenuButton 
+          style={{
+            fontWeight: state[10].label[9].label === 3
+            ? '500' : ''
+          }}
+          onClick={() => {
+            dispatch({
+              type: 'CONTROL_NAVIGATION',
+              value: 3
+            });
+          }}
+        >
           <FontAwesomeIcon
             style={{
               marginLeft: 12,
@@ -85,7 +129,18 @@ function WideMenu() {
         </SideMenuButton>
       </Link>
       <Link to={"/"} style={{ textDecoration: "none" }}>
-        <SideMenuButton>
+      <SideMenuButton 
+          style={{
+            fontWeight: state[10].label[9].label === 4
+            ? '500' : ''
+          }}
+          onClick={() => {
+            dispatch({
+              type: 'CONTROL_NAVIGATION',
+              value: 4
+            });
+          }}
+        >
           <FontAwesomeIcon
             style={{
               marginLeft: 12,

@@ -10,6 +10,14 @@ export default function middleware(param) {
 			localStorage.removeItem('productData');
 			break;
 
+		case 'MONITORINGS_DATA':
+			localStorage.setItem('monitoringData', param.value);
+			break;
+			
+		case 'CLEAR_MONITORINGS_DATA':
+			localStorage.removeItem('monitoringData');
+			break;	
+
 		default: 
 		break;
 

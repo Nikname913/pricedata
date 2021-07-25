@@ -79,7 +79,7 @@ function ShortMenu() {
 					display: 'block',
 					position: 'absolute',
           marginLeft: 27,
-          marginTop: -54,
+          marginTop: -46,
 					top: '100%',
           cursor: 'pointer',
 					color: 'white'

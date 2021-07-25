@@ -129,7 +129,7 @@ const bodyTags = {
 		height: 100%;
 		background-color: ${asideBackground};
 		box-shadow: 0px 0px 4px black;
-		padding-top: 20px;
+		padding-top: 12px;
 		z-index: 10;
 		overflow: hidden;
 	`,

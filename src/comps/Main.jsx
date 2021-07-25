@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { ReduxHooksContext } from "../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

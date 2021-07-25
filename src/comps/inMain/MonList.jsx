@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faEye, faPenSquare, faTrash, faAngleLeft, faAngleRight, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import { ReduxHooksContext } from "../../Context";
 import fetchDispatcher from "../../services/fetch-query.service";
+import middleware from "../../redux-hooks/middleware";
 import bodyTags from '../../templates/body-styled-elements';
 
 const MonitoringListWrapper = bodyTags.MonitoringListWrapper;
@@ -46,12 +47,29 @@ export default function MonitoringList({ props }) {
 		getList.then(data => {
 			let clearData = [];
 			if ( data.data !== undefined ) {
-			data.data.forEach(item => {
-				let deleted = new Date(item.DeletedAt).getFullYear();
-				if ( deleted === 1970 ) {
-					clearData.push(item);
-				}
-			})} else {
+				
+				data.data.forEach(item => {
+					let deleted = new Date(item.DeletedAt).getFullYear();
+					if ( deleted === 1970 ) {
+						clearData.push(item);
+					}
+				});
+
+				stateRef.current = clearData;
+				console.log(clearData);
+
+				middleware({
+					type: 'MONITORINGS_DATA',
+					value: JSON.stringify(clearData)
+				});
+
+				// dispatch({
+				// type: 'CREATE_LIST',
+				// value: clearData
+				// });
+			
+			} else {
+
 				let date = new Date();
 				let time = `${date.getHours()} : ${date.getMinutes()}`;
 				dispatch({
@@ -61,20 +79,10 @@ export default function MonitoringList({ props }) {
 						time 
 					}
 				});
-			}
-
-			stateRef.current = clearData;
-			console.log(clearData);
-
-			dispatch({
-				type: 'CREATE_LIST',
-				value: clearData
-			});
 			
-		});
+		}});
+
 		getList.catch(data => {
-			localStorage.removeItem('count');
-			localStorage.removeItem('sixstate');
 			let date = new Date();
 			let time = `${date.getHours()} : ${date.getMinutes()}`;
 			dispatch({
@@ -86,29 +94,33 @@ export default function MonitoringList({ props }) {
 			});
 		});
 
-		if ( count !== 0 ) {
-			count % state[8].label[0].label === 0 
-			? pages = count / state[8].label[0].label
-			: pages = ~~(count / state[8].label[0].label) + 1;
-		} else {
-			+localStorage.getItem('count') % state[8].label[0].label === 0 
-			? pages = +localStorage.getItem('count') / state[8].label[0].label
-			: pages = ~~(+localStorage.getItem('count') / state[8].label[0].label) + 1;
-		}
+		setTimeout(() => {
 
-		if ( state[6].label.length !== 0 ) {
-			for ( let i = 0; i < pages; i++ ) {
-				checkArr.push(state[6].label.splice(0, size));
-			}
-		} else {
-			for ( let i = 0; i < pages; i++ ) {
-				checkArr.push(JSON.parse(localStorage.getItem('sixstate')).splice(0, size));
-			}
-		}	
+			if ( localStorage.getItem('monitoringData') !== null ) {
 
-		dispatch({ type: 'PAGINATION_LIST', value: count });
-		dispatch({ type: 'PAGINATION_PAGES', value: pages });
-		dispatch({ type: 'PAGINATION_PAGES_PACK', value: checkArr });
+				dispatch({
+					type: 'CREATE_LIST',
+					value: JSON.parse(localStorage.getItem('monitoringData'))
+				});
+
+				middleware({ type: 'CLEAR_MONITORINGS_DATA' });
+
+				count = state[6].label.length;
+				count % state[8].label[0].label === 0 
+				? pages = count / state[8].label[0].label
+				: pages = ~~(count / state[8].label[0].label) + 1;
+		
+				for ( let i = 0; i < pages; i++ ) {
+					checkArr.push(state[6].label.splice(0, size));
+				}
+		
+				dispatch({ type: 'PAGINATION_LIST', value: count });
+				dispatch({ type: 'PAGINATION_PAGES', value: pages });
+				dispatch({ type: 'PAGINATION_PAGES_PACK', value: checkArr });
+
+			}
+
+		}, 1000);
 
 	},[]);
 
@@ -138,16 +150,12 @@ export default function MonitoringList({ props }) {
 
 			<ScrollBar>
 
-				{ state[6].label.map((item, index) => {
-
-					count++;
-
-					if ( count === state[6].label.length ) {
-						localStorage.setItem('count', count);
-						localStorage.setItem('sixstate', JSON.stringify(state[6].label));
-					}
+				{ state[6].label.map(
 					
-				}) }
+					// eslint-disable-next-line array-callback-return
+					(item, index) => { /** count++ **/ }
+				
+				)}
 				
 				{ state[8].label[4].label[state[8].label[3].label - 1] !== undefined 
 					? state[8].label[4].label[state[8].label[3].label - 1].map((item, index) => {		

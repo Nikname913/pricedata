@@ -210,6 +210,17 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'CONTROL_NAVIGATION': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[9].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		case 'LOGGER': {
 			let newState = [];
 			state.map(item => {

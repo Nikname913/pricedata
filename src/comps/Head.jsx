@@ -97,7 +97,7 @@ function Head() {
               
               {`${localStorage.getItem('theme') !== null
                   ? localStorage.getItem('theme').split('Theme')[0].toUpperCase() : 'BRANDPOL'
-                }\nTHEME`}
+                }\nSTYLE`}
             
             </pre>
           </Label>
