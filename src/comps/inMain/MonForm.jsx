@@ -237,7 +237,17 @@ export default function MonitoringForm() {
 				{ showParams === true ? 
 					
 					<React.Fragment>
-						<ButtonBack onClick={() => setIsRedirect(true)}>закончить</ButtonBack>
+						<ButtonBack 
+							onClick={() => {
+								setIsRedirect(true);
+								dispatch({
+									type: 'CONTROL_NAVIGATION',
+									value: 1
+								});
+							}}
+						>
+							закончить
+						</ButtonBack>
 						<Submit
 							onClick={ async () => {
 								let forData = createParams;

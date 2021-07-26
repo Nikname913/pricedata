@@ -89,6 +89,13 @@ export default async function fetchDispatcher(param) {
 			return query;
 		}
 
+		case 'GET_PRODUCTS_MONITORING': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/product-search?MonitoringUUID=${param.value}`
+			).then(res => res.json());
+			return query;
+		}
+
 		case 'SET_PRODUCTS': {
 			let query = await fetch(
 				`${process.env.REACT_APP_API_URL}/api/product-search`, {

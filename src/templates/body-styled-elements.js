@@ -257,6 +257,7 @@ const bodyTags = {
 		width: 100%;
 		height: auto;
 		margin-bottom: 8px;
+		padding-bottom: 2px;
 		font-size: 13px;
 		line-height: 30px;
 		padding-left: 34px;
@@ -296,6 +297,21 @@ const bodyTags = {
 		padding-left: 14px;
 		border-bottom: 1px solid ${asideBackground};
 		font-style: italic;
+		:hover {
+			cursor: pointer;
+		}
+	`,
+	TextEditorWorkSpaceEditorLineSave: styled.span`
+		display: block;
+		position: absolute;
+		width: 24px;
+		height: 24px;
+		box-sizing: border-box;
+		margin-top: -1px;
+		margin-left: 8px;
+		:hover {
+			cursor: pointer;
+		}
 	`,
 	LogsBar: styled.section`
 		display: flex;

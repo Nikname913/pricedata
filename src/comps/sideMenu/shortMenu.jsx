@@ -23,6 +23,12 @@ function ShortMenu() {
             }}
             size="lg"
             icon={faFolder}
+            onClick={() => {
+              dispatch({
+                type: 'CONTROL_NAVIGATION',
+                value: 0
+              });
+            }}
           />
         </SideMenuButton>
       </Link>
@@ -35,6 +41,12 @@ function ShortMenu() {
             }}
             size="lg"
             icon={faFolder}
+            onClick={() => {
+              dispatch({
+                type: 'CONTROL_NAVIGATION',
+                value: 1
+              });
+            }}
           />
         </SideMenuButton>
       </Link>
@@ -47,6 +59,12 @@ function ShortMenu() {
             }}
             size="lg"
             icon={faFolder}
+            onClick={() => {
+              dispatch({
+                type: 'CONTROL_NAVIGATION',
+                value: 2
+              });
+            }}
           />
         </SideMenuButton>
       </Link>
@@ -59,6 +77,12 @@ function ShortMenu() {
             }}
             size="lg"
             icon={faFolder}
+            onClick={() => {
+              dispatch({
+                type: 'CONTROL_NAVIGATION',
+                value: 3
+              });
+            }}
           />
         </SideMenuButton>
       </Link>
@@ -71,6 +95,12 @@ function ShortMenu() {
             }}
             size="lg"
             icon={faFolder}
+            onClick={() => {
+              dispatch({
+                type: 'CONTROL_NAVIGATION',
+                value: 4
+              });
+            }}
           />
         </SideMenuButton>
       </Link>

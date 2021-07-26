@@ -7,7 +7,7 @@ import { ReduxHooksContext } from "../../Context";
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPenSquare, faSave } from '@fortawesome/free-solid-svg-icons';
 import bodyTags from '../../templates/body-styled-elements';
 
 const Editor = bodyTags.TextEditor;
@@ -19,6 +19,7 @@ const SideMenuButton = bodyTags.TextEditorWorkSpaceMenuItem;
 const SideMenuDivider = bodyTags.TextEditorWorkSpaceMenuDivider;
 const CodeHere = bodyTags.TextEditorWorkSpaceEditor;
 const CodeHereLine = bodyTags.TextEditorWorkSpaceEditorLine;
+const SaveIcon = bodyTags.TextEditorWorkSpaceEditorLineSave;
 
 export default function ProductsEditor() {
 
@@ -40,10 +41,20 @@ export default function ProductsEditor() {
 
 		setTimeout(() => {
 
+			let base = JSON.parse(localStorage.getItem('productData')).data;
+			let arr = [];
+			base.forEach(item => arr.push(0));
+			
 			dispatch({
 				type: 'EDITOR_DATA',
 				value: JSON.parse(localStorage.getItem('productData'))
 			});
+			dispatch({
+				type: 'EDITOR_DATA_SAVEARR',
+				value: arr
+			});
+
+			middleware({ type: 'CLEAR_PRODUCTS_DATA' });
 
 		}, 1000);
 	
@@ -57,7 +68,8 @@ export default function ProductsEditor() {
 		>
 			<Header>
 				<Title>
-					<span style={{ color: '#ffc000'}}>P</span>RODUCTS VIEWER</Title>
+					<span style={{ color: '#ffc000'}}>P</span>RODUCTS VIEWER
+				</Title>
 				<FontAwesomeIcon 
 					style={{
 						display: 'block',
@@ -109,7 +121,7 @@ export default function ProductsEditor() {
         			size="2x" 
         			icon={faPenSquare}
       			/>
-						посмотреть все товары
+						товары текущего мониторинга
 					</SideMenuButton>
 					<SideMenuButton>
 						<FontAwesomeIcon 
@@ -181,6 +193,31 @@ export default function ProductsEditor() {
 						исходный формат json
 					</SideMenuButton>
 
+					<SideMenuButton
+						onClick={() => {
+							dispatch({
+								type: 'EDITOR_FORMAT',
+								value: 'json'
+							});
+						}}
+					>
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '50%',
+								left: 0,
+								marginLeft: -1,
+								marginTop: -14,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faPenSquare}
+      			/>
+						сохранить и выйти
+					</SideMenuButton>
+
 				</SideMenu>
 				<CodeHere>
 
@@ -207,7 +244,7 @@ export default function ProductsEditor() {
 						}}
 					>
 						<CodeHereLine style={{ paddingLeft: 0 }}>
-							<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '8%', display: 'block', textAlign: 'center' }}>номер</span>
+							<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>номер</span>
 							<span style={{ marginRight: 10, width: '10%', display: 'block' }}>название</span>
 							<span style={{ marginRight: 10, width: '10%', display: 'block' }}>артикул</span>
 							<span style={{ marginRight: 10, width: '30%', display: 'block' }}>uuid товара мониторинга</span>
@@ -217,7 +254,23 @@ export default function ProductsEditor() {
 						{ state[10].label[8].label[1].label.data !== undefined ? state[10].label[8].label[1].label.data.map((item, index) => (
 
 							<CodeHereLine style={{ paddingLeft: 0 }}>
-								<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '8%', display: 'block', textAlign: 'center' }}>{ index + 1 }</span>
+								<SaveIcon>
+									<FontAwesomeIcon 
+										style={{
+											display: 'block',
+											position: 'absolute',
+											color: 'white',
+											top: '50%',
+											left: 0,
+											marginLeft: 5,
+											marginTop: -9,
+											transition: 'all 300ms'
+										}}
+        						size="lg" 
+        						icon={faSave}
+      						/>
+								</SaveIcon>
+								<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>{ index + 1 }</span>
 								<span style={{ marginRight: 10, width: '10%', display: 'block' }}>{`${item.Name}`}</span>
 								<span style={{ marginRight: 10, width: '10%', display: 'block' }}>{`${item.SKU}`}</span>
 								<span style={{ marginRight: 10, width: '30%', display: 'block' }}>{`${item.UUID}`}</span>

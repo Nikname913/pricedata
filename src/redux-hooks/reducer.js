@@ -257,6 +257,17 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'EDITOR_DATA_SAVEARR': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[8].label[3].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		case 'EDITOR_FORMAT': {
 			let newState = [];
 			state.map(item => {
