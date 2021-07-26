@@ -41,22 +41,24 @@ export default function ProductsEditor() {
 
 		setTimeout(() => {
 
-			let base = JSON.parse(localStorage.getItem('productData')).data;
-			let arr = [];
-			base.forEach(item => arr.push(0));
+			if ( JSON.parse(localStorage.getItem('productData')) !== null ) {
+
+				let base = JSON.parse(localStorage.getItem('productData')).data;
+				let arr = [];
+				base.forEach(item => arr.push(0));
 			
-			dispatch({
-				type: 'EDITOR_DATA',
-				value: JSON.parse(localStorage.getItem('productData'))
-			});
-			dispatch({
-				type: 'EDITOR_DATA_SAVEARR',
-				value: arr
-			});
+				dispatch({
+					type: 'EDITOR_DATA',
+					value: JSON.parse(localStorage.getItem('productData'))
+				});
+				dispatch({
+					type: 'EDITOR_DATA_SAVEARR',
+					value: arr
+				});
 
-			middleware({ type: 'CLEAR_PRODUCTS_DATA' });
+				middleware({ type: 'CLEAR_PRODUCTS_DATA' });
 
-		}, 1000);
+		}}, 1000);
 	
 	},[]);
 
