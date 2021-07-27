@@ -109,6 +109,26 @@ export default async function fetchDispatcher(param) {
 			return query;		
 		}
 
+		case 'GET_SOURCES_TOTAL': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/parser-sources`
+			).then(res => res.json());
+			return query;
+		}
+
+		case 'SET_SOURCE': {
+			let query = await fetch(
+				`${process.env.REACT_APP_API_URL}/api/parser-sources`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json;charset=utf-8'
+					},
+					body: param.value
+				}
+			);
+			return query;		
+		}
+
 		default:
 			break;	
 

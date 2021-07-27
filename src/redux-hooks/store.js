@@ -107,7 +107,8 @@ const store = [
 			{ value: 'active', label: false },
 			{ value: 'data', label: 'products data will be here' },
 			{ value: 'contentType', label: 'table' },
-			{ value: 'isSaveArray', label: [] }
+			{ value: 'isSaveArray', label: [] },
+			{ value: 'editorType', label: 'products' }
 		]},
 		{ value: 'navigation', label: null }
 	]},

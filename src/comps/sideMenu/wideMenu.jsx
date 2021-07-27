@@ -80,7 +80,7 @@ function WideMenu() {
           monitoring history
         </SideMenuButton>
       </Link>
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link to={"/parser-sources"} style={{ textDecoration: "none" }}>
       <SideMenuButton 
           style={{
             fontWeight: state[10].label[9].label === 2
@@ -101,10 +101,10 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
-          create report
+          parser sources
         </SideMenuButton>
       </Link>
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link to={"/new-report"} style={{ textDecoration: "none" }}>
       <SideMenuButton 
           style={{
             fontWeight: state[10].label[9].label === 3
@@ -125,10 +125,10 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
-          create parser
+          create report
         </SideMenuButton>
       </Link>
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link to={"/new-parser"} style={{ textDecoration: "none" }}>
       <SideMenuButton 
           style={{
             fontWeight: state[10].label[9].label === 4
@@ -149,7 +149,7 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
-          manual
+          create parser
         </SideMenuButton>
       </Link>
       <Button 

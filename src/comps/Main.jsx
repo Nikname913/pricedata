@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from "react";
-import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import React, { useContext } from "react";
+import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import { ReduxHooksContext } from "../Context";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
-import bodyTags from '../templates/body-styled-elements';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackward, faForward } from "@fortawesome/free-solid-svg-icons";
+import bodyTags from "../templates/body-styled-elements";
 import MonitoringForm from './inMain/MonForm';
-import MonitoringList from './inMain/MonList';
+import SourceForm from "./inMain/SourceForm";
+import MonitoringList from "./inMain/MonList";
 import MonitoringCardRouter from "./inMain/MonCardRoute";
 import MonitoringRemove from "./inMain/MonRemove";
 import WideMenu from "./sideMenu/wideMenu";
@@ -65,7 +66,9 @@ function Main({ props }) {
         : location.pathname.indexOf('history') !== (-1)
         ? 'история мониторингов'
         : location.pathname.indexOf('remove') !== (-1)
-        ? 'удаление мониторинга' : null }
+        ? 'удаление мониторинга'
+        : location.pathname.indexOf('parser-sources') !== (-1)
+        ? 'добавление и просмотр источников поиска' : null }
       </PageTitle>
     </RightSideBar>
     <MainSection>
@@ -84,6 +87,12 @@ function Main({ props }) {
           history={history}
           path="/history"
           component={MonitoringList}
+        />
+
+        <Route
+          history={history}
+          path="/parser-sources"
+          component={SourceForm}
         />
 
         <Route

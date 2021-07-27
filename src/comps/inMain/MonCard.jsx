@@ -159,7 +159,7 @@ export default function MonitoringCard() {
 						onClick={() => {
 							dispatch({
 								type: 'CONTROL_EDITOR',
-								value: true
+								value: true,
 							});
 						}}
 					>

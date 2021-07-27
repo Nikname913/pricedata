@@ -50,7 +50,7 @@ function ShortMenu() {
           />
         </SideMenuButton>
       </Link>
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link to={"/parser-sources"} style={{ textDecoration: "none" }}>
         <SideMenuButton style={{ width: 42 }}>
           <FontAwesomeIcon
             style={{
@@ -68,7 +68,7 @@ function ShortMenu() {
           />
         </SideMenuButton>
       </Link>
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link to={"/new-report"} style={{ textDecoration: "none" }}>
         <SideMenuButton style={{ width: 42 }}>
           <FontAwesomeIcon
             style={{
@@ -86,7 +86,7 @@ function ShortMenu() {
           />
         </SideMenuButton>
       </Link>
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link to={"/new-parser"} style={{ textDecoration: "none" }}>
         <SideMenuButton style={{ width: 42 }}>
           <FontAwesomeIcon
             style={{

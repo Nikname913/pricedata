@@ -27,39 +27,47 @@ export default function ProductsEditor() {
 
 	useEffect(() => {
 
-		const getProducts = fetchDispatcher({fetchType: 'GET_PRODUCTS_TOTAL'});
-		getProducts.then(data => {
-			
-			middleware({
-				type: 'PRODUCTS_DATA',
-				value: JSON.stringify(data)
+		if ( state[10].label[8].label[4].label === 'products' ) {
+
+			const getProducts = fetchDispatcher({fetchType: 'GET_PRODUCTS_TOTAL'});
+			getProducts.then(data => {
+				middleware({
+					type: 'PRODUCTS_DATA',
+					value: JSON.stringify(data)
+				});
 			});
 
-			console.log(data);
+			const getSources = fetchDispatcher({fetchType: 'GET_SOURCES_TOTAL'});
+			getSources.then(data => {
+				middleware({
+					type: 'SOURCES_DATA',
+					value: JSON.stringify(data)
+				});
+			});
 
-		});
+			setTimeout(() => {
 
-		setTimeout(() => {
+				if ( JSON.parse(localStorage.getItem('productData')) !== null ) {
 
-			if ( JSON.parse(localStorage.getItem('productData')) !== null ) {
-
-				let base = JSON.parse(localStorage.getItem('productData')).data;
-				let arr = [];
-				base.forEach(item => arr.push(0));
+					let base = JSON.parse(localStorage.getItem('productData')).data;
+					let arr = [];
+					base.forEach(item => arr.push(0));
 			
-				dispatch({
-					type: 'EDITOR_DATA',
-					value: JSON.parse(localStorage.getItem('productData'))
-				});
-				dispatch({
-					type: 'EDITOR_DATA_SAVEARR',
-					value: arr
-				});
+					dispatch({
+						type: 'EDITOR_DATA',
+						value: JSON.parse(localStorage.getItem('productData'))
+					});
+					dispatch({
+						type: 'EDITOR_DATA_SAVEARR',
+						value: arr
+					});
 
-				middleware({ type: 'CLEAR_PRODUCTS_DATA' });
+					middleware({ type: 'CLEAR_PRODUCTS_DATA' });
 
-		}}, 1000);
+			}}, 1000);
 	
+		} else {}
+
 	},[]);
 
 	return (
