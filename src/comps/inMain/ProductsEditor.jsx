@@ -37,6 +37,27 @@ export default function ProductsEditor() {
 				});
 			});
 
+			setTimeout(() => {
+
+				let base = JSON.parse(localStorage.getItem('productData')).data;
+				let arr = [];
+				base.forEach(item => arr.push(0));
+			
+				dispatch({
+					type: 'EDITOR_DATA',
+					value: JSON.parse(localStorage.getItem('productData'))
+				});
+				dispatch({
+					type: 'EDITOR_DATA_SAVEARR',
+					value: arr
+				});
+
+				middleware({ type: 'CLEAR_PRODUCTS_DATA' });
+		
+			}, 1000);
+	
+		} else {
+
 			const getSources = fetchDispatcher({fetchType: 'GET_SOURCES_TOTAL'});
 			getSources.then(data => {
 				middleware({
@@ -47,26 +68,24 @@ export default function ProductsEditor() {
 
 			setTimeout(() => {
 
-				if ( JSON.parse(localStorage.getItem('productData')) !== null ) {
-
-					let base = JSON.parse(localStorage.getItem('productData')).data;
-					let arr = [];
-					base.forEach(item => arr.push(0));
+				let base = JSON.parse(localStorage.getItem('sourceData')).data;
+				let arr = [];
+				base.forEach(item => arr.push(0));
 			
-					dispatch({
-						type: 'EDITOR_DATA',
-						value: JSON.parse(localStorage.getItem('productData'))
-					});
-					dispatch({
-						type: 'EDITOR_DATA_SAVEARR',
-						value: arr
-					});
+				dispatch({
+					type: 'EDITOR_DATA',
+					value: JSON.parse(localStorage.getItem('sourceData'))
+				});
+				dispatch({
+					type: 'EDITOR_DATA_SAVEARR',
+					value: arr
+				});
 
-					middleware({ type: 'CLEAR_PRODUCTS_DATA' });
+				middleware({ type: 'CLEAR_SOURCE_DATA' });
+		
+			}, 1000);
 
-			}}, 1000);
-	
-		} else {}
+		}
 
 	},[]);
 
