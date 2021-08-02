@@ -32,7 +32,6 @@ export default function MonitoringCard() {
 	let { id } = useParams();
 	const history = useHistory();
 	const [ showParams, setShowParams ] = useState(false);
-	const [ cardMargin, setCardMargin ] = useState(0);
 
 	const startDateStr = `${state[3].label.split('-')[1]}-${state[3].label.split('-')[2]}-${state[3].label.split('-')[0]}`;
 	const endDateStr = `${state[4].label.split('-')[1]}-${state[4].label.split('-')[2]}-${state[4].label.split('-')[0]}`;
@@ -46,7 +45,9 @@ export default function MonitoringCard() {
 			type: 'CONTROL_END_DATE_VIEW_CARD',
 			value: new Date(endDateStr)
 		});
+
 		const query = fetchDispatcher({ fetchType: 'GET_PARAMS', value: id });
+
 		query.then(data => {
 			dispatch({
 				type: 'SET_ONE_PARAMS',
@@ -58,15 +59,25 @@ export default function MonitoringCard() {
 	return (
 		<React.Fragment> { state[0].label !== '' ? (
 		<MonitoringCardView
-			style={{ marginTop: cardMargin }}
+			id="card"
+			style={{ marginTop: state[10].label[10].label }}
 			onWheel={(e) => {
 				if ( e.deltaY > 0 ) {
-					setCardMargin(cardMargin - 10);
+					dispatch({
+						type: 'CONTROL_VIEWCARD_MARGIN',
+						value: state[10].label[10].label - 10
+					});
 				} else {
 					// eslint-disable-next-line no-unused-expressions
-					cardMargin < 0 
-					? setCardMargin(cardMargin + 10) 
-					: setCardMargin(0);
+					state[10].label[10].label < 0 
+					? dispatch({
+						type: 'CONTROL_VIEWCARD_MARGIN',
+						value: state[10].label[10].label + 10
+					})
+					: dispatch({
+						type: 'CONTROL_VIEWCARD_MARGIN',
+						value: 0
+					});
 				}
 			}}
 		>

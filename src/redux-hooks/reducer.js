@@ -221,6 +221,50 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'CONTROL_VIEWCARD_MARGIN': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[10].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'CONTROL_ADDCARD_MARGIN': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[11].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'CONTROL_EDITCARD_MARGIN': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[12].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'CONTROL_MODALCARD_MARGIN': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[13].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		case 'LOGGER': {
 			let newState = [];
 			state.map(item => {

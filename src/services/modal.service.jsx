@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MonitoringParamsForm from "../comps/inMain/MonParamsForm";
 import fetchDispatcher from "../services/fetch-query.service";
-import { ModalContext } from '../Context';
+import { ModalContext, ReduxHooksContext } from '../Context';
 import { times } from '../data/times';
 import selectStylesTimepicker from '../templates/css-templates/timepicker-select-modal';
 import bodyTags from '../templates/body-styled-elements';
@@ -16,8 +16,8 @@ const InputLine = bodyTags.MonitoringAddParamsFormLine;
 
 export default function Modal({ props }) {
   
+  const { state, dispatch } = useContext(ReduxHooksContext);
   const [ ,setShowModal ] = useContext(ModalContext);
-  const [ cardMargin, setCardMargin ] = useState(29);
   const [ paramsData, setParamsData ] = useState({});
 
   const createParamsFromEditForm = (data) => {
@@ -35,7 +35,10 @@ export default function Modal({ props }) {
 
     { props.modalType === 'startTimeService' ? (
 
-    <Dialog open={true}>
+    <Dialog 
+      open={true}
+      onWheel={(e) => e.stopPropagation()}
+    >
       <DialogTitle style={{ 
           padding: 0, 
           textAlign: 'center',
@@ -221,7 +224,10 @@ export default function Modal({ props }) {
 
     ) : ( 
 
-      <Dialog open={true}>
+      <Dialog 
+        open={true}
+        onWheel={(e) => e.stopPropagation()}
+      >
       <DialogTitle style={{ 
           padding: 0, 
           textAlign: 'center',
@@ -245,13 +251,22 @@ export default function Modal({ props }) {
           borderTop: '2px solid #ffc000'
         }}
         onWheel={(e) => {
-					if ( e.deltaY > 0 ) {
-						setCardMargin(cardMargin - 10);
+          if ( e.deltaY > 0 ) {
+						dispatch({
+							type: 'CONTROL_MODALCARD_MARGIN',
+							value: state[10].label[13].label - 10
+						});
 					} else {
 						// eslint-disable-next-line no-unused-expressions
-						cardMargin < 0 
-						? setCardMargin(cardMargin + 10) 
-						: setCardMargin(29);
+						state[10].label[13].label < 0 
+						? dispatch({
+							type: 'CONTROL_MODALCARD_MARGIN',
+							value: state[10].label[13].label + 10
+						})
+						: dispatch({
+							type: 'CONTROL_MODALCARD_MARGIN',
+							value: 29
+						});
 					}
 				}}
       >
@@ -265,7 +280,7 @@ export default function Modal({ props }) {
             width: '90%',
             padding: '0 20px',
             margin: '0 auto',
-            marginTop: cardMargin,
+            marginTop: state[10].label[13].label,
             marginBottom: '20px',
             boxSizing: 'border-box'
           }}

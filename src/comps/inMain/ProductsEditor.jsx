@@ -33,7 +33,9 @@ export default function ProductsEditor() {
 		>
 			<Header>
 				<Title>
-					<span style={{ color: '#ffc000'}}>P</span>RODUCTS VIEWER
+					<span style={{ color: '#ffc000'}}>
+					{ state[10].label[8].label[4].label === 'products' ? 'P' : 'S' }</span>
+					{ state[10].label[8].label[4].label === 'products' ? `RODUCTS VIEWER` : `OURCES VIEWER` }
 				</Title>
 				<FontAwesomeIcon 
 					style={{
@@ -54,7 +56,7 @@ export default function ProductsEditor() {
 			</Header>
 			<Workspace>
 				<SideMenu>
-					<SideMenuButton>
+					<SideMenuButton style={{ fontWeight: '500' }}>
 						<FontAwesomeIcon 
 							style={{
 								display: 'block',
@@ -109,6 +111,10 @@ export default function ProductsEditor() {
 					<SideMenuDivider/>
 
 					<SideMenuButton
+						style={{ fontWeight: 
+							state[10].label[8].label[2].label === 'table' 
+							? '500' : '' 
+						}}
 						onClick={() => {
 							dispatch({
 								type: 'EDITOR_FORMAT',
@@ -134,6 +140,10 @@ export default function ProductsEditor() {
 					</SideMenuButton>
 
 					<SideMenuButton
+						style={{ fontWeight: 
+							state[10].label[8].label[2].label !== 'table' 
+							? '500' : '' 
+						}}
 						onClick={() => {
 							dispatch({
 								type: 'EDITOR_FORMAT',
@@ -211,17 +221,20 @@ export default function ProductsEditor() {
 
 						{ state[10].label[8].label[4].label === 'products' ? <React.Fragment>
 
-						<CodeHereLine style={{ paddingLeft: 0 }}>
-							<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>номер</span>
-							<span style={{ marginRight: 10, width: '10%', display: 'block' }}>название</span>
-							<span style={{ marginRight: 10, width: '10%', display: 'block' }}>артикул</span>
-							<span style={{ marginRight: 10, width: '30%', display: 'block' }}>uuid товара мониторинга</span>
-							<span style={{ width: '30%', display: 'block' }}>uuid мониторинга</span>
+						<CodeHereLine style={{ paddingLeft: 0, paddingRight: '10%' }}>
+							<span style={{ marginRight: 0, color: 'rgb(255, 192, 0)', width: '12.5%', display: 'block', textAlign: 'center' }}>номер</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>название</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>артикул</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>бренд</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>категория</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>поисковые запросы</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>обязательные запросы</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>ключевики</span>
 						</CodeHereLine>
 
 						{ state[10].label[8].label[1].label.data !== undefined ? state[10].label[8].label[1].label.data.map((item, index) => (
 
-							<CodeHereLine style={{ paddingLeft: 0 }}>
+							<CodeHereLine style={{ paddingLeft: 0, paddingRight: '10%' }}>
 								<SaveIcon>
 									<FontAwesomeIcon 
 										style={{
@@ -230,7 +243,7 @@ export default function ProductsEditor() {
 											color: 'white',
 											top: '50%',
 											left: 0,
-											marginLeft: 5,
+											marginLeft: 8,
 											marginTop: -9,
 											transition: 'all 300ms'
 										}}
@@ -238,27 +251,65 @@ export default function ProductsEditor() {
         						icon={faSave}
       						/>
 								</SaveIcon>
-								<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>{ index + 1 }</span>
-								<span style={{ marginRight: 10, width: '10%', display: 'block' }}>{`${item.Name}`}</span>
-								<span style={{ marginRight: 10, width: '10%', display: 'block' }}>{`${item.SKU}`}</span>
-								<span style={{ marginRight: 10, width: '30%', display: 'block' }}>{`${item.UUID}`}</span>
-								<span style={{ width: '30%', display: 'block' }}>{`${item.MonitoringUUID}`}</span>
+								<span style={{ 
+									marginRight: 0, 
+									color: 'rgb(255, 192, 0)', 
+									width: '12.5%', 
+									display: 'block', 
+									textAlign: 'center',
+									borderRight: '1px solid #2d2d2d' }}
+								>
+									
+									{ index + 1 }
+								
+								</span>
+								
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{`${item.Name}`}</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{`${item.SKU}`}</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{
+									!!item.Brand ? `${item.Brand}` : 'no data'
+								}</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{
+									!!item.Category ? `${item.Category}` : 'no data'
+								}</span>
+								<span style={{ 
+									marginRight: 0, 
+									width: '12.5%', 
+									display: 'block', 
+									borderRight: '1px solid #2d2d2d', 
+									textAlign: 'center',
+									boxSizing: 'border-box',
+									paddingLeft: 8,
+									paddingRight: 8 }}>{
+									!!item.SearchRequest ? `${item.SearchRequest}` : 'no data'
+								}</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{
+									item.RequiredWords?.length > 0 ? item.RequiredWords.join(', ') : 'no data'	
+								}</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>no data</span>
+								
+								<span style={{ marginRight: 10, width: '30%', display: 'none' }}>{`${item.UUID}`}</span>
+								<span style={{ width: '30%', display: 'none' }}>{`${item.MonitoringUUID}`}</span>
 							</CodeHereLine>
 
-						)) : null}
+						)) : null }
 
 						</React.Fragment> : <React.Fragment>
 
-						<CodeHereLine style={{ paddingLeft: 0 }}>
-							<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>номер</span>
-							<span style={{ marginRight: 10, width: '15%', display: 'block' }}>название</span>
-							<span style={{ marginRight: 10, width: '15%', display: 'block' }}>название парсера</span>
-							<span style={{ width: '40%', display: 'block' }}>uuid источника</span>
+						<CodeHereLine style={{ paddingLeft: 0, paddingRight: '10%' }}>
+							<span style={{ marginRight: 0, color: 'rgb(255, 192, 0)', width: '12.5%', display: 'block', textAlign: 'center' }}>номер</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>название</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>наименование парсера</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>тип парсера</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>uuid источника</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>--</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>--</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>--</span>
 						</CodeHereLine>
 
 						{ state[10].label[8].label[1].label.data !== undefined ? state[10].label[8].label[1].label.data.map((item, index) => (
 
-							<CodeHereLine style={{ paddingLeft: 0 }}>
+							<CodeHereLine style={{ paddingLeft: 0, paddingRight: '10%' }}>
 								<SaveIcon>
 									<FontAwesomeIcon 
 										style={{
@@ -267,7 +318,7 @@ export default function ProductsEditor() {
 											color: 'white',
 											top: '50%',
 											left: 0,
-											marginLeft: 5,
+											marginLeft: 8,
 											marginTop: -9,
 											transition: 'all 300ms'
 										}}
@@ -275,13 +326,50 @@ export default function ProductsEditor() {
         						icon={faSave}
       						/>
 								</SaveIcon>
-								<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>{ index + 1 }</span>
-								<span style={{ marginRight: 10, width: '15%', display: 'block' }}>{`${item.Name}`}</span>
-								<span style={{ marginRight: 10, width: '15%', display: 'block' }}>{`${item.Parser}`}</span>
-								<span style={{ marginRight: 10, width: '40%', display: 'block' }}>{`${item.UUID}`}</span>
+								<span style={{ 
+									marginRight: 0, 
+									color: 'rgb(255, 192, 0)', 
+									width: '12.5%', 
+									display: 'block', 
+									textAlign: 'center',
+									borderRight: '1px solid #2d2d2d' }}
+								>
+									
+									{ index + 1 }
+								
+								</span>
+								
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{`${item.Name}`}</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{`${item.Parser}`}</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{
+									!!item.PersingType ? `${item.PersingType}` : 'no data'
+								}</span>
+								<span 
+									style={{ 
+										marginRight: 0, 
+										width: '12.5%', 
+										display: 'block', 
+										borderRight: '1px solid #2d2d2d', 
+										textAlign: 'center',
+										boxSizing: 'border-box',
+										paddingLeft: 8,
+										paddingRight: 8,
+										overflow: 'hidden'
+									}}
+								>
+									
+									{`${item.UUID}`}
+								
+								</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>--</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>--</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>--</span>
+								
+								<span style={{ marginRight: 10, width: '30%', display: 'none' }}>{`${item.UUID}`}</span>
+								<span style={{ width: '30%', display: 'none' }}>{`${item.MonitoringUUID}`}</span>
 							</CodeHereLine>
 
-						)) : null}
+						)) : null }
 
 						</React.Fragment> }
 					

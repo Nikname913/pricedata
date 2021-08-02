@@ -49,7 +49,6 @@ export default function MonitoringCorrectForm() {
 	const { state, dispatch } = useContext(ReduxHooksContext);
 	const history = useHistory();
 	const [ showParams, setShowParams ] = useState(false);
-	const [ cardMargin, setCardMargin ] = useState(0);
 	const startDateStr = `${state[3].label.split('-')[1]}-${state[3].label.split('-')[2]}-${state[3].label.split('-')[0]}`;
 	const endDateStr = `${state[4].label.split('-')[1]}-${state[4].label.split('-')[2]}-${state[4].label.split('-')[0]}`;
 	
@@ -143,15 +142,24 @@ export default function MonitoringCorrectForm() {
 
 			{ !rules.isRedirect ? ( <MonitoringCorrForm
 				
-				style={{ marginTop: cardMargin }}
+				style={{ marginTop: state[10].label[12].label }}
 				onWheel={(e) => {
 					if ( e.deltaY > 0 ) {
-						setCardMargin(cardMargin - 10);
+						dispatch({
+							type: 'CONTROL_EDITCARD_MARGIN',
+							value: state[10].label[12].label - 10
+						});
 					} else {
 						// eslint-disable-next-line no-unused-expressions
-						cardMargin < 0 
-						? setCardMargin(cardMargin + 10) 
-						: setCardMargin(0);
+						state[10].label[12].label < 0 
+						? dispatch({
+							type: 'CONTROL_EDITCARD_MARGIN',
+							value: state[10].label[12].label + 10
+						})
+						: dispatch({
+							type: 'CONTROL_EDITCARD_MARGIN',
+							value: 0
+						});
 					}
 				}}
 
@@ -288,7 +296,7 @@ export default function MonitoringCorrectForm() {
         		icon={faClipboard}
       		/>
 					<CreateReportButtonTitle>настройка отчета</CreateReportButtonTitle>
-					<CreateReportButtonAction>создать</CreateReportButtonAction>
+					<CreateReportButtonAction>изменить</CreateReportButtonAction>
 				</CreateReportButton>
 
 				<Headline>параметры мониторинга</Headline>

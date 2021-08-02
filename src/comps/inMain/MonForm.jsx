@@ -50,7 +50,7 @@ const loadOptionsPartners = (inputValue, cb) => {
 
 export default function MonitoringForm() {
 
-	const { dispatch } = useContext(ReduxHooksContext);
+	const { state, dispatch } = useContext(ReduxHooksContext);
 	const [ validateInner, setValidateInner ] = useState('создать мониторинг');
 	const [ monitoringDefName, ] = useState('введите название мониторинга');
 
@@ -61,7 +61,6 @@ export default function MonitoringForm() {
 	const [ isRedirect, setIsRedirect ] = useState(false);
 	const [ showParams, setShowParams ] = useState(false);
 	const [ inputDisabled, setInputDisabled ] = useState(false);
-	const [ cardMargin, setCardMargin ] = useState(0);
 	const [ filterForParams, setFilterForParams ] = useState();
 	// на начальном этапе фильтрация мониторингов при создани параметра на этой
 	// странице будет происходить через название мониторинга
@@ -102,15 +101,24 @@ export default function MonitoringForm() {
 
 			{ isRedirect === false ? ( <AddMonitoringForm
 
-				style={{ marginTop: cardMargin }}
+				style={{ marginTop: state[10].label[11].label }}
 				onWheel={(e) => {
 					if ( e.deltaY > 0 ) {
-						setCardMargin(cardMargin - 10);
+						dispatch({
+							type: 'CONTROL_ADDCARD_MARGIN',
+							value: state[10].label[11].label - 10
+						});
 					} else {
 						// eslint-disable-next-line no-unused-expressions
-						cardMargin < 0 
-						? setCardMargin(cardMargin + 10) 
-						: setCardMargin(0);
+						state[10].label[11].label < 0 
+						? dispatch({
+							type: 'CONTROL_ADDCARD_MARGIN',
+							value: state[10].label[11].label + 10
+						})
+						: dispatch({
+							type: 'CONTROL_ADDCARD_MARGIN',
+							value: 0
+						});
 					}
 				}}
 

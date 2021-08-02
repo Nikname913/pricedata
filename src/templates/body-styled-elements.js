@@ -292,8 +292,8 @@ const bodyTags = {
 		width: 100%;
 		height: auto;
 		box-sizing: border-box;
-		line-height: 30px;
-		padding: 6px 0px;
+		line-height: 20px;
+		padding: 11px 0px;
 		padding-left: 14px;
 		border-bottom: 1px solid ${asideBackground};
 		font-style: italic;

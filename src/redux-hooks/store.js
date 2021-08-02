@@ -110,7 +110,11 @@ const store = [
 			{ value: 'isSaveArray', label: [] },
 			{ value: 'editorType', label: 'products' }
 		]},
-		{ value: 'navigation', label: null }
+		{ value: 'navigation', label: null },
+		{ value: 'viewCardMargin', label: 0 },
+		{ value: 'addCardMargin', label: 0 },
+		{ value: 'editCardMargin', label: 0 },
+		{ value: 'modalCardMargin', label: 29 }
 	]},
 	{ value: 'logData', label: []}
 ];
