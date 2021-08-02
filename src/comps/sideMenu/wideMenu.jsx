@@ -53,7 +53,7 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
-          add monitoring
+          новый мониторинг
         </SideMenuButton>
       </Link>
       <Link to={"/history"} style={{ textDecoration: "none" }}>
@@ -77,7 +77,7 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
-          monitoring history
+          все мониторинги
         </SideMenuButton>
       </Link>
       <Link to={"/parser-sources"} style={{ textDecoration: "none" }}>
@@ -101,7 +101,7 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
-          parser sources
+          источники поиска
         </SideMenuButton>
       </Link>
       <Link to={"/new-report"} style={{ textDecoration: "none" }}>
@@ -125,7 +125,7 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
-          create report
+          новый пункт меню
         </SideMenuButton>
       </Link>
       <Link to={"/new-parser"} style={{ textDecoration: "none" }}>
@@ -149,7 +149,7 @@ function WideMenu() {
             size="lg"
             icon={faFolder}
           />
-          create parser
+          новый пункт меню
         </SideMenuButton>
       </Link>
       <Button 

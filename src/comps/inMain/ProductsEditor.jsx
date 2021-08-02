@@ -25,70 +25,6 @@ export default function ProductsEditor() {
 
 	const { state, dispatch } = useContext(ReduxHooksContext);
 
-	useEffect(() => {
-
-		if ( state[10].label[8].label[4].label === 'products' ) {
-
-			const getProducts = fetchDispatcher({fetchType: 'GET_PRODUCTS_TOTAL'});
-			getProducts.then(data => {
-				middleware({
-					type: 'PRODUCTS_DATA',
-					value: JSON.stringify(data)
-				});
-			});
-
-			setTimeout(() => {
-
-				let base = JSON.parse(localStorage.getItem('productData')).data;
-				let arr = [];
-				base.forEach(item => arr.push(0));
-			
-				dispatch({
-					type: 'EDITOR_DATA',
-					value: JSON.parse(localStorage.getItem('productData'))
-				});
-				dispatch({
-					type: 'EDITOR_DATA_SAVEARR',
-					value: arr
-				});
-
-				middleware({ type: 'CLEAR_PRODUCTS_DATA' });
-		
-			}, 1000);
-	
-		} else {
-
-			const getSources = fetchDispatcher({fetchType: 'GET_SOURCES_TOTAL'});
-			getSources.then(data => {
-				middleware({
-					type: 'SOURCES_DATA',
-					value: JSON.stringify(data)
-				});
-			});
-
-			setTimeout(() => {
-
-				let base = JSON.parse(localStorage.getItem('sourceData')).data;
-				let arr = [];
-				base.forEach(item => arr.push(0));
-			
-				dispatch({
-					type: 'EDITOR_DATA',
-					value: JSON.parse(localStorage.getItem('sourceData'))
-				});
-				dispatch({
-					type: 'EDITOR_DATA_SAVEARR',
-					value: arr
-				});
-
-				middleware({ type: 'CLEAR_SOURCE_DATA' });
-		
-			}, 1000);
-
-		}
-
-	},[]);
-
 	return (
 		<Editor 
 			style={{ 
@@ -272,6 +208,9 @@ export default function ProductsEditor() {
 							paddingTop: '0px'
 						}}
 					>
+
+						{ state[10].label[8].label[4].label === 'products' ? <React.Fragment>
+
 						<CodeHereLine style={{ paddingLeft: 0 }}>
 							<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>номер</span>
 							<span style={{ marginRight: 10, width: '10%', display: 'block' }}>название</span>
@@ -307,6 +246,44 @@ export default function ProductsEditor() {
 							</CodeHereLine>
 
 						)) : null}
+
+						</React.Fragment> : <React.Fragment>
+
+						<CodeHereLine style={{ paddingLeft: 0 }}>
+							<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>номер</span>
+							<span style={{ marginRight: 10, width: '15%', display: 'block' }}>название</span>
+							<span style={{ marginRight: 10, width: '15%', display: 'block' }}>название парсера</span>
+							<span style={{ width: '40%', display: 'block' }}>uuid источника</span>
+						</CodeHereLine>
+
+						{ state[10].label[8].label[1].label.data !== undefined ? state[10].label[8].label[1].label.data.map((item, index) => (
+
+							<CodeHereLine style={{ paddingLeft: 0 }}>
+								<SaveIcon>
+									<FontAwesomeIcon 
+										style={{
+											display: 'block',
+											position: 'absolute',
+											color: 'white',
+											top: '50%',
+											left: 0,
+											marginLeft: 5,
+											marginTop: -9,
+											transition: 'all 300ms'
+										}}
+        						size="lg" 
+        						icon={faSave}
+      						/>
+								</SaveIcon>
+								<span style={{ marginRight: 10, color: 'rgb(255, 192, 0)', width: '10%', display: 'block', textAlign: 'center' }}>{ index + 1 }</span>
+								<span style={{ marginRight: 10, width: '15%', display: 'block' }}>{`${item.Name}`}</span>
+								<span style={{ marginRight: 10, width: '15%', display: 'block' }}>{`${item.Parser}`}</span>
+								<span style={{ marginRight: 10, width: '40%', display: 'block' }}>{`${item.UUID}`}</span>
+							</CodeHereLine>
+
+						)) : null}
+
+						</React.Fragment> }
 					
 					</section>
 

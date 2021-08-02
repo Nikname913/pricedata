@@ -566,6 +566,48 @@ const bodyTags = {
 			box-shadow: none;
 		}
 	`,
+	MonitoringCardCreateReportButton: styled.div`
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		position: absolute;
+		width: calc(100% - 380px);
+		height: 300px;
+		border: 2px solid white;
+		border-radius: 4px;
+		top: 0;
+		margin-top: 26px;
+		left: 352px;
+	`,
+	MonitoringCardCreateReportButtonTitle: styled.h4`
+		display: block;
+		position: relative;
+		width: 100%;
+		height: auto;
+		line-height: 30px;
+		text-align: center;
+		color: white;
+		font-size: 20px;
+	`,
+	MonitoringCardCreateReportButtonAction: styled.span`
+		display: block;
+		position: absolute;
+		width: 160px;
+		height: 40px;
+		line-height: 38px;
+		border-radius: 4px;
+		top: 100%;
+		margin-top: -60px;
+		box-sizing: border-box;
+		text-align: center;
+		font-size: 13px;
+		background-color: #ffc000;
+		box-shadow: 0px 0px 3.5px #113341;
+		:hover {
+			cursor: pointer;
+		}
+	`,
 	MonitoringRemoveWindow: styled.div`
 		display: flex;
 		flex-direction: column;

@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
+import middleware from "../../redux-hooks/middleware";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import "react-datepicker/dist/react-datepicker.css";
 import bodyTags from '../../templates/body-styled-elements';
@@ -143,9 +144,42 @@ export default function SourceForm() {
 					style={{ marginRight: 16 }}
 					onClick={() => {
 						dispatch({
+							type: 'EDITOR_DATA_TYPE',
+							value: 'sources'
+						});
+						dispatch({
 							type: 'CONTROL_EDITOR',
 							value: true,
 						});
+
+						const getSources = fetchDispatcher({fetchType: 'GET_SOURCES_TOTAL'});
+						getSources.then(data => {
+							middleware({
+								type: 'SOURCES_DATA',
+								value: JSON.stringify(data)
+							});
+						});
+
+						setTimeout(() => {
+
+							let baseSource = JSON.parse(localStorage.getItem('sourceData')).data;
+							let arrSource = [];
+							baseSource.forEach(item => arrSource.push(0));
+			
+							dispatch({
+								type: 'EDITOR_DATA',
+								value: JSON.parse(localStorage.getItem('sourceData'))
+							});
+							dispatch({
+								type: 'EDITOR_DATA_SAVEARR',
+								value: arrSource
+							});
+
+							middleware({ type: 'CLEAR_PRODUCTS_DATA' });
+							middleware({ type: 'CLEAR_SOURCE_DATA' });
+
+						}, 1000);
+
 					}}
 				>
 					список источников

@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams } from "react-router";
 import { ReduxHooksContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faAngleDoubleDown, faPenSquare, faCaretSquareDown, faCaretSquareUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faAngleDoubleDown, faPenSquare, faCaretSquareDown, faCaretSquareUp, faClipboard } from '@fortawesome/free-solid-svg-icons';
 import fetchDispatcher from "../../services/fetch-query.service";
+import middleware from "../../redux-hooks/middleware";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import bodyTags from '../../templates/body-styled-elements';
@@ -21,6 +22,9 @@ const Input = bodyTags.MonitoringCorrFormInput;
 const InputLabel = bodyTags.InputWrapperDiscription;
 const InputWrapper = bodyTags.InputWrapper;
 const InputWrapperVertical = bodyTags.InputWrapperVertical;
+const CreateReportButton = bodyTags.MonitoringCardCreateReportButton;
+const CreateReportButtonTitle = bodyTags.MonitoringCardCreateReportButtonTitle;
+const CreateReportButtonAction = bodyTags.MonitoringCardCreateReportButtonAction;
 
 export default function MonitoringCard() {
 
@@ -119,7 +123,7 @@ export default function MonitoringCard() {
 					selected={state[10].label[1].label}
 					disabled="true"
 				/>
-				<InputLabel>начальная дата мониторинга</InputLabel>
+				<InputLabel>начало мониторинга</InputLabel>
 			</InputWrapper>
 
 			<InputWrapper>
@@ -128,10 +132,26 @@ export default function MonitoringCard() {
 					selected={state[10].label[2].label}
 					disabled="true"
 				/>
-				<InputLabel>конечная дата мониторинга</InputLabel>
+				<InputLabel>конец мониторинга</InputLabel>
 			</InputWrapper>
+			<CreateReportButton>
+				<FontAwesomeIcon 
+					style={{
+						display: 'block',
+						position: 'relative',
+						color: 'white',
+						transition: 'all 300ms',
+						marginTop: 22
+					}}
+        	size="5x" 
+        	icon={faClipboard}
+      	/>
+				<CreateReportButtonTitle>создание отчета</CreateReportButtonTitle>
+				<CreateReportButtonAction>создать</CreateReportButtonAction>
+			</CreateReportButton>
 
 			<Headline>параметры мониторинга</Headline>
+
 			</React.Fragment>
 
 			) : null }
@@ -158,9 +178,42 @@ export default function MonitoringCard() {
 					<ParamsLineValue
 						onClick={() => {
 							dispatch({
+								type: 'EDITOR_DATA_TYPE',
+								value: 'products'
+							});
+							dispatch({
 								type: 'CONTROL_EDITOR',
 								value: true,
 							});
+
+							const getProducts = fetchDispatcher({fetchType: 'GET_PRODUCTS_TOTAL'});
+							getProducts.then(data => {
+								middleware({
+									type: 'PRODUCTS_DATA',
+									value: JSON.stringify(data)
+								});
+							});
+
+							setTimeout(() => {
+
+								let baseProduct = JSON.parse(localStorage.getItem('productData')).data;
+								let arrProduct = [];
+								baseProduct.forEach(item => arrProduct.push(0));
+			
+								dispatch({
+									type: 'EDITOR_DATA',
+									value: JSON.parse(localStorage.getItem('productData'))
+								});
+								dispatch({
+									type: 'EDITOR_DATA_SAVEARR',
+									value: arrProduct
+								});
+
+								middleware({ type: 'CLEAR_PRODUCTS_DATA' });
+								middleware({ type: 'CLEAR_SOURCE_DATA' });
+
+							}, 1000);
+
 						}}
 					>
 						посмотреть список

@@ -3,7 +3,7 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import { ReduxHooksContext, ModalContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp, faAngleDoubleDown, faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faAngleDoubleDown, faPenSquare, faClipboard } from '@fortawesome/free-solid-svg-icons';
 import fetchDispatcher from "../../services/fetch-query.service";
 import Modal from '../../services/modal.service';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -27,6 +27,9 @@ const ParamsLineInput = bodyTags.MonitoringCardParamsLineInput;
 const ButtonBack = bodyTags.MonitoringAddFormBackHistory;
 const Input = bodyTags.MonitoringCorrFormInput;
 const InputWrapperVertical = bodyTags.InputWrapperVertical;
+const CreateReportButton = bodyTags.MonitoringCardCreateReportButton;
+const CreateReportButtonTitle = bodyTags.MonitoringCardCreateReportButtonTitle;
+const CreateReportButtonAction = bodyTags.MonitoringCardCreateReportButtonAction;
 
 const filterData = (inputValue) => {
 	return regions.filter(item => 
@@ -251,7 +254,7 @@ export default function MonitoringCorrectForm() {
 							});
 						}}
 					/>
-					<InputLabel>выберите начальную дату</InputLabel>
+					<InputLabel>начало мониторинга</InputLabel>
 				</InputWrapper>
 
 				<InputWrapper>
@@ -270,10 +273,26 @@ export default function MonitoringCorrectForm() {
 							});
 						}}
 					/>
-					<InputLabel>выберите конечную дату</InputLabel>
+					<InputLabel>конец мониторинга</InputLabel>
 				</InputWrapper>
+				<CreateReportButton>
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'relative',
+							color: 'white',
+							transition: 'all 300ms',
+							marginTop: 22
+						}}
+        		size="5x" 
+        		icon={faClipboard}
+      		/>
+					<CreateReportButtonTitle>настройка отчета</CreateReportButtonTitle>
+					<CreateReportButtonAction>создать</CreateReportButtonAction>
+				</CreateReportButton>
 
 				<Headline>параметры мониторинга</Headline>
+
 				</React.Fragment>
 
 				) : null }

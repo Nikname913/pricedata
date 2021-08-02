@@ -257,7 +257,7 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
-		case 'EDITOR_DATA_SAVEARR': {
+		case 'EDITOR_DATA_SAVEARR': { 
 			let newState = [];
 			state.map(item => {
 				if ( item.value === 'rulesState' ) {
@@ -273,6 +273,17 @@ export default function reducer(state = store, action) {
 			state.map(item => {
 				if ( item.value === 'rulesState' ) {
 					item.label[8].label[2].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'EDITOR_DATA_TYPE': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[8].label[4].label = action.value; 
 				}
 				newState.push(item);
 			});
