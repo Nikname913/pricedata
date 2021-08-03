@@ -120,5 +120,3 @@ const store = [
 	{ value: 'logData', label: []},
 	{ value: 'sourceType', label: 'simple'},
 ];
-
-export default store;

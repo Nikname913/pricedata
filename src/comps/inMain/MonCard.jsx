@@ -110,7 +110,7 @@ export default function MonitoringCard() {
 				/>
 			</InputWrapperVertical>
 			<InputWrapperVertical style={{ margin: 0 }}>
-				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>идентификатор клиента</InputLabel>
+				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>название клиента</InputLabel>
 				<Input
 					maxLength="38"
 					placeholder="Название мониторинга"
@@ -119,12 +119,13 @@ export default function MonitoringCard() {
 				/>
 			</InputWrapperVertical>
 			<InputWrapperVertical style={{ margin: 0 }}>
-				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>идентификатор партнера</InputLabel>
+				<InputLabel style={{ marginTop: 4, marginBottom: 14 }}>время действия мониторинга</InputLabel>
 				<Input
 					maxLength="38"
 					placeholder="Название мониторинга"
 					value={state[2].label}
 					disabled="true"
+					style={{ display: 'none' }}
 				/>
 			</InputWrapperVertical>
 			
@@ -197,8 +198,14 @@ export default function MonitoringCard() {
 								value: true,
 							});
 
+							// eslint-disable-next-line no-unused-vars
 							const getProducts = fetchDispatcher({fetchType: 'GET_PRODUCTS_TOTAL'});
-							getProducts.then(data => {
+							const getProductsFromMonitoring = fetchDispatcher({
+								fetchType: 'GET_PRODUCTS_MONITORING',
+								value: id
+							});
+
+							getProductsFromMonitoring.then(data => {
 								middleware({
 									type: 'PRODUCTS_DATA',
 									value: JSON.stringify(data)

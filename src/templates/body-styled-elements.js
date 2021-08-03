@@ -136,7 +136,7 @@ const bodyTags = {
 	SideMenuButton: styled.span`
 		display: block;
 		position: relative;
-		width: 78%;
+		width: calc(100% - 23px);
 		height: 40px;
 		line-height: 39px;
 		font-size: 13px;
@@ -390,6 +390,23 @@ const bodyTags = {
 		position: relative;
 		width: 300px;
 		height: 30px;
+		outline: none;
+		border: none;
+		border-bottom: 2px solid #ffc000;
+		color: white;
+		font-size: 13px;
+		margin-bottom: 16px;
+		margin-left: 8px;
+		background-color: transparent;
+	`,
+	MonitoringAddFormInputButtonsGroup: styled.div`
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		position: relative;
+		width: 304px;
+		height: 39px;
 		outline: none;
 		border: none;
 		border-bottom: 2px solid #ffc000;

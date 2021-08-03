@@ -265,6 +265,17 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'CONTROL_SOURCECARD_MARGIN': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'rulesState' ) {
+					item.label[14].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		case 'LOGGER': {
 			let newState = [];
 			state.map(item => {
@@ -328,6 +339,17 @@ export default function reducer(state = store, action) {
 			state.map(item => {
 				if ( item.value === 'rulesState' ) {
 					item.label[8].label[4].label = action.value; 
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'SOURCES_TYPE': {
+			let newState = [];
+			state.map(item => {
+				if ( item.value === 'sourceType' ) {
+					item.label = action.value; 
 				}
 				newState.push(item);
 			});

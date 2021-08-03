@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useContext } from "react";
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,40 +15,46 @@ const InputLabel = bodyTags.InputWrapperDiscription;
 const Buttons = bodyTags.MonitoringAddFormButtonsBlock;
 const Submit = bodyTags.MonitoringAddFormSubmit;
 const Input = bodyTags.MonitoringAddFormInput;
+const GroupInputButton = bodyTags.MonitoringAddFormInputButtonsGroup;
 
 export default function SourceForm() {
 
-	const { dispatch } = useContext(ReduxHooksContext);
+	const { state, dispatch } = useContext(ReduxHooksContext);
 	const [ validateInner, setValidateInner ] = useState('добавить источник');
 	const [ monitoringDefName, ] = useState('введите название источника поиска');
 	const [ parserDefName, ] = useState('введите название парсера');
-	const [ parserTypeDefName, ] = useState('введите тип парсера');
 	
 	const [ isValidating, setIsValidating ] = useState(false);
-	const [ cardMargin, setCardMargin ] = useState(0);
 
 	const [ sourceName, setSourceName ] = useState('');
 	const [ parserName, setParserName ] = useState('');
-	const [ parserType, setParserType ] = useState('');
 
 	const setSourceInputValue = event => setSourceName(`${event.target.value}`);
 	const setParserInputValue = event => setParserName(`${event.target.value}`);
-	const setParserTypeInputValue = event => setParserType(`${event.target.value}`);
 
 	return (
 		<React.Fragment>
 
 			{ true ? ( <AddMonitoringForm
 
-				style={{ marginTop: cardMargin }}
+				style={{ marginTop: state[10].label[14].label }}
 				onWheel={(e) => {
 					if ( e.deltaY > 0 ) {
-						setCardMargin(cardMargin - 10);
+						dispatch({
+							type: 'CONTROL_SOURCECARD_MARGIN',
+							value: state[10].label[14].label - 10
+						});
 					} else {
 						// eslint-disable-next-line no-unused-expressions
-						cardMargin < 0 
-						? setCardMargin(cardMargin + 10) 
-						: setCardMargin(0);
+						state[10].label[14].label < 0 
+						? dispatch({
+							type: 'CONTROL_SOURCECARD_MARGIN',
+							value: state[10].label[14].label + 10
+						}) 
+						: dispatch({
+							type: 'CONTROL_SOURCECARD_MARGIN',
+							value: 0
+						});
 					}
 				}}
 
@@ -106,24 +111,97 @@ export default function SourceForm() {
 					}}
 				/>
 
-				<Input
-					disabled={true}
-					maxLength="38"
-					defaultValue={parserTypeDefName}
-					onKeyUp={setParserTypeInputValue}
-					style={{ paddingBottom: 8 }}
-					onFocus={(e) => {
-						// setMonitoringDefName('');
-						if ( e.target.value === 'введите тип парсера' ) {
-							e.target.value = '';
-						}
-					}}
-					onBlur={(e) => {
-						if ( e.target.value === '' ) {
-							e.target.value = 'введите тип парсера';
-						}
-					}}
-				/>
+				<GroupInputButton>
+
+					<span 
+						style={{
+							display: 'block',
+							position: 'relative',
+							width: '25%',
+							height: 'auto',
+							lineHeight: '22px',
+							borderRight: '1px solid #424242',
+							textAlign: 'center',
+							marginBottom: 5,
+							cursor: 'pointer',
+							fontWeight: state[12].label === 'simple' ? '500' : ''
+						}}
+						onClick={() => {
+							dispatch({
+								type: 'SOURCES_TYPE',
+								value: 'simple'
+							});
+						}}
+					>
+						simple
+					</span>
+					<span 
+						style={{
+							display: 'block',
+							position: 'relative',
+							width: '25%',
+							height: 'auto',
+							lineHeight: '22px',
+							borderRight: '1px solid #424242',
+							textAlign: 'center',
+							marginBottom: 5,
+							cursor: 'pointer',
+							fontWeight: state[12].label === 'medium' ? '500' : ''
+						}}
+						onClick={() => {
+							dispatch({
+								type: 'SOURCES_TYPE',
+								value: 'medium'
+							});
+						}}
+					>
+						medium
+					</span>
+					<span 
+						style={{
+							display: 'block',
+							position: 'relative',
+							width: '25%',
+							height: 'auto',
+							lineHeight: '22px',
+							borderRight: '1px solid #424242',
+							textAlign: 'center',
+							marginBottom: 5,
+							cursor: 'pointer',
+							fontWeight: state[12].label === 'puppeteer' ? '500' : ''
+						}}
+						onClick={() => {
+							dispatch({
+								type: 'SOURCES_TYPE',
+								value: 'puppeteer'
+							});
+						}}
+					>
+						puppeteer
+					</span>
+					<span 
+						style={{
+							display: 'block',
+							position: 'relative',
+							width: '25%',
+							height: 'auto',
+							lineHeight: '22px',
+							textAlign: 'center',
+							marginBottom: 5,
+							cursor: 'pointer',
+							fontWeight: state[12].label === 'selenium' ? '500' : ''
+						}}
+						onClick={() => {
+							dispatch({
+								type: 'SOURCES_TYPE',
+								value: 'selenium'
+							});
+						}}
+					>
+						selenium
+					</span>
+
+				</GroupInputButton>
 
 				<InputWrapper>
 					<InputLabel
@@ -189,15 +267,14 @@ export default function SourceForm() {
 
 					onClick={ async () => {
 	    			
-						if ( sourceName !== '' && parserName !== '' && parserType !== '' ) {			
+						if ( sourceName !== '' && parserName !== '' ) {			
 							
 							setIsValidating(true);
 
 							let data = {
 								data: {
 									Name: sourceName,
-        					Parser: parserName,
-        					// ParsingType: parserType
+        					Parser: parserName
 								}
 							}
 

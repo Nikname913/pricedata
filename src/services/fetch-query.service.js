@@ -96,6 +96,18 @@ export default async function fetchDispatcher(param) {
 			return query;
 		}
 
+		case 'REMOVE_PRODUCT': {
+			let query = await fetch(
+				`${process.env.REACT_APP_API_URL}/api/product-search/${param.value}`, {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json;charset=utf-8'
+					}
+				}
+			);
+			return query;		
+		}
+
 		case 'SET_PRODUCTS': {
 			let query = await fetch(
 				`${process.env.REACT_APP_API_URL}/api/product-search`, {

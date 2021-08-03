@@ -2,12 +2,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line react-hooks/exhaustive-deps
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useRef } from "react";
 import { ReduxHooksContext } from "../../Context";
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPenSquare, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPenSquare, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import bodyTags from '../../templates/body-styled-elements';
 
 const Editor = bodyTags.TextEditor;
@@ -24,6 +24,7 @@ const SaveIcon = bodyTags.TextEditorWorkSpaceEditorLineSave;
 export default function ProductsEditor() {
 
 	const { state, dispatch } = useContext(ReduxHooksContext);
+	const dataLine = useRef();
 
 	return (
 		<Editor 
@@ -56,7 +57,7 @@ export default function ProductsEditor() {
 			</Header>
 			<Workspace>
 				<SideMenu>
-					<SideMenuButton style={{ fontWeight: '500' }}>
+					<SideMenuButton>
 						<FontAwesomeIcon 
 							style={{
 								display: 'block',
@@ -73,7 +74,7 @@ export default function ProductsEditor() {
       			/>
 						посмотреть все товары
 					</SideMenuButton>
-					<SideMenuButton>
+					<SideMenuButton style={{ fontWeight: '500' }}>
 						<FontAwesomeIcon 
 							style={{
 								display: 'block',
@@ -226,10 +227,14 @@ export default function ProductsEditor() {
 							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>название</span>
 							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>артикул</span>
 							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>бренд</span>
-							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>категория</span>
 							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>поисковые запросы</span>
-							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>обязательные запросы</span>
-							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>ключевики</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>плюс-слова</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>минус-слова</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>regexp</span>
+
+							<span style={{ marginRight: 0, width: '12.5%', display: 'none', textAlign: 'center' }}>комментарий</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'none', textAlign: 'center' }}>категория</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'none', textAlign: 'center' }}>штрихкод</span>
 						</CodeHereLine>
 
 						{ state[10].label[8].label[1].label.data !== undefined ? state[10].label[8].label[1].label.data.map((item, index) => (
@@ -248,7 +253,51 @@ export default function ProductsEditor() {
 											transition: 'all 300ms'
 										}}
         						size="lg" 
-        						icon={faSave}
+        						icon={faTrash}
+										onClick={() => {
+
+											const query = fetchDispatcher({
+												fetchType: 'REMOVE_PRODUCT',
+												value: item.UUID
+											});
+
+											setTimeout(() => {
+
+												const getProductsFromMonitoring = fetchDispatcher({
+													fetchType: 'GET_PRODUCTS_MONITORING',
+													value: item.MonitoringUUID
+												});
+					
+												getProductsFromMonitoring.then(data => {
+													middleware({
+														type: 'PRODUCTS_DATA',
+														value: JSON.stringify(data)
+													});
+												});
+
+												setTimeout(() => {
+				
+													let baseProduct = JSON.parse(localStorage.getItem('productData')).data;
+													let arrProduct = [];
+													baseProduct.forEach(item => arrProduct.push(0));
+								
+													dispatch({
+														type: 'EDITOR_DATA',
+														value: JSON.parse(localStorage.getItem('productData'))
+													});
+													dispatch({
+														type: 'EDITOR_DATA_SAVEARR',
+														value: arrProduct
+													});
+					
+													middleware({ type: 'CLEAR_PRODUCTS_DATA' });
+													middleware({ type: 'CLEAR_SOURCE_DATA' });
+					
+												}, 800);
+
+											}, 400);
+
+										}}
       						/>
 								</SaveIcon>
 								<span style={{ 
@@ -270,7 +319,7 @@ export default function ProductsEditor() {
 									!!item.Brand ? `${item.Brand}` : 'no data'
 								}</span>
 								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{
-									!!item.Category ? `${item.Category}` : 'no data'
+									!!item.SearchRequest ? `${item.SearchRequest}` : 'no data'
 								}</span>
 								<span style={{ 
 									marginRight: 0, 
@@ -281,15 +330,17 @@ export default function ProductsEditor() {
 									boxSizing: 'border-box',
 									paddingLeft: 8,
 									paddingRight: 8 }}>{
-									!!item.SearchRequest ? `${item.SearchRequest}` : 'no data'
+										item.RequiredWords?.length > 0 ? item.RequiredWords.join(', ') : 'no data'
 								}</span>
 								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{
-									item.RequiredWords?.length > 0 ? item.RequiredWords.join(', ') : 'no data'	
+									item.ExcludingWords?.length > 0 ? item.ExcludingWords.join(', ') : 'no data'	
 								}</span>
 								<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>no data</span>
 								
-								<span style={{ marginRight: 10, width: '30%', display: 'none' }}>{`${item.UUID}`}</span>
-								<span style={{ width: '30%', display: 'none' }}>{`${item.MonitoringUUID}`}</span>
+								<span style={{ marginRight: 0, width: '30%', display: 'none' }}>{`${item?.Note}`}</span>
+								<span style={{ marginRight: 0, width: '30%', display: 'none' }}>{`${item?.Category}`}</span>
+								<span style={{ width: '30%', display: 'none' }}>{`${item?.Barcode}`}</span>
+								<span style={{ width: '30%', display: 'none' }}>{`${item?.UUID}`}</span>
 							</CodeHereLine>
 
 						)) : null }

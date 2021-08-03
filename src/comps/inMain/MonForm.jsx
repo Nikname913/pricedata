@@ -176,6 +176,7 @@ export default function MonitoringForm() {
           styles={selectStyles}
 					onChange={getValueChangeClientName}
 					onInputChange={getValueInputChangeClientName}
+					onWheel={e => e.stopPropagation()}
         />
         <AsyncSelect
           cacheOptions
