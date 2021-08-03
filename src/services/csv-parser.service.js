@@ -41,14 +41,14 @@ export default function productsParser(inputData, uuid) {
 
 		});
 
-		console.log(data);
-
+		// eslint-disable-next-line no-unused-vars
 		let queryParams = fetchDispatcher({
-			fetchType: 'SET_PRODUCTS',
+			fetchType: 'SET_PRODUCTS_FUCK',
 			value: JSON.stringify({ data })
 		});
 
-		console.log(queryParams);
+		// console.log(data);
+		// console.log(queryParams);
 
 	}
 
