@@ -64,7 +64,7 @@ function Main({ props }) {
         : location.pathname.indexOf('correct') !== (-1)
         ? 'редактирование мониторинга'
         : location.pathname.indexOf('history') !== (-1)
-        ? 'история мониторингов'
+        ? 'активные мониторинги'
         : location.pathname.indexOf('remove') !== (-1)
         ? 'удаление мониторинга'
         : location.pathname.indexOf('parser-sources') !== (-1)

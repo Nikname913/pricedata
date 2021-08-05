@@ -52,13 +52,18 @@ export default function MonitoringForm() {
 
 	const { state, dispatch } = useContext(ReduxHooksContext);
 	const [ validateInner, setValidateInner ] = useState('создать мониторинг');
-	const [ monitoringDefName, ] = useState('введите название мониторинга');
+	const [ monitoringDefName, ] = useState('придумайте уникальное название мониторинга');
 
 	const [ startDate, setStartDate ] = useState(new Date());
-	const [ endDate, setEndDate ] = useState(new Date());
+	const [ endDate, setEndDate ] = useState(() => {
+		let date = new Date();
+		date.setFullYear(date.getFullYear() + 1);
+		return date;
+	});
 	
 	const [ isValidating, setIsValidating ] = useState(false);
 	const [ isRedirect, setIsRedirect ] = useState(false);
+	const [ isNotComplited, setIsNotComplited ] = useState(false);
 	const [ showParams, setShowParams ] = useState(false);
 	const [ inputDisabled, setInputDisabled ] = useState(false);
 	const [ filterForParams, setFilterForParams ] = useState();
@@ -103,6 +108,9 @@ export default function MonitoringForm() {
 
 				style={{ marginTop: state[10].label[11].label }}
 				onWheel={(e) => {
+
+					if ( e.target.parentNode.className.indexOf('MenuList') < 0 ) {
+
 					if ( e.deltaY > 0 ) {
 						dispatch({
 							type: 'CONTROL_ADDCARD_MARGIN',
@@ -120,7 +128,7 @@ export default function MonitoringForm() {
 							value: 0
 						});
 					}
-				}}
+				}}}
 
 			>
 
@@ -146,14 +154,17 @@ export default function MonitoringForm() {
 					onKeyUp={getMonitorInputValue}
 					onFocus={(e) => {
 						// setMonitoringDefName('');
-						if ( e.target.value === 'введите название мониторинга' ) {
+						if ( e.target.value === 'придумайте уникальное название мониторинга' ) {
 							e.target.value = '';
 						}
 					}}
 					onBlur={(e) => {
 						if ( e.target.value === '' ) {
-							e.target.value = 'введите название мониторинга';
+							e.target.value = 'придумайте уникальное название мониторинга';
 						}
+					}}
+					style={{
+						backgroundColor: !!isNotComplited ? '#F69D84' : ''
 					}}
 				/>
 
@@ -162,7 +173,7 @@ export default function MonitoringForm() {
           defaultOptions
 					isDisabled={inputDisabled}
           loadOptions={loadOptions}
-          placeholder={"выберите клиента"}
+          placeholder={"выберите название клиента для мониторинга"}
           theme={theme => ({
             ...theme,
             borderRadius: 4,
@@ -181,7 +192,7 @@ export default function MonitoringForm() {
         <AsyncSelect
           cacheOptions
           loadOptions={loadOptionsPartners}
-          placeholder={"название партнера*"}
+          placeholder={"название партнера для мониторинга"}
           styles={selectStyles}
 					isDisabled
         />
@@ -369,7 +380,11 @@ export default function MonitoringForm() {
 						} else {
 
 							setValidateInner('заполните все поля');
-							setTimeout(() => setValidateInner('создать мониторинг'), 2000);
+							setIsNotComplited(true);
+							setTimeout(() => { 
+								setValidateInner('создать мониторинг');
+								setIsNotComplited(false);
+							}, 2000);
 
 						}
 					}}

@@ -388,16 +388,21 @@ const bodyTags = {
 	MonitoringAddFormInput: styled.input`
 		display: block;
 		position: relative;
-		width: 300px;
-		height: 30px;
+		width: 100%;
+		height: 44px;
 		outline: none;
 		border: none;
-		border-bottom: 2px solid #ffc000;
-		color: white;
+		border-radius: 4px;
+		color: black;
+		font-weight: 200 !important;
 		font-size: 13px;
-		margin-bottom: 16px;
-		margin-left: 8px;
-		background-color: transparent;
+		margin-bottom: 9px;
+		padding-bottom: 2px;
+		text-align: center;
+		background-color: white;
+		box-sizing: border-box;
+		border-left: 4px solid #ffc000;
+		border-right: 4px solid #ffc000;
 	`,
 	MonitoringAddFormInputButtonsGroup: styled.div`
 		display: flex;
@@ -937,7 +942,7 @@ const bodyTags = {
 		top: 50%;
 		margin-top: -12px;
 		left: 0;
-		margin-left: 38px;
+		margin-left: 39px;
 		:hover {
 			cursor: pointer;
 		}

@@ -9,12 +9,14 @@ const selectStyles = {
   input: (theme) => ({
     ...theme,
     fontSize: '13px',
-    paddingBottom: '3px'
+    paddingBottom: '3px',
+    color: 'black',
   }),
   singleValue: (theme) => ({
     ...theme,
     fontSize: '13px',
-    paddingBottom: '1px'
+    paddingBottom: '1px',
+    color: 'black',
   }),
   control: (theme) => ({
     ...theme,
@@ -47,7 +49,8 @@ const selectStyles = {
 	placeholder: (theme) => ({
 		...theme,
 		fontSize: '13px',
-    paddingBottom: '2px'
+    paddingBottom: '2px',
+    color: 'black',
 	}),
 	noOptionsMessage: (theme) => ({
 		...theme,

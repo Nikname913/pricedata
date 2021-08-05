@@ -79,7 +79,7 @@ export default function SourceForm() {
 					maxLength="38"
 					defaultValue={monitoringDefName}
 					onKeyUp={setSourceInputValue}
-					style={{ marginBottom: 4, paddingBottom: 8 }}
+					style={{ marginBottom: 8 }}
 					onFocus={(e) => {
 						// setMonitoringDefName('');
 						if ( e.target.value === 'введите название источника поиска' ) {
@@ -97,7 +97,7 @@ export default function SourceForm() {
 					maxLength="38"
 					defaultValue={parserDefName}
 					onKeyUp={setParserInputValue}
-					style={{ marginBottom: 4, paddingBottom: 8 }}
+					style={{ marginBottom: 8 }}
 					onFocus={(e) => {
 						// setMonitoringDefName('');
 						if ( e.target.value === 'введите название парсера' ) {

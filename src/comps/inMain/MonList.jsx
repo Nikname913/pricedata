@@ -131,19 +131,18 @@ export default function MonitoringList({ props }) {
 				<MonitoringItem>
 					<ItemCellNameHead style={{ 
 						paddingLeft: '15px', 
-						width: 'calc(30% + 1.5px)',
+						width: 70,
 						fontWeight: 300,
 						lineHeight: '38px'
 					}}>
 						
-						{`название мониторинга`}
+						{ false ? `действия` : '' }
 					
 					</ItemCellNameHead>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px' }}>номер</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px' }}>клиент</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px' }}>партнер</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px' }}>начало</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px' }}>окончание</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '10%' }}>номер</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(60% - 70px)' }}>название мониторинга</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '15%' }}>начало</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '15%' }}>окончание</ItemCell>
 				</MonitoringItem>
 
 			</ScrollBarTop>
@@ -172,19 +171,10 @@ export default function MonitoringList({ props }) {
 							}} 
 							key={item.UUID}
 						>
-							<ItemCellName
-								style={{ lineHeight: '38px' }}
-								onClick={(e) => {
-									if ( e.target.tagName === 'SPAN' ) {
-										history.push(`/card/view/${item.UUID}`);
-									}
-								}}
-							>
-								<ItemCellView
-									onClick={() => {
-										history.push(`/card/view/${item.UUID}`)
-									}}
-								>
+							<ItemCellName style={{ lineHeight: '38px', width: 70 }}>
+
+								<ItemCellView onClick={() => history.push(`/card/view/${item.UUID}`)}>
+
 									<FontAwesomeIcon 
 										style={{
 											display: state[10].label[0].label === false ? '' : 'none',
@@ -195,12 +185,11 @@ export default function MonitoringList({ props }) {
               			size="sm" 
               			icon={faEye}
             			/>
+									
 								</ItemCellView>
 								<ItemCellCorrect 
 									style={{ display: 'none' }}
-									onClick={() => {
-										history.push(`/card/correct/${item.UUID}`)
-									}}
+									onClick={() => history.push(`/card/correct/${item.UUID}`)}
 								>
 									<FontAwesomeIcon 
 										style={{
@@ -228,13 +217,29 @@ export default function MonitoringList({ props }) {
               			icon={faTrash}
             			/>
 								</ItemCellDelete>
-								{ item.Name }
 							</ItemCellName>
-							<ItemCell>{ item.ID }</ItemCell>
-							<ItemCell>{ item.ClientID }</ItemCell>
-							<ItemCell>{ item.PartnerID }</ItemCell>
-							<ItemCell>{ item.ActiveFrom.split(' 00')[0] }</ItemCell>
-							<ItemCell>{ item.ActiveTo.split(' 00')[0] }</ItemCell>
+							<ItemCell style={{ width: '10%', color: '#ffc000'}}>{ item.ID }</ItemCell>
+							<ItemCell 
+								style={{ 
+									lineHeight: '38px', 
+									width: 'calc(60% - 70px)', 
+									textAlign: 'left',
+									paddingLeft: 12, 
+									cursor: 'pointer',
+									boxSizing: 'border-box'
+								}}
+								onClick={(e) => {
+									if ( e.target.tagName === 'SPAN' ) {
+										history.push(`/card/view/${item.UUID}`);
+									}
+								}}
+							>
+								
+								{ item.Name }
+							
+							</ItemCell>
+							<ItemCell style={{ width: '15%' }}>{ item.ActiveFrom.split(' 00')[0] }</ItemCell>
+							<ItemCell style={{ width: '15%' }}>{ item.ActiveTo.split(' 00')[0] }</ItemCell>
 						</MonitoringItem>
 					);
 

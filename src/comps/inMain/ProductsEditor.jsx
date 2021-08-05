@@ -374,7 +374,7 @@ export default function ProductsEditor() {
 											transition: 'all 300ms'
 										}}
         						size="lg" 
-        						icon={faSave}
+        						icon={faTrash}
       						/>
 								</SaveIcon>
 								<span style={{ 
