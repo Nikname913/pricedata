@@ -463,7 +463,7 @@ const bodyTags = {
 		align-items: center;
 		justify-content: space-around;
 		position: relative;
-		width: 100%;
+		width: 55%;
 		height: 110px;
 		border: 1px dashed white;
 		border-radius: 4px;

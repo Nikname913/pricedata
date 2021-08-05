@@ -463,7 +463,8 @@ export default function MonitoringParamsForm(props) {
 
 			<AddFile
 				style={{
-					border: props.blackColor === true ? '1px dashed black' : '1px dashed white'
+					border: props.blackColor === true ? '1px dashed black' : '1px dashed white',
+					width: '100%'
 				}}
 			>
 				<input 
@@ -480,10 +481,7 @@ export default function MonitoringParamsForm(props) {
 						cursor: 'pointer',
 						zIndex: 10
 					}}
-					onChange={(e) => { 
-						// productsParser(e.target.files, monitoringUUID);
-						excelParser(e.target.files, monitoringUUID);
-					}}
+					onChange={(e) => excelParser(e.target.files, monitoringUUID) }
 				/>
 				<AddFileContent>
 					<FontAwesomeIcon 
@@ -498,7 +496,48 @@ export default function MonitoringParamsForm(props) {
 							color: props.blackColor === true ? 'black' : ''
 						}}
 					>
-						загрузить фид с товарами
+						загрузить товары XLSX
+					</AddFileContentText>
+				</AddFileContent>
+			</AddFile>
+
+			<AddFile
+				style={{
+					border: props.blackColor === true ? '1px dashed black' : '1px dashed white',
+					width: '100%',
+					display: 'none'
+				}}
+			>
+				<input 
+					multiple
+					type="file"
+					style={{
+						display: 'block',
+						position: 'absolute',
+						top: 0,
+						left: 0,
+						opacity: 0,
+						width: '100%',
+						height: '100%',
+						cursor: 'pointer',
+						zIndex: 10
+					}}
+					onChange={(e) => productsParser(e.target.files, monitoringUUID) }
+				/>
+				<AddFileContent>
+					<FontAwesomeIcon 
+						style={{
+							color: props.blackColor === true ? 'black' : 'white'
+						}}
+						size="2x" 
+						icon={ faDownload }
+					/>
+					<AddFileContentText
+						style={{
+							color: props.blackColor === true ? 'black' : ''
+						}}
+					>
+						 загрузить товары CSV
 					</AddFileContentText>
 				</AddFileContent>
 			</AddFile>
