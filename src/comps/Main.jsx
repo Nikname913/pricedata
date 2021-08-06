@@ -55,6 +55,9 @@ function Main({ props }) {
             }} 
             size="lg" 
             icon={faForward}
+            onClick={() => {
+              hist.goForward();
+            }}
           />
         </Forward>
         { location.pathname.indexOf('add') !== (-1)

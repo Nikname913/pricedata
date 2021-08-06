@@ -23,7 +23,7 @@ const selectStyles = {
     border: 'none',
     outline: 'none',
     boxShadow: '0px 0px 2px 0.5px grey',
-		width: 400,
+		width: 300,
 		fontFamily: 'Roboto, "sans-serif"',
 		fontWeight: 200,
   }),

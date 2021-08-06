@@ -999,6 +999,17 @@ const bodyTags = {
 		height: 40px;
 		box-sizing: border-box;
 	`,
+	MonitoringAddParamsFormLineDayStartLabel: styled.span`
+		display: block;
+		position: relative;
+		width: 80px;
+		height: 40px;
+		line-height: 40px;
+		font-size: 13px;
+		font-family: 'Roboto', sans-serif;
+		text-align: center;
+		padding-right: 12px;
+	`,
 	MonitoringAddParamsFormInput: styled.input`
 		display: block;
 		position: relative;

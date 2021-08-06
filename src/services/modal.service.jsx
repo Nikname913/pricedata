@@ -13,6 +13,7 @@ import selectStylesTimepicker from '../templates/css-templates/timepicker-select
 import bodyTags from '../templates/body-styled-elements';
 
 const InputLine = bodyTags.MonitoringAddParamsFormLine;
+const InputLineLabel = bodyTags.MonitoringAddParamsFormLineDayStartLabel;
 
 export default function Modal({ props }) {
   
@@ -22,15 +23,13 @@ export default function Modal({ props }) {
 
   const createParamsFromEditForm = (data) => {
 	
-    let params = {
-      data
-    }
-  
+    let params = { data }
     setParamsData(params);
   
   }
   
   return(
+
     <React.Fragment>
 
     { props.modalType === 'startTimeService' ? (
@@ -69,7 +68,7 @@ export default function Modal({ props }) {
         
         </p>
 
-        { [{},{},{},{},{}].map((item, index) => (
+        { [{},{},{},{},{},{},{}].map((item, index) => (
           
           <InputLine 
             style={{ 
@@ -81,13 +80,29 @@ export default function Modal({ props }) {
               marginRight: 'auto',
               justifyContent: 'space-between'
             }}
-          >
+          > 
+            <InputLineLabel>{`${
+              index === 0
+              ? 'понедельник'
+              : index === 1
+              ? 'вторник'
+              : index === 2
+              ? 'среда'
+              : index === 3
+              ? 'четверг'
+              : index === 4
+              ? 'пятница'
+              : index === 5
+              ? 'суббота'
+              : index === 6
+              ? 'воскресенье' : ''
+            }`}</InputLineLabel>
 						<Select
               isMulti
 							defaultOptions
 							isSearchable="true"
 							isClearable="true"
-              isDisabled={ index < 5 ? false : true }
+              isDisabled={ index < 7 ? false : true }
 							options={times}
 							placeholder={`время запуска, ${
                 index === 0
@@ -99,7 +114,11 @@ export default function Modal({ props }) {
                 : index === 3
                 ? 'четверг'
                 : index === 4
-                ? 'пятница' : ''
+                ? 'пятница'
+                : index === 5
+                ? 'суббота'
+                : index === 6
+                ? 'воскресенье' : ''
               }`}
 							theme={theme => ({
           			...theme,

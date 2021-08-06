@@ -65,6 +65,9 @@ export default function MonitoringParamsForm(props) {
 	const [ searchRegions, setSearchRegions ] = useState([]);
 	const [ screenshots, setScreenshots ] = useState(false);
 	const [ screenshotsLabel, setScreenshotsLabel ] = useState('скриншоты не нужны');
+	
+	const [ validationDiscr, setValidationDiscr ] = useState('* происходит описание строгой валидации');
+	const [ validationDiscrShow, setValidationDiscrShow ] = useState(false);
 
 	const bundleData = () => {
 		let data = {
@@ -98,12 +101,14 @@ export default function MonitoringParamsForm(props) {
 
 		paramsUp(bundleData());
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[]);
 
 	return(
+		
 		<ParamsBlock style={{ fontFamily: '"Roboto", sans-serif' }}>
 		
-			<InputLine>
+			<InputLine style={{ display: 'none' }}>
 				<Input
 					value={monitoringUUID}
 					disabled="true"
@@ -117,14 +122,15 @@ export default function MonitoringParamsForm(props) {
 					maxLength="3"
 					defaultValue={currencyFrom}
 					style={{
-						color: props.blackColor === true ? 'black' : ''
+						color: props.blackColor === true ? 'black' : '',
+						width: 'calc(50% + 14px)'
 					}}
 					onFocus={(e) => {
 						switch(e.target.value) {
 							case 'RUB': e.target.value = 'USD';
 								setCurrencyFrom('USD');
 								break; 
-							case 'USD': e.target.value = 'EUR';
+							case 'USD': e.target.value = 'RUB';
 								setCurrencyFrom('EUR');
 								break;
 							case 'EUR': e.target.value = 'RUB';
@@ -136,18 +142,28 @@ export default function MonitoringParamsForm(props) {
 						paramsUp(bundleData());
 					}}
 				/>
+				<TextLabel
+					style={{
+						color: props.blackColor === true ? 'black' : ''
+					}}
+				>
+					валюта прайс листа
+				</TextLabel>
+			</InputLine>
+			<InputLine style={{ height: 46 }}>
 				<ShortInput
 					maxLength="3"
 					defaultValue={currencyTo}
 					style={{
-						color: props.blackColor === true ? 'black' : ''
+						color: props.blackColor === true ? 'black' : '',
+						width: 'calc(50% + 14px)'
 					}}
 					onFocus={(e) => {
 						switch(e.target.value) {
 							case 'RUB': e.target.value = 'USD';
 								setCurrencyTo('USD');
 								break; 
-							case 'USD': e.target.value = 'EUR';
+							case 'USD': e.target.value = 'RUB';
 								setCurrencyTo('EUR');
 								break;
 							case 'EUR': e.target.value = 'RUB';
@@ -164,7 +180,7 @@ export default function MonitoringParamsForm(props) {
 						color: props.blackColor === true ? 'black' : ''
 					}}
 				>
-					валюта на вход и выход
+					валюта отчета
 				</TextLabel>
 			</InputLine>
 			<InputLine style={{ height: 46 }}>
@@ -178,16 +194,19 @@ export default function MonitoringParamsForm(props) {
 						switch(e.target.value) {
 							case 'STRICT': e.target.value = 'NO STRICT';
 								setValidationType('NO STRICT');
+								setValidationDiscr('* происходит описание нестрогой валидации');
 								break; 
 							case 'NO STRICT': e.target.value = 'STRICT';
 							setValidationType('STRICT');
+							setValidationDiscr('* происходит описание строгой валидации');
 								break;
 							default: break;
 						}
 						e.target.blur();
-						setValidationType('strict'); // delete this later
 						paramsUp(bundleData());
 					}}
+					onMouseOver={() => setValidationDiscrShow(true)}
+					onMouseOut={() => setValidationDiscrShow(false)}
 				/>
 				<ShortInput
 					maxLength="2"
@@ -214,6 +233,25 @@ export default function MonitoringParamsForm(props) {
 					валидация и приоритет
 				</TextLabel>
 			</InputLine>
+
+			{ !!validationDiscrShow ? <InputLine style={{ height: 46 }}>
+
+				<TextLabel 
+					style={{ 
+						width: '75%', 
+						height: 46, 
+						lineHeight: '46px',
+						marginTop: 28,
+						marginLeft: 0
+					}}
+				>
+					
+					{ validationDiscr }
+					
+				</TextLabel>
+
+			</InputLine> : null }
+
 			<InputLine>
 				<ScreenSwitcher 
 					color="default"

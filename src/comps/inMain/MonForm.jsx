@@ -238,7 +238,7 @@ export default function MonitoringForm() {
 
 					<React.Fragment>
 					<Headline>параметры мониторинга</Headline>
-					<Params>
+					<Params style={{ paddingTop: 18 }}>
 				
 							<MonitoringParamsForm 
 								paramsUp={setMonitoringParams}

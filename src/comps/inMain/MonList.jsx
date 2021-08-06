@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line react-hooks/exhaustive-deps
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faEye, faPenSquare, faTrash, faAngleLeft, faAngleRight, faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import { data } from '../../data/clients';
 import { ReduxHooksContext } from "../../Context";
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
@@ -62,11 +63,6 @@ export default function MonitoringList({ props }) {
 					type: 'MONITORINGS_DATA',
 					value: JSON.stringify(clearData)
 				});
-
-				// dispatch({
-				// type: 'CREATE_LIST',
-				// value: clearData
-				// });
 			
 			} else {
 
@@ -140,7 +136,8 @@ export default function MonitoringList({ props }) {
 					
 					</ItemCellNameHead>
 					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '10%' }}>номер</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(60% - 70px)' }}>название мониторинга</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(40% - 70px)' }}>название мониторинга</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '20%' }}>клиент</ItemCell>
 					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '15%' }}>начало</ItemCell>
 					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '15%' }}>окончание</ItemCell>
 				</MonitoringItem>
@@ -148,16 +145,18 @@ export default function MonitoringList({ props }) {
 			</ScrollBarTop>
 
 			<ScrollBar>
-
-				{ state[6].label.map(
-					
-					// eslint-disable-next-line array-callback-return
-					(item, index) => { /** count++ **/ }
-				
-				)}
 				
 				{ state[8].label[4].label[state[8].label[3].label - 1] !== undefined 
 					? state[8].label[4].label[state[8].label[3].label - 1].map((item, index) => {		
+
+					let clientName = '';
+					data.forEach(line => {
+
+						if ( line.value === item.ClientID.toString() ) {
+							clientName = line.label;
+						}
+
+					});
 
 					return(
 						<MonitoringItem
@@ -222,7 +221,7 @@ export default function MonitoringList({ props }) {
 							<ItemCell 
 								style={{ 
 									lineHeight: '38px', 
-									width: 'calc(60% - 70px)', 
+									width: 'calc(40% - 70px)', 
 									textAlign: 'left',
 									paddingLeft: 12, 
 									cursor: 'pointer',
@@ -238,8 +237,17 @@ export default function MonitoringList({ props }) {
 								{ item.Name }
 							
 							</ItemCell>
-							<ItemCell style={{ width: '15%' }}>{ item.ActiveFrom.split(' 00')[0] }</ItemCell>
-							<ItemCell style={{ width: '15%' }}>{ item.ActiveTo.split(' 00')[0] }</ItemCell>
+							<ItemCell style={{ width: '20%', overflow: 'hidden' }}>{ clientName }</ItemCell>
+							<ItemCell style={{ width: '15%' }}>{` 
+								 
+								 ${item.ActiveFrom.split(' 00')[0].split('-')[2]}-${item.ActiveFrom.split(' 00')[0].split('-')[1]}-${item.ActiveFrom.split(' 00')[0].split('-')[0]}
+							
+							`}</ItemCell>
+							<ItemCell style={{ width: '15%' }}>{`
+								
+								${item.ActiveTo.split(' 00')[0].split('-')[2]}-${item.ActiveTo.split(' 00')[0].split('-')[1]}-${item.ActiveTo.split(' 00')[0].split('-')[0]}
+							
+							`}</ItemCell>
 						</MonitoringItem>
 					);
 

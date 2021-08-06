@@ -3,6 +3,7 @@ import { Redirect, useHistory, useParams } from "react-router";
 import { ReduxHooksContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faAngleDoubleDown, faPenSquare, faCaretSquareDown, faCaretSquareUp, faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { data } from '../../data/clients';
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
 import DatePicker from "react-datepicker";
@@ -32,11 +33,13 @@ export default function MonitoringCard() {
 	let { id } = useParams();
 	const history = useHistory();
 	const [ showParams, setShowParams ] = useState(false);
+	const [ clientName, setClientName ] = useState('');
 
 	const startDateStr = `${state[3].label.split('-')[1]}-${state[3].label.split('-')[2]}-${state[3].label.split('-')[0]}`;
 	const endDateStr = `${state[4].label.split('-')[1]}-${state[4].label.split('-')[2]}-${state[4].label.split('-')[0]}`;
 
 	useEffect(() => {
+		
 		dispatch({
 			type: 'CONTROL_START_DATE_VIEW_CARD',
 			value: new Date(startDateStr)
@@ -47,13 +50,19 @@ export default function MonitoringCard() {
 		});
 
 		const query = fetchDispatcher({ fetchType: 'GET_PARAMS', value: id });
-
 		query.then(data => {
 			dispatch({
 				type: 'SET_ONE_PARAMS',
 				value: data.data
 			});
 		});
+
+		data.forEach(item => {
+			if ( item.value === state[1].label.toString() ) {
+				setClientName(item.label);
+			}
+		});
+
 	},[]);
 
 	return (
@@ -114,7 +123,7 @@ export default function MonitoringCard() {
 				<Input
 					maxLength="38"
 					placeholder="Название мониторинга"
-					value={state[1].label}
+					value={clientName}
 					disabled="true"
 				/>
 			</InputWrapperVertical>
