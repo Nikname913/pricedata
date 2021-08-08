@@ -242,7 +242,8 @@ export default function MonitoringParamsForm(props) {
 						height: 46, 
 						lineHeight: '46px',
 						marginTop: 28,
-						marginLeft: 0
+						marginLeft: 0,
+						color: props.blackColor === true ? 'black' : ''
 					}}
 				>
 					
@@ -301,7 +302,7 @@ export default function MonitoringParamsForm(props) {
 						let arr = [];
 						console.log(value);
 						value.forEach(item => 
-							arr.push(item.value)	
+							arr.push(item.value.toString())	
 						);
 						setSearchRegions(arr);
 						paramsUp(bundleData());

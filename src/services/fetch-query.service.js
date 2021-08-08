@@ -141,6 +141,20 @@ export default async function fetchDispatcher(param) {
 			return query;		
 		}
 
+		case 'GET_CLIENTS': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/clients`
+			).then(res => res.json());
+			return query;
+		}
+
+		case 'GET_PARTNERS': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/partners`
+			).then(res => res.json());
+			return query;
+		}
+
 		default:
 			break;	
 

@@ -164,7 +164,8 @@ export default function MonitoringForm() {
 						}
 					}}
 					style={{
-						backgroundColor: !!isNotComplited ? '#F69D84' : ''
+						backgroundColor: !!isNotComplited ? '#F69D84' : '',
+						transition: 'all 300ms'
 					}}
 				/>
 

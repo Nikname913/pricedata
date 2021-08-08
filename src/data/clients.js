@@ -1,3 +1,4 @@
+import fetchDispatcher from "../services/fetch-query.service";
 export const data = [
 {value: "1", label: "ООО РУССКАЯ СТРАТЕГИЯ"},
 {value: "2", label: "ООО Сингента"},
