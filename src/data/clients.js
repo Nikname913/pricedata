@@ -1,42 +1,38 @@
+/* eslint-disable no-unused-vars */
 import fetchDispatcher from "../services/fetch-query.service";
-export const data = [
-{value: "1", label: "ООО РУССКАЯ СТРАТЕГИЯ"},
-{value: "2", label: "ООО Сингента"},
-{value: "3", label: "ООО БАСФ"},
-{value: "4", label: "Bosco"},
-{value: "5", label: "БАДЫ"},
-{value: "6", label: "ОСАГО"},
-{value: "7", label: "Кино"},
-{value: "8", label: "Алкоголь"},
-{value: "9", label: "Макфа"},
-{value: "10", label: "Увелка"},
-{value: "11", label: "GreenHill"},
-{value: "12", label: "Orimi"},
-{value: "13", label: "Simple"},
-{value: "14", label: "Bayer"},
-{value: "15", label: "Volovo Russia"},
-{value: "16", label: "Amway"},
-{value: "17", label: "Катков и Партнеры"},
-{value: "18", label: "ООО Лодка Маркет"},
-{value: "19", label: "British American Tobacco"},
-{value: "20", label: "ООО Виасат Глобал"},
-{value: "21", label: "Производитель"},
-{value: "22", label: "АРПО-ИТ"},
-{value: "23", label: "Демонстрационный производитель"},
-{value: "24", label: "BAYER"},
-{value: "25", label: "ООО ОТКРЫТИЕ ТВ"},
-{value: "26", label: "ООО КМР И СНГ"},
-{value: "27", label: "PRIME WORLD"},
-{value: "28", label: "ЗАО ДИРЕКЦИЯ КИНО"},
-{value: "29", label: "ОАО БЕЛАЗ"},
-{value: "30", label: "Mercedes-Benz"},
-{value: "31", label: "MOTUL"},
-{value: "32", label: "WABCO IP HOLDINGS LLC"},
-{value: "33", label: "Арима Холдинг Корп"},
-{value: "34", label: "ПАО Московская кондитерская фабрика Красный Октябрь"},
-{value: "35", label: "СИА Джум"},
-{value: "36", label: "X5 Retail Group"},
-{value: "37", label: "ООО НТВ-ПЛЮС"},
-{value: "38", label: "ООО ВОРЛДСКИЛЛС СЕРВИСЕС"},
-{value: "39", label: "ОАО ВОРОНЕЖСКАЯ КОНДИТЕРСКАЯ ФАБРИКА"},
-{value: "40", label: "ООО МАЗДА МОТОР РУС"}]
+import middleware from "../redux-hooks/middleware";
+import store from "../redux-hooks/store";
+
+export default function data() {
+
+	const getList = fetchDispatcher({ fetchType: 'GET_CLIENTS' });
+	getList.then(data => {
+		
+		let mapArray = [];
+		// eslint-disable-next-line array-callback-return
+		data.data.map(item => {
+			mapArray.push({
+				value: item.id, 
+				label: item.name
+			})
+		});
+
+		middleware({
+			type: 'FILTER_CLIENTS_DATA',
+			value: JSON.stringify(mapArray)
+		});
+
+	});
+
+	let fetchData = [];
+	JSON.parse(localStorage.getItem('filterClientsData')) 
+	? fetchData = JSON.parse(localStorage.getItem('filterClientsData')) 
+	: fetchData = [];
+	return fetchData;
+
+	// eslint-disable-next-line no-unreachable
+	middleware({ type: 'CLEAR_FILTER_CLIENTS_DATA' });
+
+}
+
+data();

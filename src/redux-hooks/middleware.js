@@ -5,7 +5,7 @@ export default function middleware(param) {
 		case 'PRODUCTS_DATA':
 			localStorage.setItem('productData', param.value);
 			break;
-		
+
 		case 'CLEAR_PRODUCTS_DATA':
 			localStorage.removeItem('productData');
 			break;
@@ -13,28 +13,37 @@ export default function middleware(param) {
 		case 'PRODUCTS_DATA_MON':
 			localStorage.setItem('productDataMonitoring', param.value);
 			break;
-		
+
 		case 'CLEAR_PRODUCTS_DATA_MON':
 			localStorage.removeItem('productDataMonitoring');
-			break;	
+			break;
 
 		case 'MONITORINGS_DATA':
 			localStorage.setItem('monitoringData', param.value);
 			break;
-			
+
 		case 'CLEAR_MONITORINGS_DATA':
 			localStorage.removeItem('monitoringData');
-			break;	
+			break;
 
 		case 'SOURCES_DATA':
 			localStorage.setItem('sourceData', param.value);
 			break;
-		
+
 		case 'CLEAR_SOURCES_DATA':
 			localStorage.removeItem('sourceData');
-			break;	
+			break;
 
-		default: 
-		break;
+		case 'FILTER_CLIENTS_DATA':
+			localStorage.setItem('filterClientsData', param.value);
+			break;
 
-}}
+		case 'CLEAR_FILTER_CLIENTS_DATA':
+			localStorage.removeItem('filterClientsData');
+			break;
+
+		default:
+			break;
+
+	}
+}

@@ -3,12 +3,14 @@ import { Redirect, useHistory, useParams } from "react-router";
 import { ReduxHooksContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faAngleDoubleDown, faPenSquare, faCaretSquareDown, faCaretSquareUp, faClipboard } from '@fortawesome/free-solid-svg-icons';
-import { data } from '../../data/clients';
+import data from '../../data/clients';
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import bodyTags from '../../templates/body-styled-elements';
+
+let returnedData = data();
 
 const MonitoringCardView = bodyTags.MonitoringCard;
 const Buttons = bodyTags.MonitoringAddFormButtonsBlock;
@@ -57,12 +59,13 @@ export default function MonitoringCard() {
 			});
 		});
 
-		data.forEach(item => {
+		returnedData.forEach(item => {
 			if ( item.value === state[1].label.toString() ) {
 				setClientName(item.label);
 			}
 		});
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[]);
 
 	return (
