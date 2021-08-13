@@ -569,13 +569,14 @@ const bodyTags = {
 	MonitoringCardParamsLineInput: styled.input`
 		display: block;
 		position: relative;
-		width: 70%;
+		width: 100%;
 		line-height: 34px;
 		font-size: 11px;
 		font-weight: 200;
 		padding-left: 10px;
 		margin-top: 12px;
-		margin-left: 10px;
+		left: 0%;
+		margin-left: -18px;
 		margin-bottom: 10px;
 		box-sizing: border-box;
 		outline: none;

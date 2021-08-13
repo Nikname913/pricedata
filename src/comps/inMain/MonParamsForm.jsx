@@ -6,7 +6,7 @@ import Switch from '@material-ui/core/Switch';
 import { withStyles } from "@material-ui/styles";
 import bodyTags from '../../templates/body-styled-elements';
 import fetchDispatcher from "../../services/fetch-query.service";
-import { regions } from '../../data/regions';
+import regions from '../../data/regions';
 import { times } from '../../data/times';
 import productsParser from '../../services/csv-parser.service';
 import excelParser from '../../services/xlsx-parser.service';
@@ -14,6 +14,8 @@ import selectStyles from '../../templates/css-templates/regions-select';
 import selectStylesSecond from '../../templates/css-templates/regions-select-second';
 import selectStylesShort from '../../templates/css-templates/timepicker-select';
 import selectStylesShortSecond from '../../templates/css-templates/timepicker-select-second';
+
+let returnedRegions = regions();
 
 const ParamsBlock = bodyTags.MonitoringAddParamsForm;
 const InputLine = bodyTags.MonitoringAddParamsFormLine;
@@ -26,7 +28,7 @@ const AddFileContent = bodyTags.MonitoringAddFormAddFileContent;
 const AddFileContentText = bodyTags.MonitoringAddFormAddFileContentText;
 
 const filterData = (inputValue) => {
-	return regions.filter(item => 
+	return returnedRegions.filter(item => 
 		item.label.toLowerCase().includes(inputValue.toLowerCase())
 	);
 }
@@ -53,6 +55,10 @@ const ScreenSwitcher = withStyles({
 	root: { marginTop: 28, marginLeft: -8 }
 })(Switch);
 
+const ProductsSwitcher = withStyles({
+	root: { zIndex: 20 }
+})(Switch);
+
 export default function MonitoringParamsForm(props) {	
 
 	const { paramsUp, createFilter } = props;
@@ -75,7 +81,7 @@ export default function MonitoringParamsForm(props) {
 			CurrencyIn: currencyFrom,
 			CurrencyOut: currencyTo,
 			ScreenShot: "nothing",
-			ValidationType: validationType,
+			ValidationType: 'strict',
 			SearchRegions: searchRegions,
 			Priority: important,
 			start_1: JSON.parse(localStorage.getItem('start1From')),
@@ -300,12 +306,14 @@ export default function MonitoringParamsForm(props) {
 				onChange={(value) => {
 					if ( value.length !== 0 ) {
 						let arr = [];
-						console.log(value);
 						value.forEach(item => 
 							arr.push(item.value.toString())	
 						);
 						setSearchRegions(arr);
 						paramsUp(bundleData());
+
+						console.log(arr);
+
 					}
 				}}
 			/>
@@ -503,9 +511,29 @@ export default function MonitoringParamsForm(props) {
 			<AddFile
 				style={{
 					border: props.blackColor === true ? '1px dashed black' : '1px dashed white',
-					width: '100%'
+					width: '100%',
+					paddingLeft: 14
 				}}
 			>
+
+				<ProductsSwitcher color="default"/>
+				<p
+					style={{
+						display: 'block',
+						position: 'absolute',
+						color: props.blackColor === true ? 'black' : 'white',
+						fontSize: '13px',
+						left: 0,
+						top: '100%',
+						marginLeft: 14,
+						marginTop: -26
+					}}
+				>
+					
+					mode name
+				
+				</p>
+
 				<input 
 					multiple
 					type="file"
@@ -525,14 +553,15 @@ export default function MonitoringParamsForm(props) {
 				<AddFileContent>
 					<FontAwesomeIcon 
 						style={{
-							color: props.blackColor === true ? 'black' : 'white'
+							color: props.blackColor === true ? 'black' : 'white',
 						}}
 						size="2x" 
 						icon={ faDownload }
 					/>
 					<AddFileContentText
 						style={{
-							color: props.blackColor === true ? 'black' : ''
+							color: props.blackColor === true ? 'black' : '',
+							marginRight: 62,
 						}}
 					>
 						загрузить товары XLSX
@@ -566,7 +595,8 @@ export default function MonitoringParamsForm(props) {
 				<AddFileContent>
 					<FontAwesomeIcon 
 						style={{
-							color: props.blackColor === true ? 'black' : 'white'
+							color: props.blackColor === true ? 'black' : 'white',
+							marginLeft: -20
 						}}
 						size="2x" 
 						icon={ faDownload }

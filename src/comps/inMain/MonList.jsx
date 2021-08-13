@@ -154,10 +154,10 @@ export default function MonitoringList({ props }) {
 				{state[8].label[4].label[state[8].label[3].label - 1] !== undefined
 					? state[8].label[4].label[state[8].label[3].label - 1].map((item, index) => {
 
-						let clientName = '';
+						let clientName = 'Нет данных клиента';
 						returnedData.forEach(line => {
 
-							if (line.value === item.ClientID.toString()) {
+							if (line.value.toString() === item.ClientID.toString()) {
 								clientName = line.label;
 							}
 
@@ -250,7 +250,7 @@ export default function MonitoringList({ props }) {
 							`}</ItemCell>
 								<ItemCell style={{ width: '15%' }}>{`
 								
-								${item.ActiveTo.split(' 00')[0].split('-')[2]}-${item.ActiveTo.split(' 00')[0].split('-')[1]}-${item.ActiveTo.split(' 00')[0].split('-')[0]}
+								${item.ActiveTo.split(' ')[0].split('-')[2]}-${item.ActiveTo.split(' ')[0].split('-')[1]}-${item.ActiveTo.split(' ')[0].split('-')[0]}
 							
 							`}</ItemCell>
 							</MonitoringItem>

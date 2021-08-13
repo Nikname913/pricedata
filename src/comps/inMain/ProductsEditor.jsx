@@ -391,7 +391,11 @@ export default function ProductsEditor() {
 								</span>
 								
 								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{`${item.Name}`}</span>
-								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{`${item.Parser}`}</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center', overflow: 'hidden'}}>{`
+									
+									${ item.Parser.split('::').join(' ') }
+									
+								`}</span>
 								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{
 									!!item.PersingType ? `${item.PersingType}` : 'no data'
 								}</span>

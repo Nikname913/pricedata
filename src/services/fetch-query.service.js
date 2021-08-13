@@ -155,6 +155,13 @@ export default async function fetchDispatcher(param) {
 			return query;
 		}
 
+		case 'GET_CITYES': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/geo/cities`
+			).then(res => res.json());
+			return query;
+		}
+
 		default:
 			break;	
 

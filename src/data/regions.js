@@ -1,17 +1,38 @@
-export const regions = [
-{value: 12, label: 'Свердловская область'},
-{value: 34, label: 'Москва'},
-{value: 14, label: 'Челябинск'},
-{value: 19, label: 'Ростовская область'},
-{value: 12, label: 'Казань'},
-{value: 34, label: 'Новосибирск'},
-{value: 14, label: 'Мурманская область'},
-{value: 19, label: 'Владивосток'},
-{value: 12, label: 'Краснодарский край'},
-{value: 34, label: 'Волгоград'},
-{value: 14, label: 'Республика Татарстан'},
-{value: 19, label: 'Самарская область'},
-{value: 12, label: 'Красноярск'},
-{value: 34, label: 'Мурманск'},
-{value: 14, label: 'Санкт-Петербург'},
-{value: 19, label: 'Екатеринбург'}]
+/* eslint-disable no-unused-vars */
+import fetchDispatcher from "../services/fetch-query.service";
+import middleware from "../redux-hooks/middleware";
+import store from "../redux-hooks/store";
+
+export default function regions() {
+
+	const getList = fetchDispatcher({ fetchType: 'GET_CITYES' });
+	getList.then(data => {
+		
+		let mapArray = [];
+		// eslint-disable-next-line array-callback-return
+		data.data.map(item => {
+			mapArray.push({
+				value: item.UUID, 
+				label: item.Name
+			})
+		});
+
+		middleware({
+			type: 'CITYES_DATA',
+			value: JSON.stringify(mapArray)
+		});
+
+	});
+
+	let fetchData = [];
+	JSON.parse(localStorage.getItem('cityesData')) 
+	? fetchData = JSON.parse(localStorage.getItem('cityesData')) 
+	: fetchData = [];
+	return fetchData;
+
+	// eslint-disable-next-line no-unreachable
+	middleware({ type: 'CLEAR_CITYES_DATA' });
+
+}
+
+regions();

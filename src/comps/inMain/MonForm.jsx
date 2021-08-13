@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,10 +27,10 @@ const Params = bodyTags.MonitoringCardParams;
 export default function MonitoringForm() {
 
 	// eslint-disable-next-line no-unused-vars
-	let returnedData = data();
+	let returnedData = data;
 	
 	const filterData = (inputValue) => {
-		return returnedData.filter(item =>
+		return returnedData().filter(item =>
 			item.label.toLowerCase().includes(inputValue.toLowerCase())
 		);	
 	}
@@ -107,14 +107,14 @@ export default function MonitoringForm() {
 	return (
 		<React.Fragment>
 
-			{ isRedirect === false ? (<AddMonitoringForm
+			{ isRedirect === false ? ( <AddMonitoringForm
 
 				style={{ marginTop: state[10].label[11].label }}
 				onWheel={(e) => {
 
-					if (e.target.parentNode.className.indexOf('MenuList') < 0) {
+					if ( e.target.parentNode.className.indexOf('MenuList') < 0 ) {
 
-						if (e.deltaY > 0) {
+						if ( e.deltaY > 0 ) {
 							dispatch({
 								type: 'CONTROL_ADDCARD_MARGIN',
 								value: state[10].label[11].label - 10
@@ -215,7 +215,7 @@ export default function MonitoringForm() {
 
 				<InputWrapper>
 					<DatePicker
-						dateFormat="dd.MM.yyyy"
+						dateFormat="yyyy.MM.dd"
 						selected={startDate}
 						disabled={inputDisabled}
 						onChange={(date) => {
@@ -228,7 +228,7 @@ export default function MonitoringForm() {
 
 				<InputWrapper>
 					<DatePicker
-						dateFormat="dd.MM.yyyy"
+						dateFormat="yyyy.MM.dd"
 						selected={endDate}
 						disabled={inputDisabled}
 						onChange={(date) => {
@@ -272,7 +272,7 @@ export default function MonitoringForm() {
 									}}
 								>
 									закончить
-						</ButtonBack>
+								</ButtonBack>
 								<Submit
 									onClick={async () => {
 										let forData = createParams;
@@ -310,7 +310,7 @@ export default function MonitoringForm() {
 									}}
 								>
 									сохранить параметры
-						</Submit>
+								</Submit>
 							</React.Fragment>
 
 							: null}
@@ -325,11 +325,11 @@ export default function MonitoringForm() {
 								localStorage.setItem('start4From', '[]');
 								localStorage.setItem('start5From', '[]');
 
-								if (clientName !== '' &&
+								if ( clientName !== '' &&
 									clientId !== 0 &&
 									monitoringName !== '' &&
 									sDate !== {} &&
-									eDate !== {}) {
+									eDate !== {} ) {
 
 									const postData = {
 										"Name": monitoringName,
@@ -346,7 +346,7 @@ export default function MonitoringForm() {
 										value: postData
 									});
 
-									if (query.status !== 201) {
+									if ( query.status !== 201 ) {
 
 										let date = new Date();
 										let time = `${date.getHours()} : ${date.getMinutes()}`;
@@ -397,7 +397,7 @@ export default function MonitoringForm() {
 
 							{validateInner}
 
-						</Submit> : null} </Buttons>) : (
+						</Submit> : null} </Buttons> ) : (
 
 					<Buttons style={{ marginTop: 17 }}>
 						<Submit>
@@ -418,7 +418,7 @@ export default function MonitoringForm() {
 
 				)}
 
-			</AddMonitoringForm>) : (
+			</AddMonitoringForm> ) : (
 
 				<Redirect to="/history" />
 

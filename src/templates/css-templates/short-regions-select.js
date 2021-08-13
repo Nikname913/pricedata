@@ -21,8 +21,8 @@ const selectStyles = {
     border: 'none',
     outline: 'none',
     boxShadow: '0px 0px 6px 0.5px grey',
-		width: '80%',
-    marginLeft: 10,
+		width: '100%',
+    marginLeft: -18,
     marginTop: 12,
     marginBottom: 10
   }),
@@ -34,7 +34,7 @@ const selectStyles = {
     width: '80%',
     height: 200,
     marginTop: 0,
-    marginLeft: 10,
+    marginLeft: -18,
     border: 'none',
   }),
   menuList: (theme) => ({

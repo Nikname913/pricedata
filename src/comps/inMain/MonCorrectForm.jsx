@@ -3,15 +3,22 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import { ReduxHooksContext, ModalContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp, faAngleDoubleDown, faPenSquare, faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, 
+	faChevronUp, 
+	faAngleDoubleDown, 
+	faPenSquare, 
+	faClipboard,
+	faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 import fetchDispatcher from "../../services/fetch-query.service";
 import Modal from '../../services/modal.service';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { regions } from '../../data/regions';
+import regions from '../../data/regions';
 import selectStyles from '../../templates/css-templates/short-regions-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import bodyTags from '../../templates/body-styled-elements';
+
+let returnedRegions = regions();
 
 const MonitoringCorrForm = bodyTags.MonitoringCorrectForm;
 const InputWrapper = bodyTags.InputWrapper;
@@ -32,7 +39,7 @@ const CreateReportButtonTitle = bodyTags.MonitoringCardCreateReportButtonTitle;
 const CreateReportButtonAction = bodyTags.MonitoringCardCreateReportButtonAction;
 
 const filterData = (inputValue) => {
-	return regions.filter(item => 
+	return returnedRegions.filter(item => 
 		item.label.toLowerCase().includes(inputValue.toLowerCase())
 	);
 }
@@ -49,8 +56,8 @@ export default function MonitoringCorrectForm() {
 	const { state, dispatch } = useContext(ReduxHooksContext);
 	const history = useHistory();
 	const [ showParams, setShowParams ] = useState(false);
-	const startDateStr = `${state[3].label.split('-')[1]}-${state[3].label.split('-')[2]}-${state[3].label.split('-')[0]}`;
-	const endDateStr = `${state[4].label.split('-')[1]}-${state[4].label.split('-')[2]}-${state[4].label.split('-')[0]}`;
+	const startDateStr = `${state[3].label.split('-')[0]}-${state[3].label.split('-')[1]}-${state[3].label.split('-')[2]}`;
+	const endDateStr = `${state[4].label.split(' ')[0].split('-')[0]}-${state[4].label.split(' ')[0].split('-')[1]}-${state[4].label.split(' ')[0].split('-')[2]}`;
 	
 	const [ edit1, setEdit1 ] = useState(false);
 	const [ edit2, setEdit2 ] = useState(false);
@@ -144,6 +151,9 @@ export default function MonitoringCorrectForm() {
 				
 				style={{ marginTop: state[10].label[12].label }}
 				onWheel={(e) => {
+
+					e.stopPropagation();
+					
 					if ( e.deltaY > 0 ) {
 						dispatch({
 							type: 'CONTROL_EDITCARD_MARGIN',
@@ -162,7 +172,6 @@ export default function MonitoringCorrectForm() {
 						});
 					}
 				}}
-
 			>
 
 				<FontAwesomeIcon 
@@ -248,7 +257,7 @@ export default function MonitoringCorrectForm() {
 
 				<InputWrapper>
 					<DatePicker 
-						dateFormat="dd.MM.yyyy"
+						dateFormat="yyyy.MM.dd"
 						selected={state[10].label[3].label}
 						onChange={(date) => { 
 							dispatch({
@@ -267,7 +276,7 @@ export default function MonitoringCorrectForm() {
 
 				<InputWrapper>
 					<DatePicker 
-						dateFormat="dd.MM.yyyy"
+						dateFormat="yyyy.MM.dd"
 						selected={state[10].label[4].label}
 						onChange={(date) => {
 							dispatch({
@@ -326,16 +335,19 @@ export default function MonitoringCorrectForm() {
 							let date = new Date();
 							let time = `${date.getHours()} : ${date.getMinutes()}`;
 							// eslint-disable-next-line no-unused-expressions
-							state[9].label !== null ? setShowParams(!showParams) : 
+							state[9].label ? setShowParams(!showParams) : 
 							dispatch({
 								type: 'LOGGER',
 								value: { 
 									message: `${time} : отсутствуют данные о параметрах данного мониторинга. добавьте их или проверьте подключение к серверу`, 
 									time 
-								}
+								} 
 							});
+
 							// eslint-disable-next-line no-unused-expressions
-							if ( state[9].label === null ) { 
+							if ( state[9].label.searchRegions === undefined 
+									 && state[9].label.start_1.length === 0
+									 && state[9].label.start_2.length === 0 ) { 
 								setModalData({ 
 									title: 'параметры мониторинга не созданы', 
 									modalType: 'editParamsFromCard',
@@ -351,7 +363,23 @@ export default function MonitoringCorrectForm() {
 				{ showParams === true ? (
 
 				<Params style={{ padding: 0 }}>
-					<ParamsLine>
+					<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '0%',
+								left: 0,
+								marginLeft: 16,
+								marginTop: 15,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faCaretSquareRight}
+      			/>
+
 						<ParamsLineLabel onClick={() => {
 							setEdit1(!edit1);
 							setEdit2(false);
@@ -402,8 +430,8 @@ export default function MonitoringCorrectForm() {
 									case 'RUB': e.target.value = 'USD';
 										setCurrencyFrom('USD');
 										break; 
-									case 'USD': e.target.value = 'EUR';
-										setCurrencyFrom('EUR');
+									case 'USD': e.target.value = 'RUB';
+										setCurrencyFrom('RUB');
 										break;
 									case 'EUR': e.target.value = 'RUB';
 										setCurrencyFrom('RUB');
@@ -414,7 +442,23 @@ export default function MonitoringCorrectForm() {
 							}}
 						/> ) : null }
 					</ParamsLine>
-					<ParamsLine>
+					<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '0%',
+								left: 0,
+								marginLeft: 16,
+								marginTop: 15,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faCaretSquareRight}
+      			/>
+
 						<ParamsLineLabel onClick={() => {
 							setEdit2(!edit2);
 							setEdit1(false);
@@ -465,8 +509,8 @@ export default function MonitoringCorrectForm() {
 									case 'RUB': e.target.value = 'USD';
 										setCurrencyTo('USD');
 										break; 
-									case 'USD': e.target.value = 'EUR';
-										setCurrencyTo('EUR');
+									case 'USD': e.target.value = 'RUB';
+										setCurrencyTo('RUB');
 										break;
 									case 'EUR': e.target.value = 'RUB';
 										setCurrencyTo('RUB');
@@ -477,7 +521,23 @@ export default function MonitoringCorrectForm() {
 							}}
 						/> ) : null }
 					</ParamsLine>
-					<ParamsLine>
+					<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '0%',
+								left: 0,
+								marginLeft: 16,
+								marginTop: 15,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faCaretSquareRight}
+      			/>
+
 						<ParamsLineLabel onClick={() => {
 							setEdit3(!edit3);
 							setEdit2(false);
@@ -519,7 +579,23 @@ export default function MonitoringCorrectForm() {
 						</ParamsLineValue>
 						{ edit3 === true ? ( <React.Fragment/> ) : null }
 					</ParamsLine>
-					<ParamsLine>
+					<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '0%',
+								left: 0,
+								marginLeft: 16,
+								marginTop: 15,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faCaretSquareRight}
+      			/>
+
 						<ParamsLineLabel onClick={() => {
 							setEdit4(!edit4);
 							setEdit2(false);
@@ -576,7 +652,23 @@ export default function MonitoringCorrectForm() {
 							}}
 						/> ) : null }
 					</ParamsLine>
-					<ParamsLine>
+					<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '0%',
+								left: 0,
+								marginLeft: 16,
+								marginTop: 15,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faCaretSquareRight}
+      			/>
+							
 						<ParamsLineLabel onClick={() => {
 							setEdit5(!edit5);
 							setEdit2(false);
@@ -634,7 +726,23 @@ export default function MonitoringCorrectForm() {
 							}}
 						/> ) : null }
 					</ParamsLine>
-					<ParamsLine>
+					<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '0%',
+								left: 0,
+								marginLeft: 16,
+								marginTop: 15,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faCaretSquareRight}
+      			/>
+
 						<ParamsLineLabel onClick={() => {
 							setEdit6(!edit6);
 							setEdit2(false);
@@ -651,7 +759,7 @@ export default function MonitoringCorrectForm() {
 							setEdit1(false);
 							setEdit5(false);
 						}}>{
-							searchRegions !== undefined ? searchRegions.join(' ') : ''
+							searchRegions.length !== 0 ? searchRegions[0] : 'данных о регионах нет'
 						}<FontAwesomeIcon 
 								style={{
 									display: 'block',
@@ -699,9 +807,28 @@ export default function MonitoringCorrectForm() {
 									setSearchRegions(arr);
 								}
 							}}
+							
+							onWheel={e => e.stopPropagation()}
+
 						/> ) : null }
 					</ParamsLine>
-					<ParamsLine style={{ border: 'none' }}>
+					<ParamsLine style={{ position: 'relative', paddingLeft: 52, border: 'none'}}>
+
+						<FontAwesomeIcon 
+							style={{
+								display: 'block',
+								position: 'absolute',
+								color: 'white',
+								top: '0%',
+								left: 0,
+								marginLeft: 16,
+								marginTop: 15,
+								transition: 'all 300ms'
+							}}
+        			size="2x" 
+        			icon={faCaretSquareRight}
+      			/>
+
 						<ParamsLineLabel>интервалы запуска</ParamsLineLabel>
 						<ParamsLineValue
 							onClick={() => {
@@ -713,30 +840,30 @@ export default function MonitoringCorrectForm() {
 							}} 
 							style={{ marginTop: 2 }}
 						>{
-							state[9].label.start_1[1] !== '' 
+							!!state[9].label.start_1.length 
 							? state[9].label.start_1.join(' - ')
-							: state[9].label.start_1[0] !== '' 
-							? state[9].label.start_1[0] : null
+							: !!state[9].label.start_1[0] 
+							? state[9].label.start_1[0] : '--'
 						}{
-							state[9].label.start_2[1] !== '' 
+							!!state[9].label.start_2[1] 
 							? ', ' + state[9].label.start_2.join(' - ')
-							: state[9].label.start_2[0] !== '' 
-							? ', ' + state[9].label.start_2[0] : null
+							: !!state[9].label.start_2[0] 
+							? ', ' + state[9].label.start_2[0] : ' --'
 						}{
-							state[9].label.start_3[1] !== '' 
+							!!state[9].label.start_3[1] 
 							? ', ' + state[9].label.start_3.join(' - ')
-							: state[9].label.start_3[0] !== '' 
-							? ', ' + state[9].label.start_3[0] : null
+							: !!state[9].label.start_3[0] 
+							? ', ' + state[9].label.start_3[0] : ' --'
 						}{
-							state[9].label.start_4[1] !== '' 
+							!!state[9].label.start_4[1] 
 							? ', ' + state[9].label.start_4.join(' - ')
-							: state[9].label.start_4[0] !== '' 
-							? ', ' + state[9].label.start_4[0] : null
+							: !!state[9].label.start_4[0] 
+							? ', ' + state[9].label.start_4[0] : ' --'
 						}{
-							state[9].label.start_5[1] !== '' 
+							!!state[9].label.start_5[1] 
 							? ', ' + state[9].label.start_5.join(' - ')
-							: state[9].label.start_5[0] !== '' 
-							? ', ' + state[9].label.start_5[0] : null
+							: !!state[9].label.start_5[0] 
+							? ', ' + state[9].label.start_5[0] : ' --'
 						}<FontAwesomeIcon 
 								style={{
 									display: 'block',
@@ -772,9 +899,13 @@ export default function MonitoringCorrectForm() {
 								ClientID: state[1].label,
 								PartnerID: state[2].label,
 								ActiveFrom: state[3].label,
-								ActiveTo: state[4].label
+								ActiveTo: state[4].label.split(' ').length === 2 
+									? state[4].label.split(' ')[0] 
+									: state[4].label
 							}
 						}
+
+						console.log(pack);
 
 						let updateParamsPack = {
 							data: bundleData()

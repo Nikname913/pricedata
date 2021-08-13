@@ -2,7 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams } from "react-router";
 import { ReduxHooksContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faAngleDoubleDown, faPenSquare, faCaretSquareDown, faCaretSquareUp, faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, 
+	faAngleDoubleDown, 
+	faPenSquare, 
+	faCaretSquareDown, 
+	faCaretSquareUp, 
+	faClipboard,
+	faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 import data from '../../data/clients';
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
@@ -38,10 +44,10 @@ export default function MonitoringCard() {
 	const [ clientName, setClientName ] = useState('');
 
 	const startDateStr = `${state[3].label.split('-')[1]}-${state[3].label.split('-')[2]}-${state[3].label.split('-')[0]}`;
-	const endDateStr = `${state[4].label.split('-')[1]}-${state[4].label.split('-')[2]}-${state[4].label.split('-')[0]}`;
+	const endDateStr = `${state[4].label.split(' ')[0].split('-')[1]}-${state[4].label.split(' ')[0].split('-')[2]}-${state[4].label.split(' ')[0].split('-')[0]}`;
 
 	useEffect(() => {
-		
+
 		dispatch({
 			type: 'CONTROL_START_DATE_VIEW_CARD',
 			value: new Date(startDateStr)
@@ -60,9 +66,9 @@ export default function MonitoringCard() {
 		});
 
 		returnedData.forEach(item => {
-			if ( item.value === state[1].label.toString() ) {
-				setClientName(item.label);
-			}
+
+			if ( item.value.toString() === state[1].label.toString() ) { setClientName(item.label) }
+			
 		});
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -143,7 +149,7 @@ export default function MonitoringCard() {
 			
 			<InputWrapper>
 				<DatePicker 
-					dateFormat="dd.MM.yyyy"
+					dateFormat="yyyy.MM.dd"
 					selected={state[10].label[1].label}
 					disabled="true"
 				/>
@@ -152,7 +158,7 @@ export default function MonitoringCard() {
 
 			<InputWrapper>
 				<DatePicker 
-					dateFormat="dd.MM.yyyy"
+					dateFormat="yyyy.MM.dd"
 					selected={state[10].label[2].label}
 					disabled="true"
 				/>
@@ -275,6 +281,7 @@ export default function MonitoringCard() {
       		/>
 					<ParamsLineLabel>параметры мониторинга</ParamsLineLabel>
 					<ParamsLineValue onClick={() => {
+
 						let date = new Date();
 						let time = `${date.getHours()} : ${date.getMinutes()}`;
 						if ( state[9].label !== null ) {
@@ -313,7 +320,23 @@ export default function MonitoringCard() {
 
 				{ state[9].label !== null ? (<React.Fragment>
 
-				<ParamsLine>
+				<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={faCaretSquareRight}
+      		/>
+
 					<ParamsLineLabel>валюта на вход</ParamsLineLabel>
 					<ParamsLineValue>{
 						state[9].label.CurrencyIn === 'USD'
@@ -335,7 +358,23 @@ export default function MonitoringCard() {
 						/>
 					</ParamsLineValue>
 				</ParamsLine>
-				<ParamsLine>
+				<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={faCaretSquareRight}
+      		/>
+
 					<ParamsLineLabel>валюта на выход</ParamsLineLabel>
 					<ParamsLineValue>{
 						state[9].label.CurrencyOut === 'USD'
@@ -357,7 +396,23 @@ export default function MonitoringCard() {
 						/>
 					</ParamsLineValue>
 				</ParamsLine>
-				<ParamsLine>
+				<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={faCaretSquareRight}
+      		/>
+
 					<ParamsLineLabel>создание скриншота</ParamsLineLabel>
 					<ParamsLineValue>{
 						state[9].label.ScreenShot === 'nothing'
@@ -376,7 +431,23 @@ export default function MonitoringCard() {
 						/>
 					</ParamsLineValue>
 				</ParamsLine>
-				<ParamsLine>
+				<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={faCaretSquareRight}
+      		/>
+
 					<ParamsLineLabel>тип валидации</ParamsLineLabel>
 					<ParamsLineValue>{
 						state[9].label.ValidationType === 'strict'
@@ -395,7 +466,23 @@ export default function MonitoringCard() {
 						/>
 					</ParamsLineValue>
 				</ParamsLine>
-				<ParamsLine>
+				<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={faCaretSquareRight}
+      		/>
+
 					<ParamsLineLabel>приоритет мониторинга</ParamsLineLabel>
 					<ParamsLineValue>{
 						state[9].label.Priority <= 2
@@ -418,11 +505,29 @@ export default function MonitoringCard() {
 						/>
 					</ParamsLineValue>
 				</ParamsLine>
-				<ParamsLine>
+				<ParamsLine style={{ position: 'relative', paddingLeft: 52 }}>
+
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={faCaretSquareRight}
+      		/>
+
 					<ParamsLineLabel>регионы мониторинга</ParamsLineLabel>
-					<ParamsLineValue style={{ marginTop: 2 }}>{
-						state[9].label.SearchRegions.join(' ')
-					}<FontAwesomeIcon 
+					<ParamsLineValue style={{ marginTop: 3 }}>{`
+					
+						${state[9].label.SearchRegions[0]}
+					
+					`}<FontAwesomeIcon 
 							style={{
 								display: 'block',
 								position: 'absolute',
@@ -435,34 +540,50 @@ export default function MonitoringCard() {
 							icon={faChevronDown}
 						/>
 					</ParamsLineValue>
-				</ParamsLine>
-				<ParamsLine style={{ border: 'none' }}>
+				</ParamsLine >
+				<ParamsLine style={{ position: 'relative', paddingLeft: 52, border: 'none' }}>
+
+					<FontAwesomeIcon 
+						style={{
+							display: 'block',
+							position: 'absolute',
+							color: 'white',
+							top: '50%',
+							left: 0,
+							marginLeft: 16,
+							marginTop: -16,
+							transition: 'all 300ms'
+						}}
+        		size="2x" 
+        		icon={faCaretSquareRight}
+      		/>
+
 					<ParamsLineLabel>интервалы запуска</ParamsLineLabel>
 					<ParamsLineValue style={{ marginTop: 2 }}>{
-						state[9].label.start_1[1] !== '' 
+						!!state[9].label.start_1.length 
 						? state[9].label.start_1.join(' - ')
-						: state[9].label.start_1[0] !== '' 
-						? state[9].label.start_1[0] : null
+						: !!state[9].label.start_1[0] 
+						? state[9].label.start_1[0] : '--'
 					}{
-						state[9].label.start_2[1] !== '' 
+						!!state[9].label.start_2[1] 
 						? ', ' + state[9].label.start_2.join(' - ')
-						: state[9].label.start_2[0] !== '' 
-						? ', ' + state[9].label.start_2[0] : null
+						: !!state[9].label.start_2[0] 
+						? ', ' + state[9].label.start_2[0] : ' --'
 					}{
-						state[9].label.start_3[1] !== '' 
+						!!state[9].label.start_3[1] 
 						? ', ' + state[9].label.start_3.join(' - ')
-						: state[9].label.start_3[0] !== '' 
-						? ', ' + state[9].label.start_3[0] : null
+						: !!state[9].label.start_3[0] 
+						? ', ' + state[9].label.start_3[0] : ' --'
 					}{
-						state[9].label.start_4[1] !== '' 
+						!!state[9].label.start_4[1] 
 						? ', ' + state[9].label.start_4.join(' - ')
-						: state[9].label.start_4[0] !== '' 
-						? ', ' + state[9].label.start_4[0] : null
+						: !!state[9].label.start_4[0] 
+						? ', ' + state[9].label.start_4[0] : ' --'
 					}{
-						state[9].label.start_5[1] !== '' 
+						!!state[9].label.start_5[1] 
 						? ', ' + state[9].label.start_5.join(' - ')
-						: state[9].label.start_5[0] !== '' 
-						? ', ' + state[9].label.start_5[0] : null
+						: !!state[9].label.start_5[0] 
+						? ', ' + state[9].label.start_5[0] : ' --'
 					}<FontAwesomeIcon 
 							style={{
 								display: 'block',
