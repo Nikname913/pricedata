@@ -356,6 +356,17 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'PARSER_TYPE': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'parserType') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		case 'CLIENTS_LIST': {
 			let newState = [];
 			state.map(item => {

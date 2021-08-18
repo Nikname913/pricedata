@@ -162,6 +162,20 @@ export default async function fetchDispatcher(param) {
 			return query;
 		}
 
+		case 'GET_STATES': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/geo/states`
+			).then(res => res.json());
+			return query;
+		}
+
+		case 'GET_COUNTRIES': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/geo/countries`
+			).then(res => res.json());
+			return query;
+		}
+
 		default:
 			break;	
 

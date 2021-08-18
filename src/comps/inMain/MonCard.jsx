@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams } from "react-router";
-import { ReduxHooksContext } from "../../Context";
+import { ReduxHooksContext, ModalContext } from "../../Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, 
 	faAngleDoubleDown, 
@@ -13,6 +13,7 @@ import data from '../../data/clients';
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
 import DatePicker from "react-datepicker";
+import Modal from '../../services/modal.service';
 import "react-datepicker/dist/react-datepicker.css";
 import bodyTags from '../../templates/body-styled-elements';
 
@@ -38,6 +39,8 @@ const CreateReportButtonAction = bodyTags.MonitoringCardCreateReportButtonAction
 export default function MonitoringCard() {
 
 	const { state, dispatch } = useContext(ReduxHooksContext);
+	const [ showModal, setShowModal ] = useContext(ModalContext);
+	const [ modalData, setModalData ] = useState({ title: '', text: '' });
 	let { id } = useParams();
 	const history = useHistory();
 	const [ showParams, setShowParams ] = useState(false);
@@ -75,7 +78,7 @@ export default function MonitoringCard() {
 	},[]);
 
 	return (
-		<React.Fragment> { state[0].label !== '' ? (
+		<React.Fragment> { state[0].label !== '' ? (	
 		<MonitoringCardView
 			id="card"
 			style={{ marginTop: state[10].label[10].label }}
@@ -177,7 +180,33 @@ export default function MonitoringCard() {
         	icon={faClipboard}
       	/>
 				<CreateReportButtonTitle>создание отчета</CreateReportButtonTitle>
-				<CreateReportButtonAction>создать</CreateReportButtonAction>
+				<CreateReportButtonAction
+					onClick={() => {
+						setModalData({ 
+							title: 'создание нового отчета', 
+							modalType: 'newReportService',
+							background: '#6c757d',
+							monitoring: state[0].label 
+						});
+						setShowModal(true);
+					}}
+					style={{ marginTop: -112 }}
+				>
+					создать
+				</CreateReportButtonAction>
+				<CreateReportButtonAction
+					onClick={() => {
+						setModalData({ 
+							title: 'создание нового отчета', 
+							modalType: 'newReportService',
+							background: '#6c757d',
+							monitoring: state[0].label 
+						});
+						setShowModal(true);
+					}}
+				>
+					просмотр
+				</CreateReportButtonAction>
 			</CreateReportButton>
 
 			<Headline>параметры мониторинга</Headline>
@@ -285,16 +314,21 @@ export default function MonitoringCard() {
 						let date = new Date();
 						let time = `${date.getHours()} : ${date.getMinutes()}`;
 						if ( state[9].label !== null ) {
-						// eslint-disable-next-line no-unused-expressions
-						state[9].label !== undefined 
-						? setShowParams(!showParams)
-						: dispatch({
-							type: 'LOGGER',
-							value: { 
-								message: `${time} : отсутствуют данные о параметрах данного мониторинга. добавьте их или проверьте подключение к серверу`, 
-								time 
-							}
-						});
+						
+							if ( state[9].label.searchRegions === undefined 
+								&& state[9].label.start_1.length === 0
+								&& state[9].label.start_2.length === 0 ) {
+
+									dispatch({
+										type: 'LOGGER',
+										value: { 
+											message: `${time} : отсутствуют данные о параметрах данного мониторинга. добавьте их или проверьте подключение к серверу`, 
+											time 
+										}
+									});
+
+							} else { setShowParams(!showParams) }
+
 						} else {
 							dispatch({
 								type: 'LOGGER',
@@ -617,6 +651,8 @@ export default function MonitoringCard() {
 				
 				</Button>
 			</Buttons>
+
+			{ showModal === true ? <Modal props={modalData}/> : null }
 
 		</MonitoringCardView> ) : ( <Redirect to="/history"/> )}
 		</React.Fragment>

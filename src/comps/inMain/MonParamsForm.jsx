@@ -55,8 +55,9 @@ const ScreenSwitcher = withStyles({
 	root: { marginTop: 28, marginLeft: -8 }
 })(Switch);
 
+// eslint-disable-next-line no-unused-vars
 const ProductsSwitcher = withStyles({
-	root: { zIndex: 20 }
+	root: { zIndex: 12, marginTop: 50 }
 })(Switch);
 
 export default function MonitoringParamsForm(props) {	
@@ -512,11 +513,10 @@ export default function MonitoringParamsForm(props) {
 				style={{
 					border: props.blackColor === true ? '1px dashed black' : '1px dashed white',
 					width: '100%',
-					paddingLeft: 14
+					paddingLeft: 14,
 				}}
 			>
 
-				<ProductsSwitcher color="default"/>
 				<p
 					style={{
 						display: 'block',
@@ -526,11 +526,55 @@ export default function MonitoringParamsForm(props) {
 						left: 0,
 						top: '100%',
 						marginLeft: 14,
-						marginTop: -26
+						marginTop: -26,
+						borderRight: `1px solid ${
+							props.blackColor === true ? 'black' : 'white'
+						}`,
+						paddingRight: 12
 					}}
 				>
 					
 					mode name
+				
+				</p>
+
+				<p
+					style={{
+						display: 'block',
+						position: 'absolute',
+						color: props.blackColor === true ? 'black' : 'white',
+						fontSize: '13px',
+						left: 0,
+						top: '100%',
+						marginLeft: 108,
+						marginTop: -26,
+						borderRight: `1px solid ${
+							props.blackColor === true ? 'black' : 'white'
+						}`,
+						paddingRight: 12,
+						zIndex: 12
+					}}
+				>
+					
+					выбрать расширение
+				
+				</p>
+				
+				<p
+					style={{
+						display: 'block',
+						position: 'absolute',
+						color: props.blackColor === true ? 'black' : 'white',
+						fontSize: '13px',
+						left: 0,
+						top: '100%',
+						marginLeft: 265,
+						marginTop: -26,
+						zIndex: 12
+					}}
+				>
+					
+					настройка колонок
 				
 				</p>
 
@@ -554,6 +598,8 @@ export default function MonitoringParamsForm(props) {
 					<FontAwesomeIcon 
 						style={{
 							color: props.blackColor === true ? 'black' : 'white',
+							marginTop: -10,
+							marginLeft: -20
 						}}
 						size="2x" 
 						icon={ faDownload }
@@ -561,7 +607,7 @@ export default function MonitoringParamsForm(props) {
 					<AddFileContentText
 						style={{
 							color: props.blackColor === true ? 'black' : '',
-							marginRight: 62,
+							marginTop: 2
 						}}
 					>
 						загрузить товары XLSX
@@ -569,11 +615,10 @@ export default function MonitoringParamsForm(props) {
 				</AddFileContent>
 			</AddFile>
 
-			<AddFile
+			{ false ? <AddFile
 				style={{
 					border: props.blackColor === true ? '1px dashed black' : '1px dashed white',
 					width: '100%',
-					display: 'none'
 				}}
 			>
 				<input 
@@ -609,7 +654,15 @@ export default function MonitoringParamsForm(props) {
 						 загрузить товары CSV
 					</AddFileContentText>
 				</AddFileContent>
-			</AddFile>
+			</AddFile> : null }
+
+			<AddFile
+				style={{
+					border: props.blackColor === true ? '1px dashed black' : '1px dashed white',
+					width: '100%',
+					paddingLeft: 14,
+				}}
+			></AddFile>
 		
 		</ParamsBlock>
 	);

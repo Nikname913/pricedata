@@ -141,6 +141,7 @@ export default function MonitoringCorrectForm() {
 
 		}
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[]);
 
 	return (
@@ -332,31 +333,43 @@ export default function MonitoringCorrectForm() {
       			/>
 						<ParamsLineLabel>настроить параметры мониторинга</ParamsLineLabel>
 						<ParamsLineValue onClick={() => {
+
 							let date = new Date();
 							let time = `${date.getHours()} : ${date.getMinutes()}`;
-							// eslint-disable-next-line no-unused-expressions
-							state[9].label ? setShowParams(!showParams) : 
-							dispatch({
-								type: 'LOGGER',
-								value: { 
-									message: `${time} : отсутствуют данные о параметрах данного мониторинга. добавьте их или проверьте подключение к серверу`, 
-									time 
-								} 
-							});
 
-							// eslint-disable-next-line no-unused-expressions
+							if ( state[9].label.searchRegions === undefined 
+								&& state[9].label.start_1.length === 0
+								&& state[9].label.start_2.length === 0 ) {
+
+									dispatch({
+										type: 'LOGGER',
+										value: { 
+											message: `${time} : отсутствуют данные о параметрах данного мониторинга. добавьте их или проверьте подключение к серверу`, 
+											time 
+										} 
+									});
+								
+							} else { setShowParams(!showParams) }
+
 							if ( state[9].label.searchRegions === undefined 
 									 && state[9].label.start_1.length === 0
-									 && state[9].label.start_2.length === 0 ) { 
+									 && state[9].label.start_2.length === 0 ) {
+
 								setModalData({ 
 									title: 'параметры мониторинга не созданы', 
 									modalType: 'editParamsFromCard',
 									background: '#6c757d',
 									monitoring: state[0].label 
 								});
+
 								setShowModal(true);
+							
 							}
-						}}>перейти к настройкам</ParamsLineValue>
+						}}>
+							
+							перейти к настройкам
+						
+						</ParamsLineValue>
 					</ParamsLine>
 				</Params>
 

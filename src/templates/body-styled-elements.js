@@ -469,7 +469,7 @@ const bodyTags = {
 		justify-content: space-around;
 		position: relative;
 		width: 55%;
-		height: 110px;
+		height: 160px;
 		border: 1px dashed white;
 		border-radius: 4px;
 		margin-top: 17px;

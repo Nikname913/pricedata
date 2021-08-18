@@ -174,7 +174,8 @@ const store = [
 		]
 	},
 	{ value: 'logData', label: [] },
-	{ value: 'sourceType', label: 'simple' },
+	{ value: 'sourceType', label: 'easy' },
+	{ value: 'parserType', label: 'cities' }
 ];
 
 export default store;

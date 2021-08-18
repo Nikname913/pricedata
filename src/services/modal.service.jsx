@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MonitoringParamsForm from "../comps/inMain/MonParamsForm";
+import ReportsForm from "../comps/inMain/ReportsForm";
 import fetchDispatcher from "../services/fetch-query.service";
 import { ModalContext, ReduxHooksContext } from '../Context';
 import { times } from '../data/times';
@@ -32,7 +33,145 @@ export default function Modal({ props }) {
 
     <React.Fragment>
 
-    { props.modalType === 'startTimeService' ? (
+    { props.modalType === 'newReportService' ? (
+    
+    <Dialog 
+      open={true}
+      onWheel={(e) => e.stopPropagation()}
+    >
+      <DialogTitle style={{ 
+          padding: 0, 
+          textAlign: 'center',
+          marginTop: 32,
+          marginBottom: 5, 
+        }}>
+        { props.title }
+      </DialogTitle>
+      <DialogContent 
+        style={{ 
+          width: 500, 
+          height: 500, 
+          overflowY: 'hidden', 
+          backgroundColor: 
+            props.background === '#6c757d' 
+            ? '' : '',
+          marginLeft: 14,
+          marginRight: 14,
+          marginTop: 28,
+          marginBottom: 20,
+          borderTop: '2px solid #ffc000'
+        }}
+        onWheel={(e) => {
+          if ( e.deltaY > 0 ) {
+						dispatch({
+							type: 'CONTROL_MODALCARD_MARGIN',
+							value: state[10].label[13].label - 10
+						});
+					} else {
+						// eslint-disable-next-line no-unused-expressions
+						state[10].label[13].label < 0 
+						? dispatch({
+							type: 'CONTROL_MODALCARD_MARGIN',
+							value: state[10].label[13].label + 10
+						})
+						: dispatch({
+							type: 'CONTROL_MODALCARD_MARGIN',
+							value: 29
+						});
+					}
+				}}
+      >
+        <p
+          style={{
+            color: 'black',
+            fontFamily: 'Roboto, "sans-serif',
+            fontSize: 13,
+            lineHeight: '22px',
+            textAlign: 'center',
+            width: '90%',
+            padding: '0 20px',
+            margin: '0 auto',
+            marginTop: state[10].label[13].label,
+            marginBottom: '20px',
+            boxSizing: 'border-box'
+          }}
+        >
+          
+          в этой форме вы можете создать новый отчет для открытого мониторинга. для этого заполните все поля и нажмите кнопку добавить. все поля являются обязательными
+        
+        </p>
+
+        <ReportsForm 
+          blackColor={true}
+          paramsUp={createParamsFromEditForm}
+					createFilter={props.monitoring}
+        />
+
+      </DialogContent>
+      <DialogActions style={{ marginRight: '20px', marginBottom: '20px' }}>
+      <Button
+          style={{
+            display: 'block',
+            position: 'relative',
+            width: '140px',
+            height: '40px',
+            lineHeight: '42px',
+            borderRadius: '4px',
+            fontSize: '11px',
+            backgroundColor: '#ffc000',
+            boxShadow: '0px 0px 2px 0.5px grey',
+            color: '#2d2d2d',
+            boxSizing: 'border-box',
+            border: 'none',
+            padding: 0,
+            marginRight: 4
+          }}
+          onClick={() => {
+            setShowModal(false);
+            console.log(localStorage.getItem('start1From'));
+            console.log(localStorage.getItem('start2From'));
+            console.log(localStorage.getItem('start3From'));
+            console.log(localStorage.getItem('start4From'));
+            console.log(localStorage.getItem('start5From'));
+          }}
+        >
+          
+            ОТМЕНА
+        
+        </Button>
+        <Button
+          style={{
+            display: 'block',
+            position: 'relative',
+            width: '140px',
+            height: '40px',
+            lineHeight: '42px',
+            borderRadius: '4px',
+            fontSize: '11px',
+            backgroundColor: '#ffc000',
+            boxShadow: '0px 0px 2px 0.5px grey',
+            color: '#2d2d2d',
+            boxSizing: 'border-box',
+            border: 'none',
+            padding: 0
+          }}
+          onClick={ async () => {
+            setShowModal(false);
+            let query = await fetchDispatcher({
+              fetchType: 'SET_PARAMS',
+              value: JSON.stringify(paramsData)
+            });
+            console.log(query);
+          }}
+        >
+          
+            ДОБАВИТЬ
+        
+        </Button>
+      </DialogActions>
+    </Dialog>
+    
+    ) : props.modalType === 'startTimeService' ? (
 
     <Dialog 
       open={true}

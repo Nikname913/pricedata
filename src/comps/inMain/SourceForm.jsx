@@ -78,6 +78,7 @@ export default function SourceForm() {
 				<Input
 					maxLength="38"
 					defaultValue={monitoringDefName}
+					value={ sourceName ? sourceName : monitoringDefName }
 					onKeyUp={setSourceInputValue}
 					style={{ marginBottom: 8 }}
 					onFocus={(e) => {
@@ -96,6 +97,7 @@ export default function SourceForm() {
 				<Input
 					maxLength="38"
 					defaultValue={parserDefName}
+					value={ parserName ? parserName : parserDefName }
 					onKeyUp={setParserInputValue}
 					style={{ marginBottom: 8 }}
 					onFocus={(e) => {
@@ -117,6 +119,54 @@ export default function SourceForm() {
 						style={{
 							display: 'block',
 							position: 'relative',
+							width: '50%',
+							height: 'auto',
+							lineHeight: '22px',
+							borderRight: '1px solid #424242',
+							textAlign: 'center',
+							marginBottom: 5,
+							cursor: 'pointer',
+							fontWeight: state[13].label === 'cities' ? '500' : ''
+						}}
+						onClick={() => {
+							dispatch({
+								type: 'PARSER_TYPE',
+								value: 'cities'
+							});
+						}}
+					>
+						парсинг города
+					</span>
+					<span 
+						style={{
+							display: 'block',
+							position: 'relative',
+							width: '50%',
+							height: 'auto',
+							lineHeight: '22px',
+							textAlign: 'center',
+							marginBottom: 5,
+							cursor: 'pointer',
+							fontWeight: state[13].label === 'states' ? '500' : ''
+						}}
+						onClick={() => {
+							dispatch({
+								type: 'PARSER_TYPE',
+								value: 'states'
+							});
+						}}
+					>
+						парсинг области
+					</span>
+
+				</GroupInputButton>
+
+				<GroupInputButton>
+
+					<span 
+						style={{
+							display: 'block',
+							position: 'relative',
 							width: '25%',
 							height: 'auto',
 							lineHeight: '22px',
@@ -124,16 +174,16 @@ export default function SourceForm() {
 							textAlign: 'center',
 							marginBottom: 5,
 							cursor: 'pointer',
-							fontWeight: state[12].label === 'simple' ? '500' : ''
+							fontWeight: state[12].label === 'easy' ? '500' : ''
 						}}
 						onClick={() => {
 							dispatch({
 								type: 'SOURCES_TYPE',
-								value: 'simple'
+								value: 'easy'
 							});
 						}}
 					>
-						simple
+						easy
 					</span>
 					<span 
 						style={{
@@ -146,16 +196,16 @@ export default function SourceForm() {
 							textAlign: 'center',
 							marginBottom: 5,
 							cursor: 'pointer',
-							fontWeight: state[12].label === 'medium' ? '500' : ''
+							fontWeight: state[12].label === 'average' ? '500' : ''
 						}}
 						onClick={() => {
 							dispatch({
 								type: 'SOURCES_TYPE',
-								value: 'medium'
+								value: 'average'
 							});
 						}}
 					>
-						medium
+						average
 					</span>
 					<span 
 						style={{
@@ -274,7 +324,9 @@ export default function SourceForm() {
 							let data = {
 								data: {
 									Name: sourceName,
-        					Parser: parserName
+        					Parser: parserName,
+									ParsingType: state[13].label,
+									Complexity: state[12].label
 								}
 							}
 
@@ -283,8 +335,35 @@ export default function SourceForm() {
 								value: JSON.stringify(data)
 							});
 
-							console.log(query);
-							setTimeout(() => setIsValidating(false), 2000);
+							setTimeout(() => { 
+								
+								setIsValidating(false);
+								let date = new Date();
+								let time = `${date.getHours()} : ${date.getMinutes()}`;
+								
+								if ( query.status === 201 ) {
+									
+									dispatch({
+										type: 'LOGGER',
+										value: { 
+											message: `${time} : источник поиска ${sourceName} был успешно добавлен. нажмите на кнопку список источников для просмотра`, 
+											time 
+										}
+									});
+
+									setSourceName('введите название источника поиска');
+									setParserName('введите название парсера');
+
+								} else {
+									dispatch({
+										type: 'LOGGER',
+										value: { 
+											message: `${time} : источник поиска ${sourceName} не получилось добавить. проверьте корректность данных и соединение с сервером`, 
+											time 
+										}
+									});
+								}
+							}, 2000);
 
 						} else {
 

@@ -351,9 +351,9 @@ export default function ProductsEditor() {
 							<span style={{ marginRight: 0, color: 'rgb(255, 192, 0)', width: '12.5%', display: 'block', textAlign: 'center' }}>номер</span>
 							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>название</span>
 							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>наименование парсера</span>
-							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>тип парсера</span>
-							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>uuid источника</span>
-							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>--</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>тип парсинга</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>сложность парсинга</span>
+							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>UUID</span>
 							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>--</span>
 							<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>--</span>
 						</CodeHereLine>
@@ -397,7 +397,7 @@ export default function ProductsEditor() {
 									
 								`}</span>
 								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{
-									!!item.PersingType ? `${item.PersingType}` : 'no data'
+									!!item.ParsingType ? `${item.ParsingType}` : 'no data'
 								}</span>
 								<span 
 									style={{ 
@@ -413,10 +413,10 @@ export default function ProductsEditor() {
 									}}
 								>
 									
-									{`${item.UUID}`}
+									{!!item.Complexity ? `${item.Complexity}` : 'no data'}
 								
 								</span>
-								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>--</span>
+								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>{`${item.UUID}`}</span>
 								<span style={{ marginRight: 0, width: '12.5%', display: 'block', borderRight: '1px solid #2d2d2d', textAlign: 'center' }}>--</span>
 								<span style={{ marginRight: 0, width: '12.5%', display: 'block', textAlign: 'center' }}>--</span>
 								
