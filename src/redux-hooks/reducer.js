@@ -378,6 +378,61 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'REPORT_DATA_TYPE': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'reportDataType') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'REPORT_DATA_LANG': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'reportDataLang') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'REPORT_DATA_START': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'reportDataStart') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'REPORT_DATA_END': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'reportDataEnd') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'REPORT_DATA_LIST': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'reports') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		default: return state;
 
 	}

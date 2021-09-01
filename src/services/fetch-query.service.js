@@ -176,6 +176,26 @@ export default async function fetchDispatcher(param) {
 			return query;
 		}
 
+		case 'SET_REPORT': {
+			let query = await fetch(
+				`${process.env.REACT_APP_API_URL}/api/report-tasks`, { 
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json;charset=utf-8'
+					},
+					body: param.value
+				}
+			);
+			return query;		
+		}
+
+		case 'GET_REPORTS': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/report-tasks`
+			).then(res => res.json());
+			return query;
+		}
+
 		default:
 			break;	
 

@@ -517,67 +517,6 @@ export default function MonitoringParamsForm(props) {
 				}}
 			>
 
-				<p
-					style={{
-						display: 'block',
-						position: 'absolute',
-						color: props.blackColor === true ? 'black' : 'white',
-						fontSize: '13px',
-						left: 0,
-						top: '100%',
-						marginLeft: 14,
-						marginTop: -26,
-						borderRight: `1px solid ${
-							props.blackColor === true ? 'black' : 'white'
-						}`,
-						paddingRight: 12
-					}}
-				>
-					
-					mode name
-				
-				</p>
-
-				<p
-					style={{
-						display: 'block',
-						position: 'absolute',
-						color: props.blackColor === true ? 'black' : 'white',
-						fontSize: '13px',
-						left: 0,
-						top: '100%',
-						marginLeft: 108,
-						marginTop: -26,
-						borderRight: `1px solid ${
-							props.blackColor === true ? 'black' : 'white'
-						}`,
-						paddingRight: 12,
-						zIndex: 12
-					}}
-				>
-					
-					выбрать расширение
-				
-				</p>
-				
-				<p
-					style={{
-						display: 'block',
-						position: 'absolute',
-						color: props.blackColor === true ? 'black' : 'white',
-						fontSize: '13px',
-						left: 0,
-						top: '100%',
-						marginLeft: 265,
-						marginTop: -26,
-						zIndex: 12
-					}}
-				>
-					
-					настройка колонок
-				
-				</p>
-
 				<input 
 					multiple
 					type="file"
@@ -598,7 +537,7 @@ export default function MonitoringParamsForm(props) {
 					<FontAwesomeIcon 
 						style={{
 							color: props.blackColor === true ? 'black' : 'white',
-							marginTop: -10,
+							marginTop: 0,
 							marginLeft: -20
 						}}
 						size="2x" 
@@ -607,7 +546,7 @@ export default function MonitoringParamsForm(props) {
 					<AddFileContentText
 						style={{
 							color: props.blackColor === true ? 'black' : '',
-							marginTop: 2
+							marginTop: 12
 						}}
 					>
 						загрузить товары XLSX

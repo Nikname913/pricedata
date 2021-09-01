@@ -186,7 +186,8 @@ export default function MonitoringCard() {
 							title: 'создание нового отчета', 
 							modalType: 'newReportService',
 							background: '#6c757d',
-							monitoring: state[0].label 
+							monitoring: state[0].label,
+							uuid: id
 						});
 						setShowModal(true);
 					}}
@@ -197,8 +198,8 @@ export default function MonitoringCard() {
 				<CreateReportButtonAction
 					onClick={() => {
 						setModalData({ 
-							title: 'создание нового отчета', 
-							modalType: 'newReportService',
+							title: 'список отчетов по мониторингу', 
+							modalType: 'showReportService',
 							background: '#6c757d',
 							monitoring: state[0].label 
 						});

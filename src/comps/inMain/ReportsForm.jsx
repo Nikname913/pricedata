@@ -6,6 +6,7 @@ import { ReduxHooksContext } from "../../Context";
 import bodyTags from '../../templates/body-styled-elements';
 import fetchDispatcher from "../../services/fetch-query.service";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import selectStyles from '../../templates/css-templates/regions-select';
 import selectStylesSecond from '../../templates/css-templates/regions-select-second';
 
@@ -18,10 +19,7 @@ const InputWrapper = bodyTags.InputWrapper;
 const filterData = (inputValue) => {
 	return [
 		{value: "daily_prices_report", label: "Ежедневный мониторинг цен"}, 
-		{value: "daily_prices_ecommerce_report", label: "Ежедневный мониторинг цен e-commerce"},
-		{value: "daily_prices_report2", label: "Ежедневный мониторинг цен"},
-		{value: "daily_prices_report3", label: "Ежедневный мониторинг цен"},
-		{value: "daily_prices_report4", label: "Ежедневный мониторинг цен"}].filter(item => 
+		{value: "daily_prices_ecommerce_report", label: "Ежедневный мониторинг цен e-commerce"}].filter(item => 
 		item.label.toLowerCase().includes(inputValue.toLowerCase())
 	);
 }
@@ -35,10 +33,7 @@ const loadOptions = (inputValue, cb) => {
 const filterDataLang = (inputValue) => {
 	return [
 		{value: "ru", label: "Русский язык"}, 
-		{value: "en", label: "Английский язык"},
-		{value: "ru", label: "Русский язык"}, 
-		{value: "ru", label: "Русский язык"},
-		{value: "ru", label: "Русский язык"}].filter(item => 
+		{value: "en", label: "Английский язык"}].filter(item => 
 		item.label.toLowerCase().includes(inputValue.toLowerCase())
 	);
 }
@@ -57,7 +52,7 @@ const ProductsSwitcher = withStyles({
 export default function ReportsForm(props) {	
 
 	const { createFilter } = props;
-	const { state } = useContext(ReduxHooksContext);
+	const { state, dispatch } = useContext(ReduxHooksContext);
 	
 	const [ monitoringUUID, setMonitoringUUID ] = useState('e6067004-6581-4690-95bd-061dec9a4825');
 
@@ -78,10 +73,35 @@ export default function ReportsForm(props) {
 
 	return(
 		
-		<ParamsBlock 
-			style={{ fontFamily: '"Roboto", sans-serif', paddingTop: 6 }}
-			onWheel={(e) => e.stopPropagation()}
-		>
+		<ParamsBlock style={{ fontFamily: '"Roboto", sans-serif', paddingTop: 6 }}>
+			
+			<InputWrapper style={{ marginTop: 10 }}>
+				<DatePicker 
+					dateFormat="yyyy.MM.dd"
+					selected={state[16].label}
+					onChange={(date) => {
+						dispatch({
+							type: 'REPORT_DATA_START',
+							value: date 
+						});
+					}}
+				/>
+				<InputLabel style={{ color: 'black' }}>начальная дата отчета</InputLabel>
+			</InputWrapper>
+
+			<InputWrapper style={{ marginBottom: 20 }}>
+				<DatePicker 
+					dateFormat="yyyy.MM.dd"
+					selected={state[17].label()}
+					onChange={(date) => {
+						dispatch({
+							type: 'REPORT_DATA_END',
+							value: date 
+						});
+					}}
+				/>
+				<InputLabel style={{ color: 'black' }}>конечная дата отчета</InputLabel>
+			</InputWrapper>
 
 			<AsyncSelect
 				isMulti
@@ -102,7 +122,15 @@ export default function ReportsForm(props) {
 				styles={ props.blackColor !== true ? selectStyles : selectStylesSecond }
 				onChange={(value) => {
 					if ( value.length !== 0 ) {
-						return true;
+						let data = [];
+						value.map(item => 
+							data.push(item.value)
+						);
+						dispatch({
+							type: 'REPORT_DATA_TYPE',
+							value: data 
+						});
+						console.log(state[14].label);
 					}
 				}}
 			/>
@@ -126,28 +154,18 @@ export default function ReportsForm(props) {
 				styles={ props.blackColor !== true ? selectStyles : selectStylesSecond }
 				onChange={(value) => {
 					if ( value.length !== 0 ) {
-						return true;
+						let data = [];
+						value.map(item => 
+							data.push(item.value)
+						);
+						dispatch({
+							type: 'REPORT_DATA_LANG',
+							value: data 
+						});
+						console.log(state[15].label);
 					}
 				}}
 			/>
-
-			<InputWrapper style={{ marginTop: 20 }}>
-				<DatePicker 
-					dateFormat="yyyy.MM.dd"
-					selected={state[10].label[2].label}
-					disabled="true"
-				/>
-				<InputLabel style={{ color: 'black' }}>начальная дата отчета</InputLabel>
-			</InputWrapper>
-
-			<InputWrapper>
-				<DatePicker 
-					dateFormat="yyyy.MM.dd"
-					selected={state[10].label[2].label}
-					disabled="true"
-				/>
-				<InputLabel style={{ color: 'black' }}>конечная дата отчета</InputLabel>
-			</InputWrapper>
 
 			<InputWrapper>
 				
@@ -166,7 +184,7 @@ export default function ReportsForm(props) {
 				</p>
 
 			</InputWrapper>
-		
+
 			<InputLine style={{ display: 'none' }}>
 				<Input
 					value={monitoringUUID}

@@ -48,11 +48,12 @@ export default function productsParser(inputData, uuid) {
 				}
 			})
 
+			// console.log(titlesArr);
+
 			Object.entries(sheet)
 			.filter(item => 
 				item[0] !== '!ref' && item[0] !== '!margins')
 			.forEach(item => {
-				// console.log(item);
 				let cell = item;
 				titlesArr.forEach(titleCell => {
 					if ( titleCell[0] !== cell[0] ) {
@@ -65,29 +66,31 @@ export default function productsParser(inputData, uuid) {
 
 			})
 
-			lines = titlesArr[0].length;
+			if ( titlesArr[0] !== undefined ) {
 
-			for ( let i = 0; i < lines; i++ ) {
+				lines = titlesArr[0].length;
 
-				let line = [];
-				titlesArr.forEach(item =>{
-					if ( typeof(item[i]) === 'object' || typeof(item[i]) === undefined ) {
-						line.push(item[i].v);
-					} else {
-						line.push('--')
-					}
-				});
+				for ( let i = 0; i < lines; i++ ) {
 
-				let lineChecker = false;
+					let line = [];
+					titlesArr.forEach(item => {
+						if ( typeof(item[i]) === 'object' || typeof(item[i]) === undefined ) {
+							line.push(item[i].v);
+						} else {
+							line.push('--')
+						}
+					});
+
+					let lineChecker = false;
 				
-				if ( line.length > 0 ) { 
+					if ( line.length > 0 ) { 
 					
-					line.forEach(cell => { if ( cell !== '--' ) lineChecker = true });
-					if ( lineChecker === true ) fetchData.push(line);
+						line.forEach(cell => { if ( cell !== '--' ) lineChecker = true });
+						if ( lineChecker === true ) fetchData.push(line);
 				
-				}
+					}
 
-			}
+			}}
 
 			const productDataTemplate = {
 				Name: '',
@@ -112,12 +115,14 @@ export default function productsParser(inputData, uuid) {
 						SearchRequest: item[3],
 						RequiredWords: [item[4]],
 						ExcludingWords: [item[5]],
+						Regex: item[6],
 						Note: item[7],
 						Category: item[8],
-						Barcode: item[9].toString(),
+						Barcode: item[9]?.toString(),
 						MonitoringUUID: uuid,
 					}
 					
+					// console.log(minidata);
 					newFetchData.push(minidata);
 				
 				}

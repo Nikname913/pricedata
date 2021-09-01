@@ -1069,6 +1069,62 @@ const bodyTags = {
 		font-style: italic;
 		color: ${cardDatepicLabel}
 	`,
+	MonitoringReportListItem: styled.article`
+		display: block;
+		position: relative;
+		width: 100%;
+		height: auto;
+		box-shadow: 0px 0px 1px 0.5px grey;
+		margin: 0;
+		margin-top: 12px;
+		padding-bottom: 24px;
+		border-radius: 4px;
+		transition: all 300ms;
+		:hover {
+			cursor: pointer;
+			background-color: rgba(216,216,216,0.4);
+		}
+	`,
+	MonitoringReportListItemTitle: styled.h4`
+		display: block;
+		position: relative;
+		width: 100%;
+		height: auto;
+		line-height: 60px;
+		font-size: 16px;
+		text-align: center;
+		margin: 0;
+		font-family: 'Roboto', sans-serif;
+		font-weight: 200;
+	`,
+	MonitoringReportListItemContent: styled.p`
+		width: 80%;
+		height: auto;
+		font-size: 13px;
+		line-height: 23px;
+		text-align: center;
+		margin: 0 auto;
+		font-weight: 700;
+		font-family: 'Roboto', sans-serif;
+	`,
+	MonitoringReportListItemButton: styled.span`
+		display: block;
+		position: relative;
+		width: 160px;
+		height: 40px;
+		border-radius: 4px;
+		box-shadow: 0px 0px 1px 0.5px grey;
+		font-size: 13px;
+		text-align: center;
+		line-height: 39px;
+		font-family: 'Roboto', sans-serif;
+		margin: 0 auto;
+		margin-top: 18px;
+		transition: all 300ms;
+		:hover {
+			cursor: pointer;
+		}
+	`
 }
 
 export default bodyTags;

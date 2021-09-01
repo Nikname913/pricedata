@@ -50,6 +50,14 @@ export default function middleware(param) {
 			localStorage.removeItem('filterClientsData');
 			break;
 
+		case 'REPORTS_DATA':
+			localStorage.setItem('reportsData', param.value);
+			break;
+
+		case 'CLEAR_REPORTS_DATA':
+			localStorage.removeItem('reportsData');
+			break;	
+
 		default:
 			break;
 

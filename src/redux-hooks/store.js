@@ -175,7 +175,16 @@ const store = [
 	},
 	{ value: 'logData', label: [] },
 	{ value: 'sourceType', label: 'easy' },
-	{ value: 'parserType', label: 'cities' }
+	{ value: 'parserType', label: 'cities' },
+	{ value: 'reportDataType', label: []},
+	{ value: 'reportDataLang', label: []},
+	{ value: 'reportDataStart', label: new Date()},
+	{ value: 'reportDataEnd', label: function() {
+		let date = new Date();
+		date.setMonth(date.getMonth() + 2);
+		return date;
+	}},
+	{ value: 'reports', label: []}
 ];
 
 export default store;
