@@ -128,7 +128,7 @@ function WideMenu() {
           задачи по источникам
         </SideMenuButton>
       </Link>
-      <Link to={"/new-parser"} style={{ textDecoration: "none" }}>
+      <Link to={"/get-reports"} style={{ textDecoration: "none" }}>
       <SideMenuButton 
           style={{
             fontWeight: state[10].label[9].label === 4

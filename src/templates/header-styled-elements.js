@@ -69,9 +69,16 @@ const headerTags = {
 	`,
 	LogoTitle: styled.h4`
 		display: block;
-		position: relative;
-		width: 300px;
-		font-size: 14px;
+		position: absolute;
+		width: 280px;
+		font-size: 13px;
+		font-weight: 500;
+		color: white;
+		line-height: 19px;
+		left: 0;
+		margin-left: 182px;
+		border-left: 1px solid white;
+		padding-left: 20px;
 	`,
 	SwitchLabel: styled.span`
 		color: ${headerColor};

@@ -11,6 +11,7 @@ const Header = headerTags.Header;
 const Logo = headerTags.Logo;
 const Label = headerTags.SwitchLabel;
 const Menu = headerTags.MenuBlock;
+const Title = headerTags.LogoTitle;
 
 const ThemeSwitch = withStyles({
   control: {
@@ -47,6 +48,7 @@ function Head() {
     <Header>
 
       <Logo onClick={() => history.push('/')}/>
+      <Title>модуль создания и управления мониторингами</Title>
       <Menu>
         <FontAwesomeIcon 
 					style={{

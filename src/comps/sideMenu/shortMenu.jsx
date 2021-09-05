@@ -86,7 +86,7 @@ function ShortMenu() {
           />
         </SideMenuButton>
       </Link>
-      <Link to={"/new-parser"} style={{ textDecoration: "none" }}>
+      <Link to={"/get-reports"} style={{ textDecoration: "none" }}>
         <SideMenuButton style={{ width: 42 }}>
           <FontAwesomeIcon
             style={{

@@ -7,6 +7,7 @@ import bodyTags from "../templates/body-styled-elements";
 import MonitoringForm from './inMain/MonForm';
 import SourceForm from "./inMain/SourceForm";
 import MonitoringList from "./inMain/MonList";
+import ReportsList from './inMain/ReportsList';
 import MonitoringCardRouter from "./inMain/MonCardRoute";
 import MonitoringRemove from "./inMain/MonRemove";
 import WideMenu from "./sideMenu/wideMenu";
@@ -71,7 +72,9 @@ function Main({ props }) {
         : location.pathname.indexOf('remove') !== (-1)
         ? 'удаление мониторинга'
         : location.pathname.indexOf('parser-sources') !== (-1)
-        ? 'добавление и просмотр источников поиска' : null }
+        ? 'добавление и просмотр источников поиска' 
+        : location.pathname.indexOf('get-reports') !== (-1) 
+        ? 'отчеты по всем мониторингам' : 'брендпол. раздел мониторингов' }
       </PageTitle>
     </RightSideBar>
     <MainSection>
@@ -96,6 +99,12 @@ function Main({ props }) {
           history={history}
           path="/parser-sources"
           component={SourceForm}
+        />
+
+        <Route
+          history={history}
+          path="/get-reports"
+          component={ReportsList}
         />
 
         <Route
