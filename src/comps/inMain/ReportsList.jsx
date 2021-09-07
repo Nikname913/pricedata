@@ -39,24 +39,16 @@ export default function ReportsList() {
 
 	useEffect(() => {
 
-		const getList = fetchDispatcher({ fetchType: 'GET' });
+		const getList = fetchDispatcher({ fetchType: 'GET_REPORTS' });
 		getList.then(data => {
-			let clearData = [];
-			if (data.data !== undefined) {
 
-				data.data.forEach(item => {
-					let deleted = new Date(item.DeletedAt).getFullYear();
-					if (deleted === 1970) {
-						clearData.push(item);
-					}
-				});
+			if (data.data !== undefined) { 
 
-				stateRef.current = clearData;
-				console.log(clearData);
+				console.log(data.data);
 
 				middleware({
-					type: 'MONITORINGS_DATA',
-					value: JSON.stringify(clearData)
+					type: 'REPORTS_DATA',
+					value: JSON.stringify(data.data)
 				});
 
 			} else {
@@ -88,14 +80,14 @@ export default function ReportsList() {
 
 		setTimeout(() => {
 
-			if (localStorage.getItem('monitoringData') !== null) {
+			if (localStorage.getItem('reportsData') !== null) {
 
 				dispatch({
-					type: 'CREATE_LIST',
-					value: JSON.parse(localStorage.getItem('monitoringData'))
+					type: 'REPORT_DATA_LIST',
+					value: JSON.parse(localStorage.getItem('reportsData'))
 				});
 
-				middleware({ type: 'CLEAR_MONITORINGS_DATA' });
+				middleware({ type: 'CLEAR_REPORTS_DATA' });
 
 			}
 
@@ -119,14 +111,15 @@ export default function ReportsList() {
 
 					</ItemCellNameHead>
 					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '20%' }}>мониторинг</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(80% - 70px)' }}>отчет по мониторингу</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(50% - 70px)' }}>отчет по мониторингу</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '30%' }}>период отчета</ItemCell>
 				</MonitoringItem>
 
 			</ScrollBarTop>
 
 			<ScrollBar>
 
-				{ true ? [{},{},{},{},{},{}].map((item, index) => {
+				{ true ? state[18].label.map((item, index) => {
 
 						return (
 							<MonitoringItem key={index}>
@@ -173,11 +166,11 @@ export default function ReportsList() {
 										/>
 									</ItemCellDelete>
 								</ItemCellName>
-								<ItemCell style={{ width: '20%', color: '#ffc000' }}>{ index }</ItemCell>
+								<ItemCell style={{ width: '20%', color: '#ffc000', overflow: 'hidden' }}>{ item.MonitoringUUID }</ItemCell>
 								<ItemCell
 									style={{
 										lineHeight: '38px',
-										width: 'calc(80% - 70px)',
+										width: 'calc(50% - 70px)',
 										textAlign: 'left',
 										paddingLeft: 12,
 										cursor: 'pointer',
@@ -185,9 +178,19 @@ export default function ReportsList() {
 									}}
 								>
 
-									--
+									{ `${ item.Language === 'ru' 
+										? 'RU' : 'EN' } - ${ item.ReportType === 'daily_prices_report' 
+										? 'ежедневный мониторинг цен' 
+										: item.ReportType === 'daily_prices_ecommerce_report' 
+										? 'ежедневный мониторинг цен eccomerce' : 'мониторинг конкурентов vita' }` }
 
 								</ItemCell>
+								<ItemCell style={{ fontWeight: 300, lineHeight: '38px', width: '30%' }}>
+
+									{ `${ item.PeriodStart } - ${ item.PeriodEnd }` }
+
+								</ItemCell>
+
 							</MonitoringItem>
 						);
 
