@@ -196,6 +196,13 @@ export default async function fetchDispatcher(param) {
 			return query;
 		}
 
+		case 'GET_TASKS': {
+			let query = fetch(
+				`${process.env.REACT_APP_API_URL}/api/tasks`
+			).then(res => res.json());
+			return query;
+		}
+
 		default:
 			break;	
 

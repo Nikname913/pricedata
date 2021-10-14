@@ -433,6 +433,17 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'TASKS_DATA_LIST': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'tasks') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		default: return state;
 
 	}

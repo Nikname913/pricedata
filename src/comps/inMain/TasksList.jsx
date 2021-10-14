@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line react-hooks/exhaustive-deps
-import React, { useContext, useEffect, useRef  } from "react";
+import React, { useContext, useEffect, useRef, useState  } from "react";
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPenSquare, faTrash, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import data from '../../data/clients';
-import { ReduxHooksContext } from "../../Context";
+import { ReduxHooksContext, ModalContext } from "../../Context";
+import Modal from '../../services/modal.service';
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
 import bodyTags from '../../templates/body-styled-elements';
@@ -26,9 +27,11 @@ const ItemCellDelete = bodyTags.MonitoringListWrapperItemCellDelete;
 const SorryBlock = bodyTags.MonitoringListSorryBlock;
 const SorryText = bodyTags.MonitoringListSorryBlockTitle;
 
-export default function ReportsList() {
+export default function TasksList() {
 
 	const { state, dispatch } = useContext(ReduxHooksContext);
+	const [ showModal, setShowModal ] = useContext(ModalContext);
+	const [ modalData, setModalData ] = useState({ title: '', text: '' });
 	const stateRef = useRef();
 	const history = useHistory();
 
@@ -39,7 +42,7 @@ export default function ReportsList() {
 
 	useEffect(() => {
 
-		const getList = fetchDispatcher({ fetchType: 'GET_REPORTS' });
+		const getList = fetchDispatcher({ fetchType: 'GET_TASKS' });
 		getList.then(data => {
 
 			if (data.data !== undefined) { 
@@ -47,7 +50,7 @@ export default function ReportsList() {
 				console.log(data.data);
 
 				middleware({
-					type: 'REPORTS_DATA',
+					type: 'TASKS_DATA',
 					value: JSON.stringify(data.data)
 				});
 
@@ -80,14 +83,14 @@ export default function ReportsList() {
 
 		setTimeout(() => {
 
-			if (localStorage.getItem('reportsData') !== null) {
+			if ( localStorage.getItem('tasksData') !== null ) {
 
 				dispatch({
-					type: 'REPORT_DATA_LIST',
-					value: JSON.parse(localStorage.getItem('reportsData'))
+					type: 'TASKS_DATA_LIST',
+					value: JSON.parse(localStorage.getItem('tasksData'))
 				});
 
-				middleware({ type: 'CLEAR_REPORTS_DATA' });
+				middleware({ type: 'CLEAR_TASKS_DATA' });
 
 			}
 
@@ -97,6 +100,9 @@ export default function ReportsList() {
 
 	return (
 		<MonitoringListWrapper>
+
+			{ showModal === true ? <Modal props={modalData}/> : null }
+
 			<ScrollBarTop>
 
 				<MonitoringItem>
@@ -111,15 +117,16 @@ export default function ReportsList() {
 
 					</ItemCellNameHead>
 					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '20%' }}>мониторинг</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(50% - 70px)' }}>отчет по мониторингу</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '30%' }}>период отчета</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(40% - 70px)' }}>адрес парсера</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '20%' }}>статус задачи</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '20%' }}>посмотреть задачу</ItemCell>
 				</MonitoringItem>
 
 			</ScrollBarTop>
 
 			<ScrollBar>
 
-				{ !!state[18].label ? state[18].label.map((item, index) => {
+				{ !!state[19].label ? state[19].label.map((item, index) => {
 
 						return (
 							<MonitoringItem key={index}>
@@ -170,7 +177,7 @@ export default function ReportsList() {
 								<ItemCell
 									style={{
 										lineHeight: '38px',
-										width: 'calc(50% - 70px)',
+										width: 'calc(40% - 70px)',
 										textAlign: 'left',
 										paddingLeft: 12,
 										cursor: 'pointer',
@@ -178,16 +185,35 @@ export default function ReportsList() {
 									}}
 								>
 
-									{ `${ item.Language === 'ru' 
-										? 'RU' : 'EN' } - ${ item.ReportType === 'daily_prices_report' 
-										? 'ежедневный мониторинг цен' 
-										: item.ReportType === 'daily_prices_ecommerce_report' 
-										? 'ежедневный мониторинг цен eccomerce' : 'мониторинг конкурентов vita' }` }
+									{ `${item.AParserHost.split(':')[0]}, порт ${item.AParserHost.split(':')[1]}` }
 
 								</ItemCell>
-								<ItemCell style={{ fontWeight: 300, lineHeight: '38px', width: '30%' }}>
+								<ItemCell style={{ fontWeight: 300, lineHeight: '38px', width: '20%' }}>
 
-									{ `${ item.PeriodStart } - ${ item.PeriodEnd }` }
+									{ item.Status }
+
+								</ItemCell>
+								<ItemCell 
+									style={{ 
+										fontWeight: 300, 
+										lineHeight: '38px',
+										width: '20%',
+										cursor: 'pointer'
+									}}
+									onClick={() => {
+
+										setModalData({ 
+											title: 'список отчетов по мониторингу', 
+											modalType: 'showReportService',
+											background: '#6c757d',
+											monitoring: state[0].label 
+										});
+										setShowModal(true);
+
+									}}
+								>
+
+									{ `ПОСМОТРЕТЬ` }
 
 								</ItemCell>
 

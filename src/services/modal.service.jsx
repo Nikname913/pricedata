@@ -149,7 +149,15 @@ export default function Modal({ props }) {
               <ReportItemContent>начальный период - {item.PeriodStart}</ReportItemContent>
               <ReportItemContent>конечный период - {item.PeriodEnd}</ReportItemContent>
 
-              <ReportItemButton>скачать отчет</ReportItemButton>
+              <ReportItemButton
+                onClick={() => {
+
+                  window.open(`${process.env.REACT_APP_API_URL}/api/report-tasks/${item.UUID}/download`)
+
+                }}
+              >
+                скачать отчет
+              </ReportItemButton>
 
             </ReportItem>
 

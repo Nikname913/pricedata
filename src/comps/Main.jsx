@@ -8,6 +8,7 @@ import MonitoringForm from './inMain/MonForm';
 import SourceForm from "./inMain/SourceForm";
 import MonitoringList from "./inMain/MonList";
 import ReportsList from './inMain/ReportsList';
+import TasksList from './inMain/TasksList';
 import MonitoringCardRouter from "./inMain/MonCardRoute";
 import MonitoringRemove from "./inMain/MonRemove";
 import WideMenu from "./sideMenu/wideMenu";
@@ -74,7 +75,9 @@ function Main({ props }) {
         : location.pathname.indexOf('parser-sources') !== (-1)
         ? 'добавление и просмотр источников поиска' 
         : location.pathname.indexOf('get-reports') !== (-1) 
-        ? 'отчеты по всем мониторингам' : 'брендпол. раздел мониторингов' }
+        ? 'отчеты по всем мониторингам'
+        : location.pathname.indexOf('get-tasks') !== (-1) 
+        ? 'список задач по всем мониторингам' : 'брендпол. раздел мониторингов' }
       </PageTitle>
     </RightSideBar>
     <MainSection>
@@ -105,6 +108,12 @@ function Main({ props }) {
           history={history}
           path="/get-reports"
           component={ReportsList}
+        />
+
+        <Route
+          history={history}
+          path="/get-tasks"
+          component={TasksList}
         />
 
         <Route

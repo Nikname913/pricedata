@@ -184,7 +184,8 @@ const store = [
 		date.setMonth(date.getMonth() + 2);
 		return date;
 	}},
-	{ value: 'reports', label: []}
+	{ value: 'reports', label: []},
+	{ value: 'tasks', label: []}
 ];
 
 export default store;

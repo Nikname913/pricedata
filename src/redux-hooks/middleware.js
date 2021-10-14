@@ -58,6 +58,14 @@ export default function middleware(param) {
 			localStorage.removeItem('reportsData');
 			break;	
 
+		case 'TASKS_DATA':
+			localStorage.setItem('tasksData', param.value);
+			break;
+
+		case 'CLEAR_TASKS_DATA':
+			localStorage.removeItem('tasksData');
+			break;		
+
 		default:
 			break;
 
