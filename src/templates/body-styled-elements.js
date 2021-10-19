@@ -870,6 +870,33 @@ const bodyTags = {
 		border-bottom: ${cellBorderColor};
 		box-sizing: border-box;
 	`,
+	MonitoringListWrapperItemSearchBlock: styled.div`
+		display: block;
+		position: relative;
+		width: 400px;
+		height: auto;
+		min-height: 10px;
+	`,
+	MonitoringListWrapperItemSearchBlockIcons: styled.span`
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content:flex-end;
+		position: relative;
+		width: 200px;
+		height: auto;
+		margin-bottom: 9px;
+		margin-right: 20px;
+	`,
+	MonitoringListWrapperItemSearchBlockIconsItem: styled.span`
+		display: block;
+		position: relative;
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		background-color: rgb(216,216,216);
+		margin-right: 12px;
+	`,
 	MonitoringListWrapperItemCellName: styled.span`
 		display: block;
 		position: relative;

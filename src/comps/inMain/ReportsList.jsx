@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-target-blank */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -6,10 +8,12 @@ import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPenSquare, faTrash, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import data from '../../data/clients';
+import AsyncSelect from 'react-select/async';
 import { ReduxHooksContext } from "../../Context";
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
 import bodyTags from '../../templates/body-styled-elements';
+import selectStyles from '../../templates/css-templates/clients-select.js';
 
 let returnedData = data();
 
@@ -17,6 +21,9 @@ const MonitoringListWrapper = bodyTags.MonitoringListWrapper;
 const ScrollBar = bodyTags.MonitoringListWrapperScrollBar;
 const ScrollBarTop = bodyTags.MonitoringListWrapperScrollBarTop;
 const MonitoringItem = bodyTags.MonitoringListWrapperItem;
+const MonitoringSearch = bodyTags.MonitoringListWrapperItemSearchBlock;
+const MonitoringSearchIcons = bodyTags.MonitoringListWrapperItemSearchBlockIcons;
+const SearchIcon = bodyTags.MonitoringListWrapperItemSearchBlockIconsItem;
 const ItemCell = bodyTags.MonitoringListWrapperItemCell;
 const ItemCellName = bodyTags.MonitoringListWrapperItemCellName;
 const ItemCellNameHead = bodyTags.MonitoringListWrapperItemCellNameHead;
@@ -31,11 +38,6 @@ export default function ReportsList() {
 	const { state, dispatch } = useContext(ReduxHooksContext);
 	const stateRef = useRef();
 	const history = useHistory();
-
-	let checkArr = [];
-	let size = state[8].label[0].label;
-	let count = 0;
-	let pages = 0;
 
 	useEffect(() => {
 
@@ -97,6 +99,50 @@ export default function ReportsList() {
 
 	return (
 		<MonitoringListWrapper>
+
+			<ScrollBarTop style={{ overflow: 'visible' }}>
+				<MonitoringItem 
+					style={{ 
+						height: 'auto', 
+						borderBottom: '1px solid rgba(255, 192, 0, 0.5)',
+						paddingLeft: '12px',
+						paddingTop: '12px',
+						paddingBottom: '3px',
+						overflow: 'visible'
+					}}
+				>
+
+					<MonitoringSearch>
+						<AsyncSelect
+							cacheOptions
+							defaultOptions
+							placeholder={"введите номер мониторинга"}
+							theme={theme => ({
+								...theme,
+								borderRadius: 4,
+								colors: {
+									...theme.colors,
+									primary: '#1F99B4',
+									primary25: '#ffc000',
+									primary50: 'rgb(236, 236, 236)'
+								}
+							})}
+							styles={selectStyles}
+							onWheel={e => e.stopPropagation()}
+						/>
+					</MonitoringSearch>
+
+					<MonitoringSearchIcons>
+
+						<SearchIcon/>
+						<SearchIcon/>
+						<SearchIcon/>
+
+					</MonitoringSearchIcons>
+
+				</MonitoringItem>
+			</ScrollBarTop>
+			
 			<ScrollBarTop>
 
 				<MonitoringItem>
@@ -111,8 +157,9 @@ export default function ReportsList() {
 
 					</ItemCellNameHead>
 					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '20%' }}>мониторинг</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(50% - 70px)' }}>отчет по мониторингу</ItemCell>
-					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '30%' }}>период отчета</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: 'calc(40% - 70px)' }}>отчет по мониторингу</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '20%' }}>период отчета</ItemCell>
+					<ItemCell style={{ border: 'none', fontWeight: 300, lineHeight: '38px', width: '20%' }}>скачать отчет</ItemCell>
 				</MonitoringItem>
 
 			</ScrollBarTop>
@@ -170,7 +217,7 @@ export default function ReportsList() {
 								<ItemCell
 									style={{
 										lineHeight: '38px',
-										width: 'calc(50% - 70px)',
+										width: 'calc(40% - 70px)',
 										textAlign: 'left',
 										paddingLeft: 12,
 										cursor: 'pointer',
@@ -185,9 +232,39 @@ export default function ReportsList() {
 										? 'ежедневный мониторинг цен eccomerce' : 'мониторинг конкурентов vita' }` }
 
 								</ItemCell>
-								<ItemCell style={{ fontWeight: 300, lineHeight: '38px', width: '30%' }}>
+								<ItemCell style={{ fontWeight: 300, lineHeight: '38px', width: '20%' }}>
 
 									{ `${ item.PeriodStart } - ${ item.PeriodEnd }` }
+
+								</ItemCell>
+								<ItemCell 
+									style={{ 
+										fontWeight: 300, 
+										lineHeight: '38px', 
+										width: '20%',
+										display: 'block',
+										position: 'relative',
+										cursor: 'pointer'
+									}}
+								>
+
+									<a style={{
+											display: 'block',
+											position: 'absolute',
+											width: '100%',
+											height: '100%',
+											top: 0,
+											left: 0,
+											opacity: 0,
+											zIndex: 4
+										}}
+										target="_blank"
+										href={`${process.env.REACT_APP_API_URL}/api/report-tasks/${item.UUID}/download`}
+									>
+									
+										СКАЧАТЬ ОТЧЕТ
+
+									</a>{ `СКАЧАТЬ ОТЧЕТ` }
 
 								</ItemCell>
 

@@ -35,11 +35,6 @@ export default function TasksList() {
 	const stateRef = useRef();
 	const history = useHistory();
 
-	let checkArr = [];
-	let size = state[8].label[0].label;
-	let count = 0;
-	let pages = 0;
-
 	useEffect(() => {
 
 		const getList = fetchDispatcher({ fetchType: 'GET_TASKS' });
