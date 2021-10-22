@@ -877,6 +877,16 @@ const bodyTags = {
 		height: auto;
 		min-height: 10px;
 	`,
+	MonitoringListWrapperItemSearchBlockClear: styled.span`
+		display: block;
+		position: absolute;
+		left: 0;
+		margin-left: 436px;
+		color: white;
+		font-style: italic;
+		margin-bottom: 10px;
+		cursor: pointer;
+	`,
 	MonitoringListWrapperItemSearchBlockIcons: styled.span`
 		display: flex;
 		flex-direction: row;

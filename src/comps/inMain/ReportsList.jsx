@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -13,15 +14,18 @@ import { ReduxHooksContext } from "../../Context";
 import fetchDispatcher from "../../services/fetch-query.service";
 import middleware from "../../redux-hooks/middleware";
 import bodyTags from '../../templates/body-styled-elements';
+import monitorings from '../../data/monitorings';
 import selectStyles from '../../templates/css-templates/clients-select.js';
 
 let returnedData = data();
+let returnedMonitorings = monitorings();
 
 const MonitoringListWrapper = bodyTags.MonitoringListWrapper;
 const ScrollBar = bodyTags.MonitoringListWrapperScrollBar;
 const ScrollBarTop = bodyTags.MonitoringListWrapperScrollBarTop;
 const MonitoringItem = bodyTags.MonitoringListWrapperItem;
 const MonitoringSearch = bodyTags.MonitoringListWrapperItemSearchBlock;
+const ClearSearch = bodyTags.MonitoringListWrapperItemSearchBlockClear;
 const MonitoringSearchIcons = bodyTags.MonitoringListWrapperItemSearchBlockIcons;
 const SearchIcon = bodyTags.MonitoringListWrapperItemSearchBlockIconsItem;
 const ItemCell = bodyTags.MonitoringListWrapperItemCell;
@@ -32,6 +36,18 @@ const ItemCellCorrect = bodyTags.MonitoringListWrapperItemCellCorrect;
 const ItemCellDelete = bodyTags.MonitoringListWrapperItemCellDelete;
 const SorryBlock = bodyTags.MonitoringListSorryBlock;
 const SorryText = bodyTags.MonitoringListSorryBlockTitle;
+
+const filterData = (inputValue) => {
+	return returnedMonitorings.filter(item => 
+		item.value.toString().toLowerCase().includes(inputValue.toLowerCase())
+	);
+}
+
+const loadOptions = (inputValue, cb) => {
+  setTimeout(() => {
+    cb(filterData(inputValue));
+  }, 1000);
+}
 
 export default function ReportsList() {
 
@@ -117,6 +133,7 @@ export default function ReportsList() {
 							cacheOptions
 							defaultOptions
 							placeholder={"введите номер мониторинга"}
+							loadOptions={loadOptions}
 							theme={theme => ({
 								...theme,
 								borderRadius: 4,
@@ -129,8 +146,33 @@ export default function ReportsList() {
 							})}
 							styles={selectStyles}
 							onWheel={e => e.stopPropagation()}
+							onChange={inputValue => {
+
+								if ( inputValue.label !== '' ) {
+									dispatch({
+										type: 'SET_ONE_REPORT_IN_LIST',
+										value: inputValue.label
+									});
+									dispatch({
+										type: 'SHOW_ONE_REPORT_IN_LIST',
+										value: true
+									});
+								}
+							}}
 						/>
 					</MonitoringSearch>
+					<ClearSearch
+						onClick={() => {
+							dispatch({
+								type: 'SHOW_ONE_REPORT_IN_LIST',
+								value: false
+							});
+						}}
+					>
+						
+						очистить поиск
+					
+					</ClearSearch>
 
 					<MonitoringSearchIcons>
 
@@ -164,7 +206,7 @@ export default function ReportsList() {
 
 			</ScrollBarTop>
 
-			<ScrollBar>
+			{ state[20].label === false ? <ScrollBar>
 
 				{ !!state[18].label ? state[18].label.map((item, index) => {
 
@@ -288,7 +330,140 @@ export default function ReportsList() {
 
 					)}
 
-			</ScrollBar>
+			</ScrollBar> : <ScrollBar>
+
+				{ !!state[18].label ? state[18].label.map((item, index) => {
+
+						let monitoring = state[21].label;
+						if ( monitoring === item.MonitoringUUID ) { 
+
+						return (
+							<MonitoringItem 
+								key={index}
+								style={{
+									// eslint-disable-next-line eqeqeq
+									// display: item.MonitoringUUID == monitoring ? 'flex' : 'none'
+								}}
+							>
+								<ItemCellName style={{ lineHeight: '38px', width: 70 }}>
+
+									<ItemCellView onClick={() => {}}>
+
+										<FontAwesomeIcon
+											style={{
+												display: state[10].label[0].label === false ? '' : 'none',
+												color: 'black',
+												marginLeft: 4.5,
+												marginBottom: 7
+											}}
+											size="sm"
+											icon={faEye}
+										/>
+
+									</ItemCellView>
+									<ItemCellCorrect
+										style={{ display: 'none' }}
+										onClick={() => history.push(`/card/correct/${item.UUID}`)}
+									>
+										<FontAwesomeIcon
+											style={{
+												color: 'black',
+												marginLeft: 6,
+												marginBottom: 7
+											}}
+											size="sm"
+											icon={faPenSquare}
+										/>
+									</ItemCellCorrect>
+									<ItemCellDelete onClick={async () => {}}>
+										<FontAwesomeIcon
+											style={{
+												display: state[10].label[0].label === false ? '' : 'none',
+												color: 'black',
+												marginLeft: 6,
+												marginBottom: 7
+											}}
+											size="sm"
+											icon={faTrash}
+										/>
+									</ItemCellDelete>
+								</ItemCellName>
+								<ItemCell style={{ width: '20%', color: '#ffc000', overflow: 'hidden' }}>{ item.MonitoringUUID }</ItemCell>
+								<ItemCell
+									style={{
+										lineHeight: '38px',
+										width: 'calc(40% - 70px)',
+										textAlign: 'left',
+										paddingLeft: 12,
+										cursor: 'pointer',
+										boxSizing: 'border-box'
+									}}
+								>
+
+									{ `${ item.Language === 'ru' 
+										? 'RU' : 'EN' } - ${ item.ReportType === 'daily_prices_report' 
+										? 'ежедневный мониторинг цен' 
+										: item.ReportType === 'daily_prices_ecommerce_report' 
+										? 'ежедневный мониторинг цен eccomerce' : 'мониторинг конкурентов vita' }` }
+
+								</ItemCell>
+								<ItemCell style={{ fontWeight: 300, lineHeight: '38px', width: '20%' }}>
+
+									{ `${ item.PeriodStart } - ${ item.PeriodEnd }` }
+
+								</ItemCell>
+								<ItemCell 
+									style={{ 
+										fontWeight: 300, 
+										lineHeight: '38px', 
+										width: '20%',
+										display: 'block',
+										position: 'relative',
+										cursor: 'pointer'
+									}}
+								>
+
+									<a style={{
+											display: 'block',
+											position: 'absolute',
+											width: '100%',
+											height: '100%',
+											top: 0,
+											left: 0,
+											opacity: 0,
+											zIndex: 4
+										}}
+										target="_blank"
+										href={`${process.env.REACT_APP_API_URL}/api/report-tasks/${item.UUID}/download`}
+									>
+									
+										СКАЧАТЬ ОТЧЕТ
+
+									</a>{ `СКАЧАТЬ ОТЧЕТ` }
+
+								</ItemCell>
+
+							</MonitoringItem>
+						)}
+
+					}) : (
+
+						<SorryBlock>
+							<FontAwesomeIcon
+								style={{
+									color: 'white',
+									marginLeft: 6,
+									marginBottom: 8
+								}}
+								size="8x"
+								icon={faUserSecret}
+							/>
+							<SorryText>привет, это Сервер. кажется, у тебя тут ничего нет. Возможно у меня нечего тебе дать, либо ты как-то не так просишь, проверь запросы</SorryText>
+						</SorryBlock>
+
+					)}
+
+			</ScrollBar> }
 
 		</MonitoringListWrapper>
 	);

@@ -185,7 +185,13 @@ const store = [
 		return date;
 	}},
 	{ value: 'reports', label: []},
-	{ value: 'tasks', label: []}
+	{ value: 'tasks', label: []},
+	{ value: 'reportSelection', label: false},
+	{ value: 'reportSelectionValue', label: ''} 
+	
+	// store item number 21
+	// ------------------------------
+
 ];
 
 export default store;

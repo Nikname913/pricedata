@@ -36,7 +36,8 @@ const selectStyles = {
   }),
   menuList: (theme) => ({
     ...theme,
-    width: '110%'
+    width: '110%',
+    color: 'black'
   }),
   indicatorSeparator: (theme) => ({
     ...theme,

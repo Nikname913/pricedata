@@ -444,6 +444,28 @@ export default function reducer(state = store, action) {
 			return newState;
 		}
 
+		case 'SHOW_ONE_REPORT_IN_LIST': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'reportSelection') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
+		case 'SET_ONE_REPORT_IN_LIST': {
+			let newState = [];
+			state.map(item => {
+				if (item.value === 'reportSelectionValue') {
+					item.label = action.value;
+				}
+				newState.push(item);
+			});
+			return newState;
+		}
+
 		default: return state;
 
 	}

@@ -5,33 +5,33 @@ import store from "../redux-hooks/store";
 
 export default function regions() {
 
-	const getList = fetchDispatcher({ fetchType: 'GET_CITYES' });
+	const getList = fetchDispatcher({ fetchType: 'GET' });
 	getList.then(data => {
 		
 		let mapArray = [];
 		// eslint-disable-next-line array-callback-return
 		data.data.map(item => {
 			mapArray.push({
-				value: item.UUID, 
-				label: item.Name
+				value: item.ID, 
+				label: item.UUID
 			})
 		});
 
 		middleware({
-			type: 'CITYES_DATA',
+			type: 'MONITORINGS_DATA',
 			value: JSON.stringify(mapArray)
 		});
 
 	});
 
 	let fetchData = [];
-	JSON.parse(localStorage.getItem('cityesData')) 
-	? fetchData = JSON.parse(localStorage.getItem('cityesData')) 
+	JSON.parse(localStorage.getItem('monitoringData')) 
+	? fetchData = JSON.parse(localStorage.getItem('monitoringData')) 
 	: fetchData = [];
 	return fetchData;
 
 	// eslint-disable-next-line no-unreachable
-	middleware({ type: 'CLEAR_CITYES_DATA' });
+	middleware({ type: 'CLEAR_MONITORINGS_DATA' });
 
 }
 
