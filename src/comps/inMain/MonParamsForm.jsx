@@ -90,7 +90,7 @@ export default function MonitoringParamsForm(props) {
 			start_3: JSON.parse(localStorage.getItem('start3From')),
 			start_4: JSON.parse(localStorage.getItem('start4From')),
 			start_5: JSON.parse(localStorage.getItem('start5From')),
-		}
+		}  
 		return data;
 	}
 
